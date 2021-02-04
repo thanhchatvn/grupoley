@@ -1,18 +1,11 @@
-# -*- coding: utf-8 -*-
-
+# # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
-
-class helpdesk_customers(models.Model):
-    _name = 'helpdesk_customers.helpdesk_customers'
-    _description = 'helpdesk_customers.helpdesk_customers'
-
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+class HelpdeskTicket(models.Model):
+    # Heredamos el módelo que deseamos modificar 
+    _inherit = 'helpdesk.ticket'    
+    
+    # Creamos el campo el cual estara relacionado para obtener los datos deseados
+    x_parent_id = fields.Many2one(string='Related Company', related='partner_id.commercial_partner_id',
+                                  readonly=True, store=True)
+    
