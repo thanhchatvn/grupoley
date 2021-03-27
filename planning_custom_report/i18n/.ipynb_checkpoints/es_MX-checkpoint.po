@@ -115,7 +115,7 @@ msgstr "Tarea cumplida en tiempo"
 #: model:ir.model.fields,field_description:planning_custom_report.field_account_analytic_line__x_achived_task_with_overtime
 #: model:ir.model.fields,field_description:planning_custom_report.field_project_timesheet_forecast_report_analysis__x_achived_task_with_overtime
 msgid "Task Achived With Overtime"
-msgstr "Tarea cumplida con retaso"
+msgstr "Tarea cumplida con retraso"
 
 #. module: planning_custom_report
 #: model:ir.model,name:planning_custom_report.model_project_task_type
