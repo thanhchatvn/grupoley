@@ -1,0 +1,12 @@
+<odoo>
+    <record model="res.config.settings" id="sale_config_settings_approval_pricelist">
+        <field name="group_product_pricelist" eval="1"/>
+    </record>
+    
+    <function model="res.config.settings" name="execute">
+
+        <value eval="[ref('sale_config_settings_approval_pricelist')]"/>     
+
+    </function>
+    
+</odoo>
