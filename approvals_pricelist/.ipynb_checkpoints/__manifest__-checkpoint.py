@@ -22,6 +22,7 @@
     'depends': ['base','sale_management','contacts'],
 
     'data': [
+        'views/res_config.xml',
         'views/approval_pricelist.xml',
         'views/res_partner.xml',
     ],
