@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+  <data>
+    <template id="l10n_mx_edi_addenda_farmacio_guadalajara" name="Addenda Farmacias Guadalajara">
+      <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
+      <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+    <requestForPayment
+            t-att-DeliveryDate="record.invoice_date"
+            t-att-documentStatus="record.x_studio_document_status"
+            t-att-documentStructureVersion="record.x_studio_document_structure_version"
+            t-att-contentVersion="record.x_studio_content_version"
+            t-att-type="record.x_studio_transaction_type"
+            xmlns="http://www.farmaciasguadalajara.com.mx/AddendaFragua"
+    >
+        <requestForPaymentIdentification>
+            <entityType t-field="record.x_studio_entity_type"/>
+            <uniqueCreatorIdentification t-field="record.payment_reference"/>
+        </requestForPaymentIdentification>
+
+        <orderIdentification>
+            <referenceIdentification t-att-type="record.x_studio_order_type" t-field="record.x_studio_customer_purchase_order"/>
+            <ReferenceDate t-field="record.x_studio_order_reference_date"/>
+        </orderIdentification>
+
+        <DeliveryNote>
+            <referenceIdentification t-field="record.x_studio_delivery_reference"/>
+            <referenceDate t-field="record.x_studio_delivery_reference_date"/>
+        </DeliveryNote>
+
+        <AdditionalInformation>
+            <referenceIdentification t-att-type="record.x_studio_additional_reference_type" t-field="record.x_studio_additional_reference"/>
+        </AdditionalInformation>
+
+        <buyer>
+            <gln t-field="record.partner_id.x_studio_gln"/>
+        </buyer>
+
+        <seller>
+            <alternatePartyIdentification t-att-type="record.x_studio_seller_identification_type" t-field="record.x_studio_seller_identification_by_costumer"/>
+        </seller>
+
+        <shipTo>
+            <alternatePartyIdentification type="ASSIGNED_IDENTIFIER_FOR_A_BUYER" t-field="record.x_studio_buyer_identifier"/>
+        </shipTo>
+
+        <currency t-att-currencyISOCode="record.currency_id.name">
+            <currencyFunction t-field="record.x_studio_currency_function"/>
+            <rateOfChange t-field="sale_id.currency_rate"/>
+        </currency>
+
+        <t t-set="total_without_disc" t-value="0.00"/>
+        <t t-foreach="sale_id.order_line" t-as="b">
+            <t t-set="product_total" t-value="b.product_id.lst_price * b.qty_invoiced"/>
+            <t t-set="total_without_disc" t-value="total_without_disc + product_total"/>
+        </t>
+        <t t-set="disccount" t-value="(total_without_disc - sale_id.amount_untaxed) * 100 / total_without_disc"/>
+
+        <allowanceCharge t-att-allowanceChargeType="record.x_studio_allowance_charge_type" t-att-settlementType="record.x_studio_settlement_type">
+          <specialServicesType t-field="record.x_studio_special_service_type"/>
+          <monetaryAmountOrPercentage>
+            <rate base="INVOICE_VALUE">
+              <percentage t-esc="disccount"/>
+            </rate>
+          </monetaryAmountOrPercentage>
+        </allowanceCharge>
+
+        <t t-set="i" t-value="1"/>
+        <t t-foreach="sale_id.order_line" t-as="o">
+            <lineItem type="SimpleInvoiceLineItemType" t-att-number="i">
+
+                <tradeItemIdentification>
+                    <gtin t-field="o.product_id.barcode"/>
+                    <t t-set="i" t-value="i+1"/>
+                </tradeItemIdentification>
+
+                <alternateTradeItemIdentification t-att-type="record.x_studio_alternate_trade_type" t-field="o.product_id.barcode"/>
+
+                <tradeItemDescriptionInformation language="ES">
+                    <longText t-field="o.product_id.name"/>
+                </tradeItemDescriptionInformation>
+
+                <invoiceQuantity t-att-unitOfMeasure="o.product_id.uom_id.name" t-field="o.qty_invoiced"/>
+
+                <additionalQuantity QuantityType="NUM_CONSUMER_UNITS"/>
+
+                <grossPrice>
+                    <Amount t-field="o.product_id.lst_price"/>
+                </grossPrice>
+
+                <netPrice>
+                    <Amount t-field="o.price_unit"/>
+                </netPrice>
+
+                <allowanceCharge t-att-allowanceChargeType="record.x_studio_allowance_charge_type" sequenceNumber="0">
+                  <specialServicesType t-field="record.x_studio_special_service_type"/>
+                  <monetaryAmountOrPercentage>
+                    <percentagePerUnit t-esc=""/>
+                    <ratePerUnit>
+                      <amountPerUnit t-esc="disccount"/>
+                    </ratePerUnit>
+                  </monetaryAmountOrPercentage>
+                </allowanceCharge>
+
+                <totalLineAmount>
+
+                    <grossAmount>
+                        <Amount t-esc="o.product_id.lst_price * o.qty_invoiced"/>
+                    </grossAmount>
+
+                    <netAmount>
+                        <Amount t-esc="o.price_subtotal"/>
+                    </netAmount>
+
+                </totalLineAmount>
+
+            </lineItem>
+        </t>
+
+
+        <totalAllowenceCharge allowenceOrChargeType="Allowance">
+            <t t-set="total_allowance_charge" t-value="total_without_disc - sale_id.amount_untaxed"/>
+            <Amount t-esc="total_allowance_charge"/>
+        </totalAllowenceCharge>
+
+    </requestForPayment>
+    </template>
+
+    <record id="l10n_mx_edi_addenda_farmacio_guadalajara" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+  </data>
+</odoo>
