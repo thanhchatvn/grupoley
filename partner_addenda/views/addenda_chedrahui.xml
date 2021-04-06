@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+  <data>
+    <template id="l10n_mx_edi_addenda_chedrahui" name="Addenda Chedrahui">
+      <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
+      <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+    <requestForPayment
+            t-att-DeliveryDate="sale_id.effective_date"
+            documentStatus="ORIGINAL"
+            documentStructureVersion="AMC7.1"
+            contentVersion="1.3.1"
+            type="SimpleInvoiceType"
+    >
+        <requestForPaymentIdentification>
+            <entityType t-esc="INVOICE"/>
+            <uniqueCreatorIdentification t-esc="record.payment_reference"/>
+        </requestForPaymentIdentification>
+
+        <specialInstruction code="ZZZ">
+            <text t-esc="record._l10n_mx_edi_cfdi_amount_to_text()"/>
+        </specialInstruction>
+
+        <orderIdentification>
+            <referenceIdentification type="ON" t-esc="record.client_order_ref"/>
+            <ReferenceDate t-field="record.x_studio_order_reference_date"/>
+        </orderIdentification>
+
+        <AdditionalInformation>
+            <referenceIdentification t-att-type="record.x_studio_additional_reference_type" t-field="record.x_studio_additional_reference"/>
+        </AdditionalInformation>
+
+        <DeliveryNote>
+            <referenceIdentification t-field="record.x_studio_delivery_reference"/>
+            <referenceDate t-field="record.x_studio_delivery_reference_date"/>
+        </DeliveryNote>
+
+        <buyer>
+            <gln t-field="record.partner_id.x_studio_gln"/>
+        </buyer>
+
+        <seller>
+            <gln t-field="record.user_id.partner_id.x_studio_gln"/>
+            <alternatePartyIdentification t-att-type="record.x_studio_seller_identification_type" t-field="record.x_studio_seller_identification_by_costumer"/>
+        </seller>
+
+        <shipTo>
+            <gln t-field="record.partner_shipping_id.x_studio_gln"/>
+            <NameAndAddress>
+                <name t-field="record.partner_shipping_id.name"/>
+                <streetAddressOne t-esc="record.partner_shipping_id.street_name + ' ' + record.partner_shipping_id.street_number"/>
+                <city t-esc="record.partner_shipping_id.city_id.name + ' ' + record.partner_shipping_id.state_id.code"/>
+                <postalCode t-field="record.partner_shipping_id.zip"/>
+            </NameAndAddress>
+        </shipTo>
+
+        <currency t-att-currencyISOCode="record.currency_id.name">
+            <currencyFunction t-field="record.x_studio_currency_function"/>
+            <rateOfChange t-field="sale_id.currency_rate"/>
+        </currency>
+
+        <paymentTerms t-att-PaymentTermsRelationTime="record.x_studio_payment_terms_relation_time"
+                      t-att-paymentTermsEvent="record.x_studio_payment_terms_event">
+            <netPayment t-att-netPaymentTermsType="record.x_studio_net_payment_terms_type">
+                <paymentTimePeriod>
+                    <timePeriodDue timePeriod="DAYS"/>
+                </paymentTimePeriod>
+            </netPayment>
+        </paymentTerms>
+
+        <t t-set="i" t-value="1"/>
+        <t t-foreach="sale_id.order_line" t-as="o">
+            <lineItem type="SimpleInvoiceLineItemType" t-att-number="i">
+                <tradeItemIdentification>
+                    <gtin t-field="o.product_id.barcode"/>
+                    <t t-set="i" t-value="i+1"/>
+                </tradeItemIdentification>
+
+                <tradeItemDescriptionInformation language="ES">
+                    <longText t-field="o.product_id.name"/>
+                </tradeItemDescriptionInformation>
+
+                <invoiceQuantity t-att-unitOfMeasure="o.product_id.uom_id.name" t-field="o.qty_invoiced"/>
+
+                <additionalQuantity QuantityType="NUM_CONSUMER_UNITS"/>
+
+                <grossPrice>
+                    <Amount t-field="o.product_id.lst_price"/>
+                </grossPrice>
+
+                <netPrice>
+                    <Amount t-field="o.price_unit"/>
+                </netPrice>
+
+                <totalLineAmount>
+                    <grossAmount>
+                        <Amount t-esc="o.product_id.lst_price * o.qty_invoiced"/>
+                    </grossAmount>
+
+                    <netAmount>
+                        <Amount t-esc="o.price_subtotal"/>
+                    </netAmount>
+
+                </totalLineAmount>
+            </lineItem>
+        </t>
+
+        <t t-set="total_without_disc" t-value="0.00"/>
+        <t t-foreach="sale_id.order_line" t-as="b">
+            <t t-set="product_total" t-value="b.product_id.lst_price * b.qty_invoiced"/>
+            <t t-set="total_without_disc" t-value="total_without_disc + product_total"/>
+        </t>
+
+        <totalAmount>
+            <Amount t-esc="total_without_disc"/>
+        </totalAmount>
+
+        <totalAllowenceCharge allowenceOrChargeType="Allowence">
+            <t t-set="total_allowance_charge" t-value="total_without_disc - sale_id.amount_untaxed"/>
+            <Amount t-esc="total_allowance_charge"/>
+        </totalAllowenceCharge>
+
+        <baseAmount>
+            <Amount t-esc="sale_id.amount_untaxed"/>
+        </baseAmount>
+
+        <tax type="VAT">
+            <taxPercentage t-esc="sale_id.order_line.tax_id.amount"/>
+            <taxAmount t-esc="sale_id.amount_tax"/>
+        </tax>
+
+        <payableAmount>
+            <Amount t-esc="record.amount_total"/>
+        </payableAmount>
+
+    </requestForPayment>
+    </template>
+
+    <record id="l10n_mx_edi_addenda_chedrahui" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+  </data>
+</odoo>
