@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_valuation_unit_value
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-08 15:55+0000\n"
+"PO-Revision-Date: 2021-04-08 09:53-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_MX\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#. module: stock_valuation_unit_value
+#: model:ir.model.fields,field_description:stock_valuation_unit_value.field_stock_valuation_layer__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: stock_valuation_unit_value
+#: model:ir.model.fields,field_description:stock_valuation_unit_value.field_stock_valuation_layer__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_valuation_unit_value
+#: model:ir.model.fields,field_description:stock_valuation_unit_value.field_stock_valuation_layer____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: stock_valuation_unit_value
+#: model:ir.model,name:stock_valuation_unit_value.model_stock_valuation_layer
+msgid "Stock Valuation Layer"
+msgstr "Capa de valoración de stock"
+
+#. module: stock_valuation_unit_value
+#: model:ir.model.fields,field_description:stock_valuation_unit_value.field_stock_valuation_layer__unit_cost
+msgid "Unit Value"
+msgstr "Valor unitario"
