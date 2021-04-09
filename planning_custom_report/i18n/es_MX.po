@@ -4,23 +4,23 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0+e-20210124\n"
+"Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-27 23:26+0000\n"
-"PO-Revision-Date: 2021-03-27 16:29-0700\n"
+"POT-Creation-Date: 2021-04-09 19:04+0000\n"
+"PO-Revision-Date: 2021-04-09 13:03-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: es_MX\n"
+"Language: es\n"
 "X-Generator: Poedit 2.4.2\n"
 
 #. module: planning_custom_report
 #: model:ir.model,name:planning_custom_report.model_account_analytic_line
 msgid "Analytic Line"
-msgstr "Línea analítica"
+msgstr "Línea Analítica"
 
 #. module: planning_custom_report
 #: model:ir.model.fields,field_description:planning_custom_report.field_account_analytic_line__x_is_closed
@@ -32,6 +32,17 @@ msgstr "Etapa de Cierre"
 #: model:ir.model.fields,help:planning_custom_report.field_account_analytic_line__x_validation_date
 msgid "Date when the task reached validation stage"
 msgstr "Fecha cuando la tarea alcanzó la etapa de validación"
+
+#. module: planning_custom_report
+#: model:ir.model.fields,help:planning_custom_report.field_account_analytic_line__x_remaining_hours
+msgid "Difference between initial planned hours and effective hours"
+msgstr "Diferencia entre horas iniciales y las reales"
+
+#. module: planning_custom_report
+#: model:ir.model.fields,field_description:planning_custom_report.field_account_analytic_line__x_remaining_hours
+#: model:ir.model.fields,field_description:planning_custom_report.field_project_timesheet_forecast_report_analysis__x_remaining_hours
+msgid "Difference with planned hours"
+msgstr "Diferencia con horas iniciales"
 
 #. module: planning_custom_report
 #: model:ir.model.fields,field_description:planning_custom_report.field_account_analytic_line__display_name
@@ -106,6 +117,12 @@ msgid "Task"
 msgstr "Tarea"
 
 #. module: planning_custom_report
+#: model:ir.model.fields,field_description:planning_custom_report.field_account_analytic_line__x_achived_task_in_date
+#: model:ir.model.fields,field_description:planning_custom_report.field_project_timesheet_forecast_report_analysis__x_achived_task_in_date
+msgid "Task Achived In Date"
+msgstr "Tarea cumplida en fecha"
+
+#. module: planning_custom_report
 #: model:ir.model.fields,field_description:planning_custom_report.field_account_analytic_line__x_achived_task_in_time
 #: model:ir.model.fields,field_description:planning_custom_report.field_project_timesheet_forecast_report_analysis__x_achived_task_in_time
 msgid "Task Achived In Time"
@@ -132,6 +149,12 @@ msgstr "La tarea en esta etapa se encuentra en validación antes de su cierre"
 #: model:ir.model.fields,help:planning_custom_report.field_project_timesheet_forecast_report_analysis__x_achived_task_in_time
 msgid "Task that was achived"
 msgstr "Tarea que fue cumplida"
+
+#. module: planning_custom_report
+#: model:ir.model.fields,help:planning_custom_report.field_account_analytic_line__x_achived_task_in_date
+#: model:ir.model.fields,help:planning_custom_report.field_project_timesheet_forecast_report_analysis__x_achived_task_in_date
+msgid "Task that was achived in date"
+msgstr "Tarea que fue cumplida en fecha"
 
 #. module: planning_custom_report
 #: model:ir.model.fields,help:planning_custom_report.field_account_analytic_line__x_achived_task_in_time
