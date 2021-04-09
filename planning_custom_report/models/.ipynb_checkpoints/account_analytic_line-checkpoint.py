@@ -32,7 +32,7 @@ class AccountAnalyticLine(models.Model):
     x_validation_date = fields.Datetime(string="Validation Date", related='task_id.x_validation_date',
                                         store=True, readonly=True, help="Date when the task reached validation stage")
     
-    x_remaining_hours = fields.Float(string="Difference with planned hours", compute='_get_difference_planned_and_effective_hours', readonly=True, help="Difference between initial planned hours and effective hours")
+    x_remaining_hours = fields.Float(string="Difference with planned hours", compute='_get_difference_planned_and_effective_hours', store=True, readonly=True, help="Difference between initial planned hours and effective hours")
     
     
 
