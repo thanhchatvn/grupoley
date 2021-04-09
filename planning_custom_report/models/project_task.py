@@ -28,6 +28,8 @@ class ProjectTask(models.Model):
             task.ensure_one()
             if task.stage_id.x_in_validation:
                 self.x_validation_date = datetime.now()
+            elif task.stage_id.is_closed:
+                pass
             else:
                 self.x_validation_date = None
 

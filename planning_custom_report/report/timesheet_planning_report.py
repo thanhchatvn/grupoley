@@ -28,6 +28,9 @@ class TimesheetPlanningReport(models.Model):
     x_validation_date = fields.Datetime('Validation Date', readonly=True)
     
     x_remaining_hours = fields.Float(string="Difference with planned hours", readonly=True, group_operator="max")
+    
+    x_achived_task_in_date = fields.Boolean(string='Task Achived In Date', readonly=True, group_operator='bool_or',
+                                            help='Task that was achived in date')
 
 # -----------------------------------------------------------------------------------------------------------------------
 
@@ -53,6 +56,7 @@ class TimesheetPlanningReport(models.Model):
                         F.x_validation_date::date AS x_validation_date,
                         F.x_in_validation AS x_in_validation,
                         0.0 AS x_remaining_hours,
+                        NULL as x_achived_task_in_date,
                         F.x_is_closed AS x_is_closed,
                         0.0 AS x_initial_planned_hours,
                         NULL AS x_achived_task_in_time,
@@ -86,6 +90,7 @@ class TimesheetPlanningReport(models.Model):
                         A.x_validation_date::date AS x_validation_date,
                         A.x_in_validation AS x_in_validation,
                         A.x_remaining_hours AS x_remaining_hours,
+                        A.x_achived_task_in_date AS x_achived_task_in_date,
                         A.x_is_closed AS x_is_closed,
                         A.x_initial_planned_hours AS x_initial_planned_hours,
                         A.x_achived_task_in_time AS x_achived_task_in_time,
