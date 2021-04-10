@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+from datetime import datetime
 
 class AccountAnalyticLine(models.Model):
     # Heredamos del modelo para poder agregar nuevos campos
@@ -31,6 +32,14 @@ class AccountAnalyticLine(models.Model):
 
     x_validation_date = fields.Datetime(string="Validation Date", related='task_id.x_validation_date',
                                         store=True, readonly=True, help="Date when the task reached validation stage")
+    
+    x_remaining_hours = fields.Float(string="Difference with planned hours", compute='_get_difference_planned_and_effective_hours', store=True, readonly=True, help="Difference between initial planned hours and effective hours")
+    
+    x_achived_task_in_date = fields.Boolean(string='Task Achived In Date', group_operator='bool_or',
+                                            compute="_get_achived_task_in_date", store=True, readonly=True,
+                                            help='Task that was achived in date')
+    
+    
 
 # -----------------------------------------------------------------------------------------------------------------------
 
@@ -65,5 +74,46 @@ class AccountAnalyticLine(models.Model):
                 task.x_achived_task_with_overtime = True
             else:
                 task.x_achived_task_with_overtime = False
+                
+    # Metodo para calcular la diferencia entre las horas reales y las horas planificadas inicialmente
+    @api.depends('task_id.planned_hours', 'task_id.total_hours_spent')
+    def _get_difference_planned_and_effective_hours(self):
+        for record in self:
+            record.ensure_one()
+            self.x_remaining_hours = record.task_id.planned_hours - record.task_id.total_hours_spent
+    
+    
+    # Metodo para obtener un indicador de cumplimiento en fecha
+    @api.depends('task_id.date_end', 'task_id.date_deadline',
+                 'task_id.x_validation_date')
+    def _get_achived_task_in_date(self):
+        for record in self:
+            record.ensure_one()
+            date_deadline = str(record.task_id.date_deadline)
+
+            if date_deadline == False:
+                self.x_achived_task_in_date = False
+
+            elif date_deadline and record.task_id.date_end:
+                date_end = record.task_id.date_end
+                date_end = str(datetime.date(date_end))
+
+                if date_end <= date_deadline:
+                    self.x_achived_task_in_date = True
+                else:
+                    self.x_achived_task_in_date = False
+
+            elif date_deadline and record.task_id.x_validation_date:
+                validation_date = record.task_id.x_validation_date
+                validation_date = str(datetime.date(validation_date))
+
+                if validation_date <= date_deadline:
+                    self.x_achived_task_in_date = True
+                else:
+                    self.x_achived_task_in_date = False
+
+            else:
+                self.x_achived_task_in_date = False
+   
 
 # -----------------------------------------------------------------------------------------------------------------------
