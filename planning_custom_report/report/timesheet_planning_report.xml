@@ -13,6 +13,8 @@
                 <field name="x_initial_planned_hours" type="measure"/>
                 <field name="x_achived_task_in_time" type="measure"/>
                 <field name="x_achived_task_with_overtime" type="measure"/>
+                <field name="x_remaining_hours" type="measure"/>
+                <field name="x_achived_task_in_date" type="measure"/>
             </xpath>
         </field>
     </record>
