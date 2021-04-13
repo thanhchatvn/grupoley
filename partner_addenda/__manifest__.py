@@ -22,6 +22,7 @@
 
     'data': [
         # 'security/ir.model.access.csv',
+        'views/sale_order.xml',
         'views/addenda_chedrahui.xml',
         'views/addenda_farmacias_guadalajara.xml',
         'views/addenda_casa_ley.xml',
