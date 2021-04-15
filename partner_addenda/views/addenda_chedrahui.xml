@@ -22,40 +22,51 @@
         </specialInstruction>
 
         <orderIdentification>
-            <referenceIdentification type="ON" t-esc="record.client_order_ref"/>
-            <ReferenceDate t-esc="sale_id.x_order_reference_date"/>
+            <referenceIdentification type="ON" t-esc="record.x_order_reference"/>
+            <ReferenceDate t-esc="record.x_order_reference_date"/>
         </orderIdentification>
 
         <AdditionalInformation>
-            <referenceIdentification type="ATZ" t-esc="sale_id.x_additional_reference"/>
+            <referenceIdentification type="ATZ" t-esc="record.x_additional_reference"/>
         </AdditionalInformation>
 
         <DeliveryNote>
-            <referenceIdentification t-esc="sale_id.x_delivery_reference"/>
-            <referenceDate t-esc="sale_id.x_delivery_reference_date"/>
+            <referenceIdentification t-esc="record.x_delivery_reference"/>
+            <referenceDate t-esc="record.x_delivery_reference_date"/>
         </DeliveryNote>
 
         <buyer>
-            <gln t-field="record.partner_id.x_gln"/>
+            <gln t-esc="record.partner_id.x_gln"/>
         </buyer>
+        
+        
+        <!-- Valores para relacionar el nombre de como nos conoce el cliente y su centro/tienda -->
+        <t t-set="customer_seller" t-value=""/>
+        
+        <!-- Ciclo para para obtener el nombre de como nos conoce el cliente y su centro/tienda -->
+        <t t-foreach="sale_id.order_line.product_id.seller_ids" t-as="l">
+            <t t-if="sale_id.partner_id == l.name">
+                <t t-set="customer_seller" t-value="l.x_customer_seller"/>                                           
+            </t>
+        </t>
 
         <seller>
-            <gln t-field="record.user_id.partner_id.x_gln"/>
-            <alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY" t-esc="record.x_seller_identification_by_costumer"/>
+            <gln t-esc="record.company_id.partner_id.x_gln"/>
+            <alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY" t-esc="customer_seller"/>
         </seller>
 
         <shipTo>
-            <gln t-field="record.partner_shipping_id.x_gln"/>
+            <gln t-esc="record.partner_shipping_id.x_gln"/>
             <NameAndAddress>
-                <name t-field="record.partner_shipping_id.name"/>
-                <streetAddressOne t-esc="record.partner_shipping_id.street_name + ' ' + record.partner_shipping_id.street_number"/>
-                <city t-esc="record.partner_shipping_id.city_id.name + ' ' + record.partner_shipping_id.state_id.code"/>
-                <postalCode t-field="record.partner_shipping_id.zip"/>
+                <name t-esc="record.partner_id.name"/>
+                <streetAddressOne t-esc="record.partner_id.street_name + ' ' + record.partner_id.street_number"/>
+                <city t-esc="record.partner_id.city_id.name + ' ' + record.partner_id.state_id.code"/>
+                <postalCode t-esc="record.partner_id.zip"/>
             </NameAndAddress>
         </shipTo>
 
         <currency t-att-currencyISOCode="record.currency_id.name">
-            <currencyFunction>BILLING_CURRENCY</currencyFunction>
+            <currencyFunction t-esc="BILLING_CURRENCY"/>
             <rateOfChange t-field="sale_id.currency_rate"/>
         </currency>
 
@@ -69,6 +80,10 @@
         </paymentTerms>
 
         <t t-set="i" t-value="1"/>
+        <t t-set="partner_name" t-value=""/>
+        <t t-set="product_name" t-value=""/>
+        <t t-set="uom" t-value=""/>
+        
         <t t-foreach="sale_id.order_line" t-as="o">
             <lineItem type="SimpleInvoiceLineItemType" t-att-number="i">
                 <tradeItemIdentification>
@@ -79,22 +94,34 @@
                 <tradeItemDescriptionInformation language="ES">
                     <longText t-esc="o.product_id.name"/>
                 </tradeItemDescriptionInformation>
+                
+                
+                
+                <t t-foreach="sale_id.order_line.product_id.seller_ids" t-as="t">
+                    <t t-set="partner_name" t-value="t.name"/>
+                    <t t-set="product_name" t-value="t.product_tmpl_id.display_name"/>
+                    <t t-if="partner_name == sale_id.partner_id">
+                        <t t-if="product_name == o.product_id.display_name">
+                            <t t-set="uom" t-value="t.x_uom"/>                                            
+                        </t>
+                    </t>
+                </t>
 
-                <invoiceQuantity t-att-unitOfMeasure="o.product_id.uom_id.name" t-esc="o.qty_invoiced"/>
+                <invoiceQuantity t-att-unitOfMeasure="uom" t-esc="o.qty_invoiced"/>
 
-                <additionalQuantity QuantityType="NUM_CONSUMER_UNITS"/>
+                <additionalQuantity QuantityType="NUM_CONSUMER_UNITS" t-esc="o.product_uom.factor_inv"/>
 
                 <grossPrice>
-                    <Amount t-field="o.product_id.lst_price"/>
+                    <Amount t-esc="o.price_unit"/>
                 </grossPrice>
 
                 <netPrice>
-                    <Amount t-field="o.price_unit"/>
+                    <Amount t-esc="round(o.price_subtotal / o.qty_invoiced,2)"/>
                 </netPrice>
 
                 <totalLineAmount>
                     <grossAmount>
-                        <Amount t-esc="o.product_id.lst_price * o.qty_invoiced"/>
+                        <Amount t-esc="round(o.price_unit * o.qty_invoiced,2)"/>
                     </grossAmount>
 
                     <netAmount>
@@ -107,17 +134,17 @@
 
         <t t-set="total_without_disc" t-value="0.00"/>
         <t t-foreach="sale_id.order_line" t-as="b">
-            <t t-set="product_total" t-value="b.product_id.lst_price * b.qty_invoiced"/>
+            <t t-set="product_total" t-value="b.price_unit * b.qty_invoiced"/>
             <t t-set="total_without_disc" t-value="total_without_disc + product_total"/>
         </t>
 
         <totalAmount>
-            <Amount t-esc="total_without_disc"/>
+            <Amount t-esc="round(total_without_disc,2)"/>
         </totalAmount>
 
-        <totalAllowenceCharge allowenceOrChargeType="Allowence">
+        <totalAllowenceCharge allowenceOrChargeType="ALLOWANCE">
             <t t-set="total_allowance_charge" t-value="total_without_disc - sale_id.amount_untaxed"/>
-            <Amount t-esc="total_allowance_charge"/>
+            <Amount t-esc="round(total_allowance_charge,2)"/>
         </totalAllowenceCharge>
 
         <baseAmount>

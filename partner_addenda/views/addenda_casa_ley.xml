@@ -61,7 +61,7 @@
                                         </t>
                                     </t>
                                 </t>                                
-                            </t>
+                        </t>
                         
                         <!-- Detalle del pedido -->
                         <cley:DETALLE DESCUENTO="0.00" TASA_IEPS="0" IMPUESTO_IEPS="0.00"
