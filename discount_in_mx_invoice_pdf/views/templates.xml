@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+
+        <template id="report_invoice_inherit" inherit_id="account.report_invoice_document">
+            <!-- Colocar encabezado de descuento en monto -->
+            <xpath expr="//th[@name='th_price_unit']" position="after">
+                <th name="th_price_discount" t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                    <span>Descuento</span>
+                </th>
+            </xpath>
+            <!-- Ocultar encabezado de Descuento en porcentaje -->
+            <xpath expr="//th[@name='th_price_unit']/span" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            <!-- Ocultar detalles de descuento en porcentaje -->
+            <xpath expr="//span[@t-field='line.discount']" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            <!-- Agregar campo auxiliar invisible para extraer los datos necesarios de una funcion en este modulo -->
+            <xpath expr="//table[@name='invoice_line_table']" position="before">
+                <t t-set="cfdi_values" t-value="o.calculate_cfdi_values_pdf()"></t>
+            </xpath>
+            <!-- Colocar encabezado de descuento en monto, se basa en el unico td que tiene un if display_discount -->
+            <xpath expr="//td[@t-if='display_discount']" position="after">
+                <td t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                    <span t-if="display_discount" class="text-nowrap">
+                        <t t-esc="cfdi_values[line.id]['discount_amount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"></t>
+                    </span>
+                </td>
+            </xpath>
+            <!-- Antes del precio sin iva de la linea coloca el precio sin descuento ni iva -->
+            <xpath expr="//span[@t-field='line.price_subtotal']" position="before">
+                <span class="text-nowrap">
+                    <t t-esc="cfdi_values[line.id]['total_wo_discount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"></t>
+                </span>
+            </xpath>
+            <!-- reemplaza el span del subtotal final con la suma de todos los valores antes de descuento e iva -->
+            <xpath expr="//span[@t-field='o.amount_untaxed']" position="replace">
+                <span>
+                    <t t-esc="sum([v['total_wo_discount'] for v in cfdi_values.values()])" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"></t>
+                </span>
+            </xpath>
+            <!-- Oculta el subtotal de linea original, OJO esto limita la posibilidad de mostrar subtotales con iva incluido -->
+            <xpath expr="//span[@t-field='line.price_subtotal']" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            <!-- Oculta el subtotal de linea original, OJO esto limita la posibilidad de mostrar subtotales con iva incluido -->
+            <xpath expr="//span[@t-field='line.price_total']" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            <!-- En el area de total final agrega el total de descuentos, solo descuentos de todas las lineas -->
+            <xpath expr="//tr[hasclass('o_subtotal')]" position="after">
+                <tr t-if="display_discount" class="border-black " style="">
+                        <td><strong>Descuentos</strong></td>
+                        <td class="text-right">
+                            <span>
+                                <t t-esc="sum([v['discount_amount'] for v in cfdi_values.values()])" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"></t>
+                            </span>
+                        </td>
+                </tr>
+            </xpath>
+        </template>
+    </data>
+</odoo>
