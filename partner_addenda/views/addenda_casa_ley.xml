@@ -16,13 +16,13 @@
 
                     <!-- Valores para relacionar el nombre de como nos conoce el cliente y su centro/tienda -->
                     <t t-set="customer_seller" t-value=""/>
-                    <t t-set="center" t-value=""/>
+                    <t t-set="center" t-value=""/>                    
 
                     <!-- Ciclo para para obtener el nombre de como nos conoce el cliente y su centro/tienda -->
                     <t t-foreach="sale_id.order_line.product_id.seller_ids" t-as="l">
                         <t t-if="sale_id.partner_id == l.name">
                             <t t-set="customer_seller" t-value="l.x_customer_seller"/>
-                            <t t-set="center" t-value="l.x_center"/>
+                            <t t-set="center" t-value="l.x_center"/>                            
                         </t>
                     </t>
 
@@ -36,7 +36,7 @@
                     <!-- Descuento total -->
                     <t t-set="desc" t-value="total_without_disc - sale_id.amount_untaxed"/>
 
-                    <cley:PA t-att-DESCUENTO="desc" t-att-NO_REMISION="7" PROVEEDOR-SAP="000R104704" t-att-FECHA_ENTRADA="record.x_delivery_reference_date"
+                    <cley:PA t-att-DESCUENTO="round(desc, 2)" t-att-NO_REMISION="7" PROVEEDOR-SAP="000R104704" t-att-FECHA_ENTRADA="record.x_delivery_reference_date"
                              t-att-NUMERO_ENTRADA="record.x_delivery_reference" t-att-CENTRO="center" t-att-PROVEEDOR="customer_seller"/>
                     
                     <!-- Iteradores y contenedores -->
@@ -44,18 +44,35 @@
                     <t t-set="partner_name" t-value=""/>
                     <t t-set="product_name" t-value=""/>
                     <t t-set="product_code" t-value=""/>
+                    <t t-set="uom" t-value=""/>
                     
+                    <!-- Obtener la unidad de medida dada por el cliente -->
                     <t t-foreach="sale_id.order_line" t-as="o">
-
                         
-                        <cley:DETALLE t-att-DESCUENTO="0.00" TASA_IEPS="0" IMPUESTO_IEPS="0.00"
-                                      t-att-TASA_IVA="0" t-att-IMPUESTO_IVA="o.tax_id.amount"
-                                      t-att-PRECIO_LISTA="o.price_unit" t-att-UMC="o.product_id.uom_id.name"
+                        <t t-if="sale_id.order_line.product_id.seller_ids">
+                                
+                                <t t-foreach="sale_id.order_line.product_id.seller_ids" t-as="t">
+
+                                    <t t-set="partner_name" t-value="t.name"/>
+                                    <t t-set="product_name" t-value="t.product_tmpl_id.display_name"/>
+                                    <t t-if="partner_name == sale_id.partner_id">
+                                        <t t-if="product_name == o.product_id.display_name">
+                                            <t t-set="uom" t-value="t.x_uom"/>                                            
+                                        </t>
+                                    </t>
+                                </t>                                
+                            </t>
+                        
+                        <!-- Detalle del pedido -->
+                        <cley:DETALLE DESCUENTO="0.00" TASA_IEPS="0" IMPUESTO_IEPS="0.00"
+                                      TASA_IVA="0" t-att-IMPUESTO_IVA="o.tax_id.amount"
+                                      t-att-PRECIO_LISTA="o.price_unit" t-att-UMC="uom"
                                       t-att-CANTIDAD="o.qty_invoiced" t-att-RENGLON="i">
                             
                             <t t-set="i" t-value="i+1"/>
                             <cley:CODBAR_ARTICULO t-att-COD_BAR="o.product_id.barcode"/>
-
+                            
+                            <!-- Obtenemos el codigo del producto dado por el cliente -->
                             <t t-if="sale_id.order_line.product_id.seller_ids">
                                 
                                 <t t-foreach="sale_id.order_line.product_id.seller_ids" t-as="p">
@@ -64,17 +81,13 @@
                                     <t t-set="product_name" t-value="p.product_tmpl_id.display_name"/>
                                     <t t-if="partner_name == sale_id.partner_id">
                                         <t t-if="product_name == o.product_id.display_name">
-                                            <t t-set="product_code" t-value="p.product_code"/>
+                                            <t t-set="product_code" t-value="p.product_code"/>                         
                                             <cley:CLEY_ARTICULO t-att-COD_ARTICULO="product_code"/>
                                         </t>
                                     </t>
-                                </t>
-                                
-                            </t>
-                            
-                            <t t-else="">
-                                <cley:CLEY_ARTICULO COD_ARTICULO="No configurado"/>
-                            </t>  
+                                </t>                                
+                            </t>                            
+                             
                             
                         </cley:DETALLE>
                     </t>
