@@ -9,33 +9,33 @@
             <cley:ADDENDA_CLEY
                     VERSION="1.0"
                     xmlns:cley="http://servicios.casaley.com.mx/factura_electronica"
-                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"                    
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                     CORREO="Facturacion@laguacamaya.com"
                     xsi:SchemaLocation="http://servicios.casaley.com.mx/factura_electronica http://servicios.casaley.com.mx/factura_electronica/XSD_ADDENDA_CASALEY.xsd">
                 <cley:MERCADERIAS>
 
                     <!-- Valores para relacionar el nombre de como nos conoce el cliente -->
                     <t t-set="customer_seller" t-value=""/>
-                    <t t-set="center" t-value=""/> 
-                    
-                    <t t-if="record.partner_id.is_company">                                               
+                    <t t-set="center" t-value=""/>
+
+                    <t t-if="record.partner_id.is_company">
                         <t t-if="record.partner_shipping_id">
                             <t t-set="center" t-value="record.partner_id.x_center"/>
-                        </t>                        
+                        </t>
                         <t t-if="sale_id.partner_shipping_id">
                             <t t-set="center" t-value="sale_id.partner_shipping_id.x_center"/>
                         </t>
-                        
+
                         <t t-if="record.partner_id.x_partner_code">
                             <t t-foreach="record.partner_id.x_partner_code" t-as="l">
                                 <t t-if="record.partner_id == l.name">
                                     <t t-if="record.company_id == l.companies">
                                         <t t-set="customer_seller" t-value="l.code"/>
-                                    </t>                                                               
+                                    </t>
                                 </t>
                             </t>
-                        </t>                        
-                        
+                        </t>
+
                         <t t-if="sale_id.partner_id.x_partner_code">
                             <t t-foreach="sale_id.partner_id.x_partner_code" t-as="l">
                                 <t t-if="sale_id.partner_id == l.name">
@@ -44,28 +44,28 @@
                                     </t>
                                 </t>
                             </t>
-                        </t>                        
+                        </t>
                     </t>
-                    
+
                     <!-- Verificar si el cliente no es una empresa y asignar el numero de la entidad -->
                     <t t-if="record.partner_id.is_company == False">
                         <t t-if="record.partner_id">
                             <t t-set="center" t-value="record.partner_id.x_center"/>
-                        </t>                        
+                        </t>
                         <t t-if="sale_id.partner_id">
                             <t t-set="center" t-value="sale_id.partner_id.x_center"/>
                         </t>
-                        
+
                         <t t-if="record.partner_id.parent_id.x_partner_code">
                             <t t-foreach="record.partner_id.parent_id.x_partner_code" t-as="l">
                                 <t t-if="record.partner_id.parent_id == l.name">
                                     <t t-if="record.company_id == l.companies">
                                         <t t-set="customer_seller" t-value="l.code"/>
-                                    </t>                                                               
+                                    </t>
                                 </t>
                             </t>
-                        </t>                        
-                        
+                        </t>
+
                         <t t-if="sale_id.partner_id.parent_id.x_partner_code">
                             <t t-foreach="sale_id.partner_id.parent_id.x_partner_code" t-as="l">
                                 <t t-if="sale_id.partner_id.parent_id == l.name">
@@ -74,8 +74,8 @@
                                     </t>
                                 </t>
                             </t>
-                        </t>                        
-                    </t> 
+                        </t>
+                    </t>
 
                     <!-- Ciclo para obtener el descuento total -->
                     <t t-set="total_without_disc" t-value="0.00"/>
@@ -83,90 +83,92 @@
                         <t t-set="product_total" t-value="b.price_unit * b.quantity"/>
                         <t t-set="total_without_disc" t-value="total_without_disc + product_total"/>
                     </t>
-                    
-                    <!-- Descuento total -->
-                    <t t-set="desc" t-value="total_without_disc - record.amount_untaxed"/>                   
 
-                    <cley:PA t-att-DESCUENTO="round(desc, 2)" NO_REMISION="" PROVEEDOR-SAP="000R104704" t-att-FECHA_ENTRADA="record.x_delivery_reference_date"
-                             t-att-NUMERO_ENTRADA="record.x_delivery_reference" t-att-CENTRO="center" t-att-PROVEEDOR="customer_seller"/>
-                    
+                    <!-- Descuento total -->
+                    <t t-set="desc" t-value="total_without_disc - record.amount_untaxed"/>
+
+                    <cley:PA t-att-DESCUENTO="round(desc, 2)" NO_REMISION="" PROVEEDOR-SAP="000R104704"
+                             t-att-FECHA_ENTRADA="record.x_delivery_reference_date"
+                             t-att-NUMERO_ENTRADA="record.x_delivery_reference" t-att-CENTRO="center"
+                             t-att-PROVEEDOR="customer_seller"/>
+
                     <!-- Iteradores y contenedores -->
                     <t t-set="i" t-value="1"/>
                     <t t-set="partner_name" t-value=""/>
                     <t t-set="product_name" t-value=""/>
                     <t t-set="product_code" t-value=""/>
                     <t t-set="uom" t-value=""/>
-                    
+
                     <!-- Obtener la unidad de medida dada por el cliente -->
                     <t t-foreach="record.invoice_line_ids" t-as="o">
-                        
+
                         <!-- Obtenemos la unidad de medida proporcionada por el cliente -->
                         <t t-if="record.partner_id.is_company">
                             <t t-if="record.partner_id.x_product_info">
                                 <t t-foreach="record.partner_id.x_product_info" t-as="l">
                                     <t t-if="record.partner_id == l.partner_name">
                                         <t t-if="record.company_id == l.company">
-                                            <t t-if="o.product_id == l.product_name">                                          
+                                            <t t-if="o.product_id == l.product_name">
                                                 <t t-set="uom" t-value="l.uom"/>
                                                 <t t-set="product_code" t-value="l.product_code"/>
-                                            </t> 
-                                        </t>                                                               
+                                            </t>
+                                        </t>
                                     </t>
                                 </t>
-                            </t>                        
-                        
+                            </t>
+
                             <t t-if="sale_id.partner_id.x_product_info">
                                 <t t-foreach="sale_id.partner_id.x_product_info" t-as="l">
                                     <t t-if="sale_id.partner_id == l.partner_name">
                                         <t t-if="sale_id.company_id == l.company">
-                                            <t t-if="o.product_id == l.product_name">                                          
+                                            <t t-if="o.product_id == l.product_name">
                                                 <t t-set="uom" t-value="l.uom"/>
                                                 <t t-set="product_code" t-value="l.product_code"/>
-                                            </t> 
+                                            </t>
                                         </t>
                                     </t>
                                 </t>
-                            </t>                        
+                            </t>
                         </t>
-                        
+
                         <t t-if="record.partner_id.is_company == False">
                             <t t-if="record.partner_id.parent_id.x_product_info">
                                 <t t-foreach="record.partner_id.parent_id.x_product_info" t-as="l">
                                     <t t-if="record.partner_id.parent_id == l.partner_name">
                                         <t t-if="record.company_id == l.company">
-                                            <t t-if="o.product_id == l.product_name">                                          
+                                            <t t-if="o.product_id == l.product_name">
                                                 <t t-set="uom" t-value="l.uom"/>
                                                 <t t-set="product_code" t-value="l.product_code"/>
-                                            </t> 
-                                        </t>                                                               
+                                            </t>
+                                        </t>
                                     </t>
                                 </t>
-                            </t>                        
-                        
+                            </t>
+
                             <t t-if="sale_id.partner_id.parent_id.x_product_info">
                                 <t t-foreach="sale_id.partner_id.parent_id.x_product_info" t-as="l">
                                     <t t-if="sale_id.partner_id.parent_id == l.partner_name">
                                         <t t-if="sale_id.company_id == l.company">
-                                            <t t-if="o.product_id == l.product_name">                                          
+                                            <t t-if="o.product_id == l.product_name">
                                                 <t t-set="uom" t-value="l.uom"/>
                                                 <t t-set="product_code" t-value="l.product_code"/>
-                                            </t> 
+                                            </t>
                                         </t>
                                     </t>
                                 </t>
-                            </t>                        
-                        </t>                    
-                        
+                            </t>
+                        </t>
+
                         <!-- Detalle del pedido -->
                         <cley:DETALLE DESCUENTO="0.00" TASA_IEPS="0" IMPUESTO_IEPS="0.00"
                                       TASA_IVA="0" IMPUESTO_IVA="0.00"
                                       t-att-PRECIO_LISTA="o.price_unit" t-att-UMC="uom"
                                       t-att-CANTIDAD="o.quantity" t-att-RENGLON="i">
-                            
+
                             <t t-set="i" t-value="i+1"/>
                             <cley:CODBAR_ARTICULO t-att-COD_BAR="o.product_id.barcode"/>
-                            <cley:CLEY_ARTICULO t-att-COD_ARTICULO="product_code"/>                         
-                            
+                            <cley:CLEY_ARTICULO t-att-COD_ARTICULO="product_code"/>
+
                         </cley:DETALLE>
                     </t>
                 </cley:MERCADERIAS>
