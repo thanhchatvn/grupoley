@@ -48,7 +48,7 @@
                 <t t-set="street_number" t-value=""/>
                 <t t-set="city" t-value=""/>
                 <t t-set="state" t-value=""/>
-                <t t-set="zip" t-value=""/>
+                <t t-set="zip_code" t-value=""/>
 
                 <t t-if="record.partner_id.is_company">
 

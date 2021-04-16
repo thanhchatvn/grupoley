@@ -27,13 +27,13 @@
 
         <orderIdentification>
             <referenceIdentification type="ON" t-esc="record.x_order_reference"/>
-            <ReferenceDate t-esc="record.x_order_reference_dater"/>
+            <ReferenceDate t-field="record.x_order_reference_date"/>
         </orderIdentification>
 
 
         <DeliveryNote>
             <referenceIdentification t-esc="record.x_delivery_reference"/>
-            <referenceDate t-esc="record.x_delivery_reference_date"/>
+            <referenceDate t-field="record.x_delivery_reference_date"/>
         </DeliveryNote>
 
         <AdditionalInformation>
@@ -50,7 +50,7 @@
         <t t-set="street_number" t-value=""/>
         <t t-set="city" t-value=""/>
         <t t-set="state" t-value=""/>
-        <t t-set="zip" t-value=""/>
+        <t t-set="zip_code" t-value=""/>
         
         
         <t t-if="record.partner_id.is_company">
@@ -67,7 +67,7 @@
             <t t-if="record.partner_id">
                 <t t-set="name" t-value="record.partner_id.name"/>
                 <t t-set="street_name" t-value="record.partner_id.street_name"/>
-                <t t-set="street_number" t-value="record.partner_id.street_number"/>
+                <t t-set="street_number" t-value="record.partner_id.l10n_mx_edi_colony"/>
                 <t t-if="record.partner_id.city_id">
                     <t t-set="city" t-value="record.partner_id.city_id.name"/>
                 </t>
@@ -81,7 +81,7 @@
             <t t-if="sale_id.partner_id">
                 <t t-set="name" t-value="sale_id.partner_shipping_id.name"/>
                 <t t-set="street_name" t-value="sale_id.partner_shipping_id.street_name"/>
-                <t t-set="street_number" t-value="sale_id.partner_shipping_id.street_number"/>
+                <t t-set="street_number" t-value="sale_id.partner_shipping_id.l10n_mx_edi_colony"/>
                 <t t-if="sale_id.partner_shipping_id.city_id">
                     <t t-set="city" t-value="sale_id.partner_shipping_id.city_id.name"/>
                 </t>
@@ -122,7 +122,7 @@
             <t t-if="record.partner_id">
                 <t t-set="name" t-value="record.partner_id.name"/>
                 <t t-set="street_name" t-value="record.partner_id.street_name"/>
-                <t t-set="street_number" t-value="record.partner_id.street_number"/>
+                <t t-set="street_number" t-value="record.partner_id.l10n_mx_edi_colony"/>
                 <t t-if="record.partner_id.city_id">
                     <t t-set="city" t-value="record.partner_id.city_id.name"/>
                 </t>
@@ -137,7 +137,7 @@
             <t t-if="sale_id.partner_id">
                 <t t-set="name" t-value="sale_id.partner_shipping_id.name"/>
                 <t t-set="street_name" t-value="sale_id.partner_shipping_id.street_name"/>
-                <t t-set="street_number" t-value="sale_id.partner_shipping_id.street_number"/>
+                <t t-set="street_number" t-value="sale_id.partner_shipping_id.l10n_mx_edi_colony"/>
                 <t t-if="sale_id.partner_shipping_id.city_id">
                     <t t-set="city" t-value="sale_id.partner_shipping_id.city_id.name"/>
                 </t>
@@ -188,27 +188,81 @@
         <InvoiceCreator>
             <gln t-esc="record.company_id.partner_id.x_gln"/>
             <NameAndAddress>
-                <name t-field="name"/>
+                <name t-esc="name"/>
                 <streetAddressOne t-esc="str(street_name) + ' ' + str(street_number)"/>
-                <city t-esc="str(city) + ' ' + str(state)"/>
-                <postalCode t-field="zip"/>
+                <city t-esc="str(city)"/>
+                <postalCode t-esc="zip_code"/>
             </NameAndAddress>
         </InvoiceCreator>
               
 
         <t t-set="i" t-value="1"/>
+        <t t-set="uom" t-value=""/>
         <t t-foreach="record.invoice_line_ids" t-as="o">
             <lineItem type="SimpleInvoiceLineItemType" t-att-number="i">
                 <tradeItemIdentification>
-                    <gtin t-field="o.product_id.barcode"/>
+                    <gtin t-esc="o.product_id.barcode"/>
                     <t t-set="i" t-value="i+1"/>
                 </tradeItemIdentification>
 
                 <tradeItemDescriptionInformation language="ES">
-                    <longText t-field="o.product_id.name"/>
+                    <longText t-esc="o.product_id.name"/>
                 </tradeItemDescriptionInformation>
+                
+                <!-- Obtenemos la unidad de medida proporcionada por el cliente -->
+                <t t-if="record.partner_id.is_company">
+                    <t t-if="record.partner_id.x_product_info">
+                        <t t-foreach="record.partner_id.x_product_info" t-as="l">
+                            <t t-if="record.partner_id == l.partner_name">
+                                <t t-if="record.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">
+                                        <t t-set="uom" t-value="l.uom"/>
+                                    </t>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
 
-                <invoiceQuantity t-att-unitOfMeasure="o.product_id.uom_id.name" t-field="o.quantity"/>
+                    <t t-if="sale_id.partner_id.x_product_info">
+                        <t t-foreach="sale_id.partner_id.x_product_info" t-as="l">
+                            <t t-if="sale_id.partner_id == l.partner_name">
+                                <t t-if="sale_id.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">
+                                        <t t-set="uom" t-value="l.uom"/>
+                                    </t>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                </t>
+
+                <t t-if="record.partner_id.is_company == False">
+                    <t t-if="record.partner_id.parent_id.x_product_info">
+                        <t t-foreach="record.partner_id.parent_id.x_product_info" t-as="l">
+                            <t t-if="record.partner_id.parent_id == l.partner_name">
+                                <t t-if="record.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">
+                                        <t t-set="uom" t-value="l.uom"/>
+                                    </t>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+
+                    <t t-if="sale_id.partner_id.parent_id.x_product_info">
+                        <t t-foreach="sale_id.partner_id.parent_id.x_product_info" t-as="l">
+                            <t t-if="sale_id.partner_id.parent_id == l.partner_name">
+                                <t t-if="sale_id.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">
+                                        <t t-set="uom" t-value="l.uom"/>
+                                    </t>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                </t>
+
+                <invoiceQuantity t-att-unitOfMeasure="uom" t-field="o.quantity"/>
 
                 <grossPrice>
                     <Amount t-esc="o.price_unit"/>
@@ -256,6 +310,7 @@
         <tax type="VAT">
             <taxPercentage t-esc="record.invoice_line_ids.tax_ids.amount"/>
             <taxAmount t-esc="record.amount_tax"/>
+            <taxCategory t-esc="record.invoice_line_ids.tax_ids.tax_group_id.name"/>  
         </tax>
 
         <payableAmount>
