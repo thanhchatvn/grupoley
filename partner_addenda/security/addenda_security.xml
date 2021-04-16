@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Multicompay rules-->
+    <record model="ir.rule" id="product_supplierinfo_sale_rule">
+        <field name="name">product supplierinfo sale multi-company</field>
+        <field name="model_id" search="[('model','=','product.supplierinfo.sale')]" model="ir.model"/>
+        <field name="domain_force">[ '|',('company', '=', company_id), ('company', '=', False)]</field>
+    </record>
+    <record model="ir.rule" id="res_partner_supplierinfo_rule">
+        <field name="name">partner supplierinfo multi-company</field>
+        <field name="model_id" search="[('model','=','res.partner.supplierinfo')]" model="ir.model"/>
+        <field name="domain_force">[ '|',('companies', '=', company_id), ('companies', '=', False)]</field>
+    </record>
+</odoo>

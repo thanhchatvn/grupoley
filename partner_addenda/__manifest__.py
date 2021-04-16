@@ -22,6 +22,7 @@
 
     'data': [
         'security/ir.model.access.csv',
+        'security/addenda_security.xml',
         'views/res_partner.xml',
         'views/res_partner_supplierinfo.xml',
         'views/product_supplierinfo.xml',
