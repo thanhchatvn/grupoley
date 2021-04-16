@@ -28,21 +28,24 @@
         <DeliveryNote>
             <referenceIdentification t-esc="record.x_delivery_reference"/>
             <referenceDate t-field="record.x_delivery_reference_date"/>
-        </DeliveryNote>
+        </DeliveryNote>  
 
         <AdditionalInformation>
             <referenceIdentification type="IV" t-esc="record.payment_reference"/>
-        </AdditionalInformation>
-
-        <buyer>
-            <gln t-esc="record.partner_id.x_gln"/>
-        </buyer>
-        
+        </AdditionalInformation>             
         
         <!-- Valores para relacionar el nombre de como nos conoce el cliente -->
         <t t-set="customer_seller" t-value=""/>
+        <t t-set="buyer_gln" t-value=""/>
+        <t t-set="partner_ref" t-value=""/>
                     
         <t t-if="record.partner_id.is_company">
+            <!-- Asignar gln de cliente -->
+            <t t-if="record.partner_id.x_gln">
+                 <t t-set="buyer_gln" t-value="record.partner_id.x_gln"/>
+            </t>
+            <t t-set="partner_ref" t-value="record.partner_id.ref"/>
+            
             <t t-if="record.partner_id.x_partner_code">
                 <t t-foreach="record.partner_id.x_partner_code" t-as="l">
                     <t t-if="record.partner_id == l.name">
@@ -66,6 +69,21 @@
                     
         <!-- Verificar si el cliente no es una empresa y asignar el numero de la entidad -->
         <t t-if="record.partner_id.is_company == False">
+            
+            <t t-if="record.partner_id.parent_id.x_gln">
+                <t t-set="buyer_gln" t-value="record.partner_id.parent_id.x_gln"/>
+            </t>
+            <t t-if="sale_id.partner_id.parent_id.x_gln">
+                <t t-set="buyer_gln" t-value="sale_id.partner_id.parent_id.x_gln"/>
+            </t>
+            
+            <t t-if="record.partner_id.parent_id.ref">
+                <t t-set="partner_ref" t-value="record.partner_id.parent_id.ref"/>
+            </t>
+            <t t-if="sale_id.partner_id.parent_id.ref">
+                <t t-set="partner_ref" t-value="sale_id.partner_id.parent_id.ref"/>
+            </t>
+            
             <t t-if="record.partner_id.parent_id.x_partner_code">
                 <t t-foreach="record.partner_id.parent_id.x_partner_code" t-as="l">
                     <t t-if="record.partner_id.parent_id == l.name">
@@ -87,13 +105,16 @@
             </t>                        
         </t>         
        
-
+        <buyer>
+            <gln t-esc="buyer_gln"/>
+        </buyer>
+        
         <seller>
             <alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY" t-esc="customer_seller"/>
         </seller>
 
         <shipTo>
-            <alternatePartyIdentification type="ASSIGNED_IDENTIFIER_FOR_A_BUYER" t-esc="record.partner_id.ref"/>
+            <alternatePartyIdentification type="ASSIGNED_IDENTIFIER_FOR_A_BUYER" t-esc="partner_ref"/>
         </shipTo>
 
         <t t-if="pos_id">
@@ -131,6 +152,7 @@
         <t t-set="partner_name" t-value=""/>
         <t t-set="product_name" t-value=""/>
         <t t-set="uom" t-value=""/>
+        <t t-set="additional_uom" t-value=""/>
         
         <t t-foreach="record.invoice_line_ids" t-as="o">
             <lineItem type="SimpleInvoiceLineItemType" t-att-number="i">
@@ -154,6 +176,7 @@
                                 <t t-if="record.company_id == l.company">
                                     <t t-if="o.product_id == l.product_name">                                          
                                         <t t-set="uom" t-value="l.uom"/>
+                                        <t t-set="additional_uom" t-value="l.uom_additional"/>
                                     </t> 
                                 </t>                                                               
                             </t>
@@ -166,6 +189,7 @@
                                 <t t-if="sale_id.company_id == l.company">
                                     <t t-if="o.product_id == l.product_name">                                          
                                         <t t-set="uom" t-value="l.uom"/>
+                                        <t t-set="additional_uom" t-value="l.uom_additional"/>
                                     </t> 
                                 </t>
                             </t>
@@ -180,6 +204,7 @@
                                 <t t-if="record.company_id == l.company">
                                     <t t-if="o.product_id == l.product_name">                                          
                                         <t t-set="uom" t-value="l.uom"/>
+                                        <t t-set="additional_uom" t-value="l.uom_additional"/>
                                     </t> 
                                 </t>                                                               
                             </t>
@@ -192,6 +217,7 @@
                                 <t t-if="sale_id.company_id == l.company">
                                     <t t-if="o.product_id == l.product_name">                                          
                                         <t t-set="uom" t-value="l.uom"/>
+                                        <t t-set="additional_uom" t-value="l.uom_additional"/>
                                     </t> 
                                 </t>
                             </t>
@@ -201,7 +227,8 @@
 
                 <invoiceQuantity t-att-unitOfMeasure="uom" t-esc="o.quantity"/>
 
-                <additionalQuantity QuantityType="NUM_CONSUMER_UNITS" t-esc="o.product_uom_id.factor_inv"/>
+                <additionalQuantity t-att-unitOfMeasure="additional_uom"  QuantityType="NUM_CONSUMER_UNITS" t-esc="o.product_uom_id.factor_inv"/>
+                
 
                 <grossPrice>
                     <Amount t-esc="o.price_unit"/>
