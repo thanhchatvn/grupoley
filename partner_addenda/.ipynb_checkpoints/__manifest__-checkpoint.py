@@ -31,6 +31,8 @@
         'views/addenda_farmacias_guadalajara.xml',
         'views/addenda_casa_ley.xml',
         'views/addenda_soriana.xml',
+        'views/addenda_fresko.xml',
+        'views/addenda_smart.xml',
     ],
 
     'demo': [

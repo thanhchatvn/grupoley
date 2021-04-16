@@ -2,7 +2,7 @@
 
 <odoo>
   <data>
-    <template id="l10n_mx_edi_addenda_farmacio_guadalajara" name="Addenda Farmacias Guadalajara">
+    <template id="l10n_mx_edi_addenda_farmacia_guadalajara" name="Addenda Farmacias Guadalajara">
       <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
       <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
       <t t-set="pos_model" t-value="'pos_order_ids' in record._fields"/>
@@ -247,7 +247,7 @@
     </requestForPayment>
     </template>
 
-    <record id="l10n_mx_edi_addenda_farmacio_guadalajara" model="ir.ui.view">
+    <record id="l10n_mx_edi_addenda_farmacia_guadalajara" model="ir.ui.view">
             <field name="l10n_mx_edi_addenda_flag">True</field>
     </record>
   </data>
