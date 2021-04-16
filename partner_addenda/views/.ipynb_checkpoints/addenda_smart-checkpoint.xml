@@ -215,12 +215,15 @@
                 </grossPrice>
 
                 <netPrice>
-                    <Amount t-esc="o.price_unit"/>
+                    <t t-if="o.quantity > 0">
+                        <Amount t-esc="round(o.price_subtotal / o.quantity,2)"/>
+                    </t>                    
                 </netPrice>
 
                 <totalLineAmount>
+
                     <grossAmount>
-                        <Amount t-esc="o.price_unit * o.quantity"/>
+                        <Amount t-esc="round(o.price_unit * o.quantity,2)"/>
                     </grossAmount>
 
                     <netAmount>
@@ -232,27 +235,27 @@
         </t>
 
         <t t-set="total_without_disc" t-value="0.00"/>
-        <t t-foreach="sale_id.order_line" t-as="b">
-            <t t-set="product_total" t-value="b.product_id.lst_price * b.qty_invoiced"/>
-            <t t-set="total_without_disc" t-value="total_without_disc + product_total"/>
+            <t t-foreach="record.invoice_line_ids" t-as="b">
+                <t t-set="product_total" t-value="b.price_unit * b.quantity"/>
+                <t t-set="total_without_disc" t-value="total_without_disc + product_total"/>
         </t>
 
         <totalAmount>
-            <Amount t-esc="total_without_disc"/>
+            <Amount t-esc="round(total_without_disc,2)"/>
         </totalAmount>
 
-        <totalAllowenceCharge allowenceOrChargeType="Allowence">
-            <t t-set="total_allowance_charge" t-value="total_without_disc - sale_id.amount_untaxed"/>
-            <Amount t-esc="total_allowance_charge"/>
+        <totalAllowenceCharge allowenceOrChargeType="ALLOWANCE">
+            <t t-set="total_allowance_charge" t-value="total_without_disc - record.amount_untaxed"/>
+            <Amount t-esc="round(total_allowance_charge,2)"/>
         </totalAllowenceCharge>
-
+        
         <baseAmount>
-            <Amount t-esc="sale_id.amount_untaxed"/>
+            <Amount t-esc="record.amount_untaxed"/>
         </baseAmount>
 
         <tax type="VAT">
-            <taxPercentage t-esc="sale_id.order_line.tax_id.amount"/>
-            <taxAmount t-esc="sale_id.amount_tax"/>
+            <taxPercentage t-esc="record.invoice_line_ids.tax_ids.amount"/>
+            <taxAmount t-esc="record.amount_tax"/>
         </tax>
 
         <payableAmount>
