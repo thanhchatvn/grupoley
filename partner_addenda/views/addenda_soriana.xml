@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+        <template id="l10n_mx_edi_addenda_soriana" name="Addenda Soriana">
+            <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
+            <t t-set="sale_id"
+               t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+
+            <t t-set="total_without_disc" t-value="0.00"/>
+            <t t-set="total_units" t-value="0.00"/>
+            <t t-set="totalProducts" t-value="0"/>
+            <t t-foreach="record.invoice_line_ids" t-as="b">
+                <t t-set="totalProducts" t-value="totalProducts + 1"/>
+                <t t-set="total_units" t-value="total_units + b.quantity"/>
+                <t t-set="product_total" t-value="b.price_unit * b.quantity"/>
+                <t t-set="total_without_disc" t-value="total_without_disc + product_total"/>
+            </t>
+
+            <DSCargaRemisionProv xmlns="http://tempuri.org/DSCargaRemisionProv.xsd">
+                <Remision Id="Remision1" RowOrder="0">                  
+                    
+                    <!-- Valores para relacionar el nombre de como nos conoce el cliente y su centro/tienda -->
+                    <t t-set="customer_seller" t-value=""/>
+
+                    <!-- Ciclo para para obtener el nombre de como nos conoce el cliente y su centro/tienda -->
+                    <t t-if="record.invoice_line_ids.product_id.seller_ids">
+                        <t t-foreach="record.invoice_line_ids.product_id.seller_ids" t-as="l">
+                            <t t-if="record.partner_id == l.name">
+                                <t t-set="customer_seller" t-value="l.x_customer_seller"/>
+                            </t>
+                        </t>
+                    </t>
+                    
+                    <t t-if="sale_id.order_line.product_id.seller_ids">
+                        <t t-foreach="sale_id.order_line.product_id.seller_ids" t-as="l">
+                            <t t-if="sale_id.partner_id == l.name">
+                                <t t-set="customer_seller" t-value="l.x_customer_seller"/>
+                            </t>
+                        </t>
+                    </t>
+                    
+                    <t t-if="sale_id">
+                        
+                    </t>
+                    
+                    <Proveedor t-sec="customer_seller"/>
+                    <Remision>-</Remision>
+                    <Consecutivo>0</Consecutivo>
+                    <FechaRemision t-esc="record.invoice_date"/>
+                    <Tienda t-esc="record.x_center"/>
+                    <TipoMoneda>1</TipoMoneda>
+                    <TipoBulto>1</TipoBulto>
+                    <EntregaMercancia>0</EntregaMercancia>
+                    <CumpleReqFiscales>true</CumpleReqFiscales>
+                    <CantidadBultos t-esc="total_units"/>
+                    <Subtotal t-esc="total_without_disc"/>
+
+                    <t t-set="total_Discount" t-value="total_without_disc - sale_id.amount_untaxed"/>
+                    <Descuentos t-esc="total_Discount"/>
+
+                    <IEPS>0</IEPS>
+                    <IVA>0</IVA>
+                    <OtrosImpuestos>0</OtrosImpuestos>
+                    <Total t-esc="record.amount_total"/>
+                    <CantidadPedidos t-esc="1"/>
+                    <FechaEntregaMercancia>2020-09-30T00:00:00</FechaEntregaMercancia>
+                    <Cita>0000076404</Cita>
+                    <FolioNotaEntrada>0000076404</FolioNotaEntrada>
+                </Remision>
+
+                <Pedidos Id="Pedido1" RowOrder="1">
+                    <Proveedor>000000000044586</Proveedor>
+                    <Remision>-</Remision>
+                    <FolioPedido>0</FolioPedido>
+                    <Tienda>695</Tienda>
+                    <CantidadArticulos t-esc="totalProducts"/>
+                </Pedidos>
+
+
+                <t t-set="i" t-value="1"/>
+                <t t-foreach="sale_id.order_line" t-as="o">
+
+                    <Articulos Id="Art" t-att-RowOrder="i">
+                        <Proveedor>000000000044586</Proveedor>
+                        <Remision t-field="record.payment_reference"/>
+                        <FolioPedido>0</FolioPedido>
+                        <Tienda>695</Tienda>
+                        <Codigo t-field="o.product_id.barcode"/>
+                        <t t-set="i" t-value="i+1"/>
+                        <CantidadUnidadCompra t-field="o.qty_invoiced"/>
+                        <CostoNetoUnidadCompra t-esc="o.product_id.lst_price"/>
+                        <PorcentajeIEPS>0.00</PorcentajeIEPS>
+                        <PorcentajeIVA>0.00</PorcentajeIVA>
+                    </Articulos>
+                </t>
+            </DSCargaRemisionProv>
+        </template>
+
+        <record id="l10n_mx_edi_addenda_soriana" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>

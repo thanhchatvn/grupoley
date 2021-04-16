@@ -8,8 +8,8 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='company_id']" position="after">
                     <field name="x_customer_seller"/>
-                    <field name="x_center"/> 
                     <field name="x_uom"/>
+                    <field name="x_uom_additional"/>
                 </xpath>
             </field>
         </record>
