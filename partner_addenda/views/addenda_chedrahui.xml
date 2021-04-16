@@ -65,7 +65,12 @@
                         <t t-set="name" t-value="record.partner_id.name"/>
                         <t t-set="street_name" t-value="record.partner_id.street_name"/>
                         <t t-set="street_number" t-value="record.partner_id.street_number"/>
-                        <t t-set="city" t-value="record.partner_id.city_id.name"/>
+                        <t t-if="record.partner_id.city_id">
+                            <t t-set="city" t-value="record.partner_id.city_id.name"/>
+                        </t>
+                         <t t-if="record.partner_id.city">
+                            <t t-set="city" t-value="record.partner_id.city"/>
+                        </t>
                         <t t-set="state" t-value="record.partner_id.state_id.code"/>
                         <t t-set="zip_code" t-value="record.partner_id.zip"/>
                     </t>
@@ -101,7 +106,13 @@
                         <t t-set="name" t-value="record.partner_id.parent_id.name"/>
                         <t t-set="street_name" t-value="record.partner_id.parent_id.street_name"/>
                         <t t-set="street_number" t-value="record.partner_id.parent_id.street_number"/>
-                        <t t-set="city" t-value="record.partner_id.parent_id.city_id.name"/>
+                        <t t-if="record.partner_id.parent_id.city_id">
+                            <t t-set="city" t-value="record.partner_id.parent_id.city_id.name"/>
+                        </t>
+                         <t t-if="record.partner_id.parent_id.city">
+                            <t t-set="city" t-value="record.partner_id.parent_id.city"/>
+                        </t>
+                        
                         <t t-set="state" t-value="record.partner_id.parent_id.state_id.code"/>
                         <t t-set="zip_code" t-value="record.partner_id.parent_id.zip"/>
                     </t>
@@ -142,7 +153,7 @@
                     <NameAndAddress>
                         <name t-esc="name"/>
                         <streetAddressOne t-esc="street_name + ' ' + street_number"/>
-                        <city t-esc="city + ' ' + state"/>
+                        <city t-esc="str(city) + ' ' + str(state)"/>                 
                         <postalCode t-esc="zip_code"/>
                     </NameAndAddress>
                 </shipTo>
