@@ -5,6 +5,8 @@
     <template id="l10n_mx_edi_addenda_chedrahui" name="Addenda Chedrahui">
       <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
       <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+      <t t-set="pos_model" t-value="'pos_order_ids' in record._fields"/>
+      <t t-set="pos_id" t-value="record.mapped('pos_order_ids') if pos_model else False"/> 
     <requestForPayment
             t-att-DeliveryDate="sale_id.effective_date"
             documentStatus="ORIGINAL"
@@ -40,24 +42,52 @@
         </buyer>
         
         
-        <!-- Valores para relacionar el nombre de como nos conoce el cliente y su centro/tienda -->
+        <!-- Valores para relacionar el nombre de como nos conoce el cliente -->
         <t t-set="customer_seller" t-value=""/>
-        
-        <!-- Ciclo para para obtener el nombre de como nos conoce el cliente y su centro/tienda -->
-        <t t-if="record.invoice_line_ids.product_id.seller_ids">
-            <t t-foreach="record.invoice_line_ids.product_id.seller_ids" t-as="l">
-                <t t-if="record.partner_id == l.name">
-                    <t t-set="customer_seller" t-value="l.x_customer_seller"/>                                           
+                    
+        <t t-if="record.partner_id.is_company">
+            <t t-if="record.partner_id.x_partner_code">
+                <t t-foreach="record.partner_id.x_partner_code" t-as="l">
+                    <t t-if="record.partner_id == l.name">
+                        <t t-if="record.company_id == l.companies">
+                            <t t-set="customer_seller" t-value="l.code"/>
+                        </t>                                                               
+                    </t>
                 </t>
-            </t>
+            </t>                        
+                        
+            <t t-if="sale_id.partner_id.x_partner_code">
+                <t t-foreach="sale_id.partner_id.x_partner_code" t-as="l">
+                    <t t-if="sale_id.partner_id == l.name">
+                        <t t-if="sale_id.company_id == l.companies">
+                            <t t-set="customer_seller" t-value="l.code"/>
+                        </t>
+                    </t>
+                </t>
+            </t>                        
         </t>
-        
-        <t t-if="sale_id.order_line.product_id.seller_ids">
-            <t t-foreach="sale_id.order_line.product_id.seller_ids" t-as="l">
-                <t t-if="sale_id.partner_id == l.name">
-                    <t t-set="customer_seller" t-value="l.x_customer_seller"/>                                           
+                    
+        <!-- Verificar si el cliente no es una empresa y asignar el numero de la entidad -->
+        <t t-if="record.partner_id.is_company == False">
+            <t t-if="record.partner_id.parent_id.x_partner_code">
+                <t t-foreach="record.partner_id.parent_id.x_partner_code" t-as="l">
+                    <t t-if="record.partner_id.parent_id == l.name">
+                        <t t-if="record.company_id == l.companies">
+                            <t t-set="customer_seller" t-value="l.code"/>
+                        </t>                                                               
+                    </t>
                 </t>
-            </t>
+            </t>                        
+                        
+            <t t-if="sale_id.partner_id.parent_id.x_partner_code">
+                <t t-foreach="sale_id.partner_id.parent_id.x_partner_code" t-as="l">
+                    <t t-if="sale_id.partner_id.parent_id == l.name">
+                        <t t-if="sale_id.company_id == l.companies">
+                            <t t-set="customer_seller" t-value="l.code"/>
+                        </t>
+                    </t>
+                </t>
+            </t>                        
         </t> 
         
 
@@ -75,11 +105,20 @@
                 <postalCode t-esc="record.partner_id.zip"/>
             </NameAndAddress>
         </shipTo>
-
-        <currency t-att-currencyISOCode="record.currency_id.name">
-            <currencyFunction t-esc="BILLING_CURRENCY"/>
-            <rateOfChange t-field="sale_id.currency_rate"/>
-        </currency>
+        
+        <t t-if="pos_id">
+            <currency t-att-currencyISOCode="record.currency_id.name">
+                <currencyFunction t-esc="BILLING_CURRENCY"/>
+                <rateOfChange t-esc="pos_id.currency_rate"/>
+            </currency>
+        </t>
+        
+        <t t-if="sale_id">
+            <currency t-att-currencyISOCode="record.currency_id.name">
+                <currencyFunction t-esc="BILLING_CURRENCY"/>
+                <rateOfChange t-esc="sale_id.currency_rate"/>
+            </currency>
+        </t>       
 
         <paymentTerms PaymentTermsRelationTime="REFERENCE_AFTER"
                       paymentTermsEvent="DATE_OF_INVOICE">
@@ -104,32 +143,61 @@
 
                 <tradeItemDescriptionInformation language="ES">
                     <longText t-esc="o.product_id.name"/>
-                </tradeItemDescriptionInformation>
+                </tradeItemDescriptionInformation>          
                 
                 
-                <t t-if="record.invoice_line_ids.product_id.seller_ids">
-                    <t t-foreach="record.invoice_line_ids.product_id.seller_ids" t-as="t">
-                        <t t-set="partner_name" t-value="t.name"/>
-                        <t t-set="product_name" t-value="t.product_tmpl_id.display_name"/>
-                        <t t-if="partner_name == record.partner_id">
-                            <t t-if="product_name == o.product_id.display_name">
-                                <t t-set="uom" t-value="t.x_uom"/>                                            
+                <!-- Obtenemos la unidad de medida proporcionada por el cliente -->
+                <t t-if="record.partner_id.is_company">
+                    <t t-if="record.partner_id.x_product_info">
+                        <t t-foreach="record.partner_id.x_product_info" t-as="l">
+                            <t t-if="record.partner_id == l.partner_name">
+                                <t t-if="record.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">                                          
+                                        <t t-set="uom" t-value="l.uom"/>
+                                    </t> 
+                                </t>                                                               
                             </t>
                         </t>
-                    </t>
-                </t>
-                
-                <t t-if="sale_id.order_line.product_id.seller_ids">
-                    <t t-foreach="sale_id.order_line.product_id.seller_ids" t-as="t">
-                        <t t-set="partner_name" t-value="t.name"/>
-                        <t t-set="product_name" t-value="t.product_tmpl_id.display_name"/>
-                        <t t-if="partner_name == sale_id.partner_id">
-                            <t t-if="product_name == o.product_id.display_name">
-                                <t t-set="uom" t-value="t.x_uom"/>                                            
+                    </t>                        
+                        
+                    <t t-if="sale_id.partner_id.x_product_info">
+                        <t t-foreach="sale_id.partner_id.x_product_info" t-as="l">
+                            <t t-if="sale_id.partner_id == l.partner_name">
+                                <t t-if="sale_id.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">                                          
+                                        <t t-set="uom" t-value="l.uom"/>
+                                    </t> 
+                                </t>
                             </t>
                         </t>
-                    </t>
+                    </t>                        
                 </t>
+                        
+                <t t-if="record.partner_id.is_company == False">
+                    <t t-if="record.partner_id.parent_id.x_product_info">
+                        <t t-foreach="record.partner_id.parent_id.x_product_info" t-as="l">
+                            <t t-if="record.partner_id.parent_id == l.partner_name">
+                                <t t-if="record.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">                                          
+                                        <t t-set="uom" t-value="l.uom"/>
+                                    </t> 
+                                </t>                                                               
+                            </t>
+                        </t>
+                    </t>                        
+                        
+                    <t t-if="sale_id.partner_id.parent_id.x_product_info">
+                        <t t-foreach="sale_id.partner_id.parent_id.x_product_info" t-as="l">
+                            <t t-if="sale_id.partner_id.parent_id == l.partner_name">
+                                <t t-if="sale_id.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">                                          
+                                        <t t-set="uom" t-value="l.uom"/>
+                                    </t> 
+                                </t>
+                            </t>
+                        </t>
+                    </t>                        
+                </t>                    
                 
 
                 <invoiceQuantity t-att-unitOfMeasure="uom" t-esc="o.quantity"/>
