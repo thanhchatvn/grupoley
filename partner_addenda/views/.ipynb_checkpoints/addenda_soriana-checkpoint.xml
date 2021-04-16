@@ -18,33 +18,73 @@
             </t>
 
             <DSCargaRemisionProv xmlns="http://tempuri.org/DSCargaRemisionProv.xsd">
-                <Remision Id="Remision1" RowOrder="0">                  
+                <Remision Id="Remision1" RowOrder="0">                    
                     
-                    <!-- Valores para relacionar el nombre de como nos conoce el cliente y su centro/tienda -->
+                    <!-- Valores para relacionar el nombre de como nos conoce el cliente -->
                     <t t-set="customer_seller" t-value=""/>
 
-                    <!-- Ciclo para para obtener el nombre de como nos conoce el cliente y su centro/tienda -->
-                    <t t-if="record.invoice_line_ids.product_id.seller_ids">
-                        <t t-foreach="record.invoice_line_ids.product_id.seller_ids" t-as="l">
-                            <t t-if="record.partner_id == l.name">
-                                <t t-set="customer_seller" t-value="l.x_customer_seller"/>
+                    <t t-if="record.partner_id.is_company">
+                        <t t-if="record.partner_id.x_partner_code">
+                            <t t-foreach="record.partner_id.x_partner_code" t-as="l">
+                                <t t-if="record.partner_id == l.name">
+                                    <t t-if="record.company_id == l.companies">
+                                        <t t-set="customer_seller" t-value="l.code"/>
+                                    </t>                                                               
+                                </t>
                             </t>
-                        </t>
+                        </t>                        
+
+                        <t t-if="sale_id.partner_id.x_partner_code">
+                            <t t-foreach="sale_id.partner_id.x_partner_code" t-as="l">
+                                <t t-if="sale_id.partner_id == l.name">
+                                    <t t-if="sale_id.company_id == l.companies">
+                                        <t t-set="customer_seller" t-value="l.code"/>
+                                    </t>
+                                </t>
+                            </t>
+                        </t>                        
+                    </t>
+
+                    <!-- Verificar si el cliente no es una empresa y asignar el numero de la entidad -->
+                    <t t-if="record.partner_id.is_company == False">
+                        <t t-if="record.partner_id.parent_id.x_partner_code">
+                            <t t-foreach="record.partner_id.parent_id.x_partner_code" t-as="l">
+                                <t t-if="record.partner_id.parent_id == l.name">
+                                    <t t-if="record.company_id == l.companies">
+                                        <t t-set="customer_seller" t-value="l.code"/>
+                                    </t>                                                               
+                                </t>
+                            </t>
+                        </t>                        
+
+                        <t t-if="sale_id.partner_id.parent_id.x_partner_code">
+                            <t t-foreach="sale_id.partner_id.parent_id.x_partner_code" t-as="l">
+                                <t t-if="sale_id.partner_id.parent_id == l.name">
+                                    <t t-if="sale_id.company_id == l.companies">
+                                        <t t-set="customer_seller" t-value="l.code"/>
+                                    </t>
+                                </t>
+                            </t>
+                        </t>                        
+                    </t>         
+                    
+                    <t t-if="sale_id">
+                        
                     </t>
                     
-                    <t t-if="sale_id.order_line.product_id.seller_ids">
-                        <t t-foreach="sale_id.order_line.product_id.seller_ids" t-as="l">
-                            <t t-if="sale_id.partner_id == l.name">
-                                <t t-set="customer_seller" t-value="l.x_customer_seller"/>
-                            </t>
-                        </t>
-                    </t>  
+                    <t t-set="center" t-value=""/>
+                    <t t-if="record.partner_id">
+                        <t t-set="center" t-value="record.partner_id.x_center"/>
+                    </t>                    
+                    <t t-if="sale_id.partner_id">
+                        <t t-set="center" t-value="sale_id.partner_id.x_center"/>
+                    </t>
                     
                     <Proveedor t-sec="customer_seller"/>
                     <Remision>-</Remision>
                     <Consecutivo>0</Consecutivo>
                     <FechaRemision t-esc="record.invoice_date"/>
-                    <Tienda t-esc="record.partner_id.x_center"/>
+                    <Tienda t-esc="center"/>
                     <TipoMoneda>1</TipoMoneda>
                     <TipoBulto>1</TipoBulto>
                     <EntregaMercancia>0</EntregaMercancia>
