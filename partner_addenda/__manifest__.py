@@ -21,13 +21,18 @@
     'depends': ['base','l10n_mx_edi','contacts'],
 
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
+        'security/addenda_security.xml',
         'views/res_partner.xml',
+        'views/res_partner_supplierinfo.xml',
         'views/product_supplierinfo.xml',
         'views/account_move.xml',
         'views/addenda_chedrahui.xml',
         'views/addenda_farmacias_guadalajara.xml',
         'views/addenda_casa_ley.xml',
+        'views/addenda_soriana.xml',
+        'views/addenda_fresko.xml',
+        'views/addenda_smart.xml',
     ],
 
     'demo': [
