@@ -18,21 +18,29 @@
             </t>
 
             <DSCargaRemisionProv xmlns="http://tempuri.org/DSCargaRemisionProv.xsd">
-                <Remision Id="Remision1" RowOrder="0">                    
+                <Remision RowOrder="0" Id="Remision1">                    
                     
                     <!-- Valores para relacionar el nombre de como nos conoce el cliente -->
                     <t t-set="customer_seller" t-value=""/>
+                    <t t-set="center" t-value=""/>
 
                     <t t-if="record.partner_id.is_company">
+                        <t t-if="record.partner_shipping_id">
+                            <t t-set="center" t-value="record.partner_id.x_center"/>
+                        </t>
+                        <t t-if="sale_id.partner_shipping_id">
+                            <t t-set="center" t-value="sale_id.partner_shipping_id.x_center"/>
+                        </t>
+
                         <t t-if="record.partner_id.x_partner_code">
                             <t t-foreach="record.partner_id.x_partner_code" t-as="l">
                                 <t t-if="record.partner_id == l.name">
                                     <t t-if="record.company_id == l.companies">
                                         <t t-set="customer_seller" t-value="l.code"/>
-                                    </t>                                                               
+                                    </t>
                                 </t>
                             </t>
-                        </t>                        
+                        </t>
 
                         <t t-if="sale_id.partner_id.x_partner_code">
                             <t t-foreach="sale_id.partner_id.x_partner_code" t-as="l">
@@ -42,20 +50,27 @@
                                     </t>
                                 </t>
                             </t>
-                        </t>                        
+                        </t>
                     </t>
 
                     <!-- Verificar si el cliente no es una empresa y asignar el numero de la entidad -->
                     <t t-if="record.partner_id.is_company == False">
+                        <t t-if="record.partner_id">
+                            <t t-set="center" t-value="record.partner_id.x_center"/>
+                        </t>
+                        <t t-if="sale_id.partner_id">
+                            <t t-set="center" t-value="sale_id.partner_id.x_center"/>
+                        </t>
+
                         <t t-if="record.partner_id.parent_id.x_partner_code">
                             <t t-foreach="record.partner_id.parent_id.x_partner_code" t-as="l">
                                 <t t-if="record.partner_id.parent_id == l.name">
                                     <t t-if="record.company_id == l.companies">
                                         <t t-set="customer_seller" t-value="l.code"/>
-                                    </t>                                                               
+                                    </t>
                                 </t>
                             </t>
-                        </t>                        
+                        </t>
 
                         <t t-if="sale_id.partner_id.parent_id.x_partner_code">
                             <t t-foreach="sale_id.partner_id.parent_id.x_partner_code" t-as="l">
@@ -65,67 +80,55 @@
                                     </t>
                                 </t>
                             </t>
-                        </t>                        
-                    </t>         
-                    
-                    <t t-if="sale_id">
-                        
+                        </t>
                     </t>
                     
-                    <t t-set="center" t-value=""/>
-                    <t t-if="record.partner_id">
-                        <t t-set="center" t-value="record.partner_id.x_center"/>
-                    </t>                    
-                    <t t-if="sale_id.partner_id">
-                        <t t-set="center" t-value="sale_id.partner_id.x_center"/>
-                    </t>
-                    
-                    <Proveedor t-sec="customer_seller"/>
+                    <Proveedor t-esc="customer_seller"/>
                     <Remision>-</Remision>
                     <Consecutivo>0</Consecutivo>
-                    <FechaRemision t-esc="record.invoice_date"/>
+                    <FechaRemision t-esc="record.x_order_reference_date.strftime('%Y-%m-%dT%H:%M:%S')"/>
                     <Tienda t-esc="center"/>
                     <TipoMoneda>1</TipoMoneda>
                     <TipoBulto>1</TipoBulto>
                     <EntregaMercancia>0</EntregaMercancia>
                     <CumpleReqFiscales>true</CumpleReqFiscales>
                     <CantidadBultos t-esc="total_units"/>
-                    <Subtotal t-esc="total_without_disc"/>
+                    <Subtotal t-esc="record.amount_total"/>
 
-                    <t t-set="total_Discount" t-value="total_without_disc - sale_id.amount_untaxed"/>
-                    <Descuentos t-esc="total_Discount"/>
+                    <t t-set="total_Discount" t-value="total_without_disc - record.amount_untaxed"/>
+                    <Descuentos t-esc="round(total_Discount,2)"/>
 
                     <IEPS>0</IEPS>
                     <IVA>0</IVA>
                     <OtrosImpuestos>0</OtrosImpuestos>
                     <Total t-esc="record.amount_total"/>
                     <CantidadPedidos t-esc="1"/>
-                    <FechaEntregaMercancia>2020-09-30T00:00:00</FechaEntregaMercancia>
-                    <Cita>0000076404</Cita>
-                    <FolioNotaEntrada>0000076404</FolioNotaEntrada>
+                    <FechaEntregaMercancia t-esc="record.x_delivery_reference_date.strftime('%Y-%m-%dT%H:%M:%S')"/>
+                    <Cita t-esc="record.x_delivery_reference"/>
+                    <FolioNotaEntrada t-esc="record.x_delivery_reference"/>
                 </Remision>
 
                 <Pedidos Id="Pedido1" RowOrder="1">
-                    <Proveedor>000000000044586</Proveedor>
+                    <Proveedor t-esc="customer_seller"/>
                     <Remision>-</Remision>
-                    <FolioPedido>0</FolioPedido>
-                    <Tienda>695</Tienda>
+                    <FolioPedido t-esc="record.x_order_reference"/>
+                    <Tienda t-esc="center"/>
                     <CantidadArticulos t-esc="totalProducts"/>
                 </Pedidos>
 
 
                 <t t-set="i" t-value="1"/>
-                <t t-foreach="sale_id.order_line" t-as="o">
+                <t t-foreach="record.invoice_line_ids" t-as="o">
 
                     <Articulos Id="Art" t-att-RowOrder="i">
-                        <Proveedor>000000000044586</Proveedor>
-                        <Remision t-field="record.payment_reference"/>
-                        <FolioPedido>0</FolioPedido>
-                        <Tienda>695</Tienda>
-                        <Codigo t-field="o.product_id.barcode"/>
+                        <Proveedor t-esc="customer_seller"/>
+                        <Remision t-esc="record.payment_reference"/>
+                        <FolioPedido t-esc="record.x_order_reference"/>
+                        <Tienda t-esc="center"/>
+                        <Codigo t-esc="o.product_id.barcode"/>
                         <t t-set="i" t-value="i+1"/>
-                        <CantidadUnidadCompra t-field="o.qty_invoiced"/>
-                        <CostoNetoUnidadCompra t-esc="o.product_id.lst_price"/>
+                        <CantidadUnidadCompra t-esc="o.quantity"/>
+                        <CostoNetoUnidadCompra t-esc="o.price_unit"/>
                         <PorcentajeIEPS>0.00</PorcentajeIEPS>
                         <PorcentajeIVA>0.00</PorcentajeIVA>
                     </Articulos>
