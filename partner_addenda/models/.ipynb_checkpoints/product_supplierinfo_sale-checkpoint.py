@@ -6,6 +6,7 @@ from odoo import models, fields, api
 class ProductSupplierinfoSale(models.Model):
     _name = 'product.supplierinfo.sale' 
     _description = 'Relation between product info from customer'
+    _rec_name = "product_name"
     
     partner_name = fields.Many2one('res.partner', ondelete='cascade', required=True)
     product_name = fields.Many2one('product.product', ondelete='cascade', required=True)     

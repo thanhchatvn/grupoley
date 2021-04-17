@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-15 14:22+0000\n"
-"PO-Revision-Date: 2021-04-15 08:26-0600\n"
+"POT-Creation-Date: 2021-04-17 04:45+0000\n"
+"PO-Revision-Date: 2021-04-16 23:01-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,24 @@ msgstr ""
 "X-Generator: Poedit 2.4.2\n"
 
 #. module: partner_addenda
+#: model_terms:ir.ui.view,arch_db:partner_addenda.l10n_mx_edi_addenda_soriana
+msgid "0.00"
+msgstr ""
+
+#. module: partner_addenda
 #: model:ir.model.fields,field_description:partner_addenda.field_account_bank_statement_line__x_additional_reference
 #: model:ir.model.fields,field_description:partner_addenda.field_account_move__x_additional_reference
 #: model:ir.model.fields,field_description:partner_addenda.field_account_payment__x_additional_reference
 msgid "Additional Reference"
 msgstr "Referencia adicional"
+
+#. module: partner_addenda
+#: model_terms:ir.ui.view,arch_db:partner_addenda.product_supplierinfo_sale_form
+#: model_terms:ir.ui.view,arch_db:partner_addenda.product_supplierinfo_sale_tree
+#: model_terms:ir.ui.view,arch_db:partner_addenda.res_partner_supplierinfo_form
+#: model_terms:ir.ui.view,arch_db:partner_addenda.res_partner_supplierinfo_tree
+msgid "Additional info"
+msgstr "Información adicional"
 
 #. module: partner_addenda
 #: model:ir.model.fields,help:partner_addenda.field_account_bank_statement_line__x_additional_reference
@@ -32,9 +45,38 @@ msgid "Aproval Number"
 msgstr "Número de aprobación"
 
 #. module: partner_addenda
-#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo__x_center
+#: model_terms:ir.actions.act_window,help:partner_addenda.res_partner_supplierinfo_action
+msgid "Assigned partner with code  !"
+msgstr "Cliente asignado con código !"
+
+#. module: partner_addenda
+#: model_terms:ir.actions.act_window,help:partner_addenda.product_supplierinfo_sale_action
+msgid "Assigned product with code  !"
+msgstr "Producto asignado con código"
+
+#. module: partner_addenda
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner__x_center
+#: model:ir.model.fields,field_description:partner_addenda.field_res_users__x_center
 msgid "Center"
-msgstr "Centro"
+msgstr "Tienda"
+
+#. module: partner_addenda
+#: model:ir.model.fields,help:partner_addenda.field_product_supplierinfo_sale__product_code
+msgid "Code that customer know the product"
+msgstr "Código con el cual el cliente conoce el producto"
+
+#. module: partner_addenda
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__company
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner_supplierinfo__companies
+#: model_terms:ir.ui.view,arch_db:partner_addenda.product_supplierinfo_sale_form
+#: model_terms:ir.ui.view,arch_db:partner_addenda.res_partner_supplierinfo_form
+msgid "Company"
+msgstr "Compañía"
+
+#. module: partner_addenda
+#: model_terms:ir.ui.view,arch_db:partner_addenda.res_partner_supplierinfo_form
+msgid "Company code"
+msgstr "Código de compañía"
 
 #. module: partner_addenda
 #: model:ir.model,name:partner_addenda.model_res_partner
@@ -42,14 +84,27 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: partner_addenda
-#: model:ir.model.fields,help:partner_addenda.field_product_supplierinfo__x_center
-msgid "Customer Store"
-msgstr "Tienda del cliente"
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__create_uid
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner_supplierinfo__create_uid
+msgid "Created by"
+msgstr "Creado por"
 
 #. module: partner_addenda
-#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo__x_customer_seller
-msgid "Customer/Seller"
-msgstr "Cliente/Proveedor"
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__create_date
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner_supplierinfo__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: partner_addenda
+#: model_terms:ir.ui.view,arch_db:partner_addenda.res_partner_supplierinfo_form
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: partner_addenda
+#: model:ir.model.fields,help:partner_addenda.field_res_partner__x_center
+#: model:ir.model.fields,help:partner_addenda.field_res_users__x_center
+msgid "Customer Store"
+msgstr "Tienda del cliente"
 
 #. module: partner_addenda
 #: model:ir.model.fields,field_description:partner_addenda.field_account_bank_statement_line__x_delivery_reference_date
@@ -67,8 +122,10 @@ msgstr "Folio de entrega"
 
 #. module: partner_addenda
 #: model:ir.model.fields,field_description:partner_addenda.field_account_move__display_name
-#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo__display_name
+#: model:ir.model.fields,field_description:partner_addenda.field_product_product__display_name
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__display_name
 #: model:ir.model.fields,field_description:partner_addenda.field_res_partner__display_name
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner_supplierinfo__display_name
 msgid "Display Name"
 msgstr "Nombre desplegado"
 
@@ -97,10 +154,17 @@ msgstr "Número de localización global"
 
 #. module: partner_addenda
 #: model:ir.model.fields,field_description:partner_addenda.field_account_move__id
-#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo__id
+#: model:ir.model.fields,field_description:partner_addenda.field_product_product__id
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__id
 #: model:ir.model.fields,field_description:partner_addenda.field_res_partner__id
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner_supplierinfo__id
 msgid "ID"
 msgstr ""
+
+#. module: partner_addenda
+#: model:ir.model,name:partner_addenda.model_res_partner_supplierinfo
+msgid "Indlude additional information about partner"
+msgstr "Incluye información adicional sobre contacto"
 
 #. module: partner_addenda
 #: model:ir.model,name:partner_addenda.model_account_move
@@ -109,15 +173,29 @@ msgstr "Asiento Contable"
 
 #. module: partner_addenda
 #: model:ir.model.fields,field_description:partner_addenda.field_account_move____last_update
-#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo____last_update
+#: model:ir.model.fields,field_description:partner_addenda.field_product_product____last_update
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale____last_update
 #: model:ir.model.fields,field_description:partner_addenda.field_res_partner____last_update
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner_supplierinfo____last_update
 msgid "Last Modified on"
 msgstr "Ultima modificacion realizada"
 
 #. module: partner_addenda
-#: model:ir.model.fields,help:partner_addenda.field_product_supplierinfo__x_customer_seller
-msgid "Name with which our company is identified by the customer."
-msgstr "Nombre con el cual el cliente conoce a la compañía."
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__write_uid
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner_supplierinfo__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: partner_addenda
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__write_date
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner_supplierinfo__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: partner_addenda
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner_supplierinfo__name
+msgid "Name"
+msgstr "Nombre"
 
 #. module: partner_addenda
 #: model:ir.model.fields,field_description:partner_addenda.field_account_bank_statement_line__x_order_reference_date
@@ -132,6 +210,54 @@ msgstr "Fecha de orden de compra"
 #: model:ir.model.fields,field_description:partner_addenda.field_account_payment__x_order_reference
 msgid "Order Reference"
 msgstr "Folio de orden de compra"
+
+#. module: partner_addenda
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__partner_name
+msgid "Partner Name"
+msgstr "Nombre del contacto"
+
+#. module: partner_addenda
+#: model:ir.actions.act_window,name:partner_addenda.res_partner_supplierinfo_action
+#: model:ir.ui.menu,name:partner_addenda.menu_res_partner_supplierinfo
+msgid "Partner additional info"
+msgstr "Información adicional sobre el contacto"
+
+#. module: partner_addenda
+#: model:ir.model,name:partner_addenda.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: partner_addenda
+#: model_terms:ir.ui.view,arch_db:partner_addenda.product_supplierinfo_sale_form
+msgid "Product Code"
+msgstr "Código de producto"
+
+#. module: partner_addenda
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__product_name
+#: model_terms:ir.ui.view,arch_db:partner_addenda.product_supplierinfo_sale_form
+msgid "Product Name"
+msgstr "Nombre del producto"
+
+#. module: partner_addenda
+#: model:ir.actions.act_window,name:partner_addenda.product_supplierinfo_sale_action
+#: model:ir.ui.menu,name:partner_addenda.menu_product_supplierinfo_sale
+msgid "Product additional info"
+msgstr "Información adicional del producto"
+
+#. module: partner_addenda
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__product_code
+msgid "Product code"
+msgstr "Código de producto"
+
+#. module: partner_addenda
+#: model:ir.model,name:partner_addenda.model_product_supplierinfo_sale
+msgid "Relation between product info from customer"
+msgstr "Relación entre producto y cliente"
+
+#. module: partner_addenda
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner_supplierinfo__code
+msgid "Seller code"
+msgstr "Código de proveedor"
 
 #. module: partner_addenda
 #: model:ir.model.fields,help:partner_addenda.field_account_bank_statement_line__x_delivery_reference_date
@@ -156,26 +282,53 @@ msgid ""
 msgstr "Especifica el folio de la orden de compra por el cliente."
 
 #. module: partner_addenda
-#: model:ir.model,name:partner_addenda.model_product_supplierinfo
-msgid "Supplier Pricelist"
-msgstr "Tarifa de proveedor"
-
-#. module: partner_addenda
-#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo__x_uom
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__uom
 msgid "UOM"
-msgstr ""
-
-#. module: partner_addenda
-#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo__x_uom_additional
-msgid "UOM Additional"
-msgstr "UOM Adicional"
-
-#. module: partner_addenda
-#: model:ir.model.fields,help:partner_addenda.field_product_supplierinfo__x_uom
-msgid "Unit Of Measurement"
 msgstr "Unidad de medida"
 
 #. module: partner_addenda
-#: model:ir.model.fields,help:partner_addenda.field_product_supplierinfo__x_uom_additional
+#: model:ir.model.fields,field_description:partner_addenda.field_product_supplierinfo_sale__uom_additional
+msgid "UOM Additional"
+msgstr "Unidad medida adicional"
+
+#. module: partner_addenda
+#: model:ir.model.fields,help:partner_addenda.field_product_supplierinfo_sale__uom
+msgid "Unit Of Measurement"
+msgstr "Unidad de medida por cliente"
+
+#. module: partner_addenda
+#: model:ir.model.fields,help:partner_addenda.field_product_supplierinfo_sale__uom_additional
 msgid "Unit Of Measurement Additional"
+msgstr "Unidad de medida adicional por cliente"
+
+#. module: partner_addenda
+#: model_terms:ir.ui.view,arch_db:partner_addenda.product_supplierinfo_sale_form
+msgid "Unit of measurement"
+msgstr "Unidad de medida"
+
+#. module: partner_addenda
+#: model_terms:ir.ui.view,arch_db:partner_addenda.product_supplierinfo_sale_form
+msgid "Unit of measurement additional"
 msgstr "Unidad de medida adicional"
+
+#. module: partner_addenda
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner__x_partner_code
+#: model:ir.model.fields,field_description:partner_addenda.field_res_users__x_partner_code
+msgid "X Partner Code"
+msgstr "Información adicional proveedor"
+
+#. module: partner_addenda
+#: model:ir.model.fields,field_description:partner_addenda.field_res_partner__x_product_info
+#: model:ir.model.fields,field_description:partner_addenda.field_res_users__x_product_info
+msgid "X Product Info"
+msgstr "Información adicional de producto"
+
+#. module: partner_addenda
+#: model:ir.model.fields,field_description:partner_addenda.field_product_product__x_product_supplierinfo
+msgid "X Product Supplierinfo"
+msgstr "Información adicional de producto"
+
+#. module: partner_addenda
+#: model_terms:ir.ui.view,arch_db:partner_addenda.l10n_mx_edi_addenda_soriana
+msgid "true"
+msgstr ""
