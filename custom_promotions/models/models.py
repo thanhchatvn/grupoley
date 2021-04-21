@@ -77,7 +77,13 @@ class SaleOrder(models.Model):
         '''Apply new programs that are applicable'''
         self.ensure_one()
         order = self
-        order.order_line.filtered(lambda p: p.is_promo).unlink()
+
+        # Se eliminan los registros calculados anteriormente para poder recalcular las promociones
+        to_remove = order.order_line.filtered(lambda line: line.is_reward_line)
+        if to_remove:
+            for id in to_remove.ids:
+                self.env.cr.execute("""DELETE FROM sale_order_line WHERE id=""" + str(id))
+
         programs = order._get_applicable_no_code_promo_program()
         programs = programs._keep_only_most_interesting_auto_applied_global_discount_program()
         for program in programs:
