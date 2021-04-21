@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="AdendaPopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup popup-textinput">
+                <header class="title">
+                    <t t-esc="props.title" />
+                </header>
+                <div class="div">
+                    <p>
+                        <t t-esc="props.body" />
+                    </p>
+                    <div>
+                        <label for="referencia-input">Folio de Orden de Compra</label>
+                        <input id="referencia-input" type="text" t-model="state.inputValue1" t-ref="input" />
+                    </div>
+                    <div style="padding-top: 20px;">
+                        <label for="fch-oc-input">Fecha Orden de Compra</label>
+                        <input id="fch-oc-input" type="date" t-model="state.inputValue2"/>
+                    </div>
+                    <div style="padding-top: 20px;">
+                        <label for="folio-entrega-input">Folio de Entrega</label>
+                        <input id="folio-entrega-input" type="text" t-model="state.inputValue3"/>
+                    </div>
+                    <div style="padding-top: 20px; padding-bottom: 20px;">
+                        <label for="fch-entrega-input">Fecha de Entrega</label>
+                        <input id="fch-entrega-input" type="date" t-model="state.inputValue4"/>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm" t-on-click="confirm">
+                        <t t-esc="props.confirmText" />
+                    </div>
+                    <div class="button cancel" t-on-click="cancel">
+                        <t t-esc="props.cancelText" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>
