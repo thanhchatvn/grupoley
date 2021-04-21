@@ -153,8 +153,7 @@ class SaleOrder(models.Model):
             'is_reward_line': True,
             'name': "(" + program.display_name +  ") " + "Free Product" + " - " + program.reward_product_id.name,
             'product_uom': program.reward_product_id.uom_id.id,
-            'tax_id': [(4, tax.id, False) for tax in taxes],
-            'is_promo': True
+            'tax_id': [(4, tax.id, False) for tax in taxes]
         }
 
     def _custom_update_existing_reward_lines(self):
