@@ -210,9 +210,8 @@ class SaleOrder(models.Model):
 
     def _get_custom_reward_values_discount(self, program):
         order = self
-        lines = order.order_line.filtered(lambda p: p.is_promo == False)
-        for line in lines:
-            if order._is_valid_product(program, line):
+        for line in order.order_line:
+            if order._is_valid_product(program, line) and not line.is_reward_line:
                 line.update({'discount': program.discount_percentage})
 
         return line
