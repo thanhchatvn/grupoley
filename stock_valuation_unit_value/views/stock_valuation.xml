@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <record id="exchange_rate_amount_view_tree" model="ir.ui.view">-->
+<!--            <field name="name">exchange.rate.amount.view.tree</field>-->
+<!--            <field name="model">res.currency.rate</field>-->
+<!--            <field name="inherit_id" res="base.view_currency_rate_tree"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//tree[1]/field[@name='name']" position="after">-->
+<!--                    <field name="x_tasa_cambio"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>
