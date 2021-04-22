@@ -3,7 +3,7 @@
     'name': "custom_promotions",
 
     'summary': """
-        TESTING Short (1 phrase/line) summary of the module's purpose, used as
+        Short (1 phrase/line) summary of the module's purpose, used as
         subtitle on modules listing or apps.openerp.com""",
 
     'description': """

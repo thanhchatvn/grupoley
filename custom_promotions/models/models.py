@@ -204,8 +204,8 @@ class SaleOrder(models.Model):
                         order.write({'order_line': [(0, False, value)]})
                 # Case 3.
                 lines_to_remove.unlink()
-            else:
-                update_line(order, lines, values[0]).unlink()
+            #else:
+            #    update_line(order, lines, values[0]).unlink()
 
     def _get_custom_reward_values_discount(self, program):
         order = self
