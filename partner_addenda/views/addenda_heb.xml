@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+        <template id="l10n_mx_edi_addenda_heb" name="Addenda HEB">
+            <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
+            <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+            <t t-set="pos_model" t-value="'pos_order_ids' in record._fields"/>
+            <t t-set="pos_id" t-value="record.mapped('pos_order_ids') if pos_model else False"/>
+            <if:FacturaInterfactura xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                    xmlns:if="https://www.interfactura.com/Schemas/Documentos" 
+                                    TipoDocumento="Factura">
+                
+                <!-- Valores para relacionar el nombre de como nos conoce el cliente -->
+                <t t-set="customer_seller" t-value=""/>
+                <t t-set="center" t-value=""/>
+                <t t-set="buyer_gln" t-value=""/>
+                <t t-set="street_name" t-value=""/>
+                <t t-set="street_number" t-value=""/>
+                <t t-set="city" t-value=""/>
+
+                <t t-if="record.partner_id.is_company">
+                    
+                    <t t-if="record.partner_shipping_id">
+                         <t t-set="center" t-value="record.partner_id.x_center"/>
+                    </t>
+                    <t t-if="sale_id.partner_shipping_id">
+                         <t t-set="center" t-value="sale_id.partner_shipping_id.x_center"/>
+                    </t>
+
+                    <!-- Asignar gln de cliente -->
+                    <t t-if="record.partner_id.x_gln">
+                        <t t-set="buyer_gln" t-value="record.partner_id.x_gln"/>
+                    </t>
+                    
+
+                    <!-- Asignar direccion de cliente -->
+                    <t t-if="record.partner_id">
+                        <t t-set="street_name" t-value="record.partner_id.street_name"/>
+                        <t t-set="street_number" t-value="record.partner_id.street_number"/>
+                        <t t-if="record.partner_id.city_id">
+                            <t t-set="city" t-value="record.partner_id.city_id.name"/>
+                        </t>
+                         <t t-if="record.partner_id.city">
+                            <t t-set="city" t-value="record.partner_id.city"/>
+                        </t>
+                    </t>
+
+                    <t t-if="record.partner_id.x_partner_code">
+                        <t t-foreach="record.partner_id.x_partner_code" t-as="l">
+                            <t t-if="record.partner_id == l.name">
+                                <t t-if="record.company_id == l.companies">
+                                    <t t-set="customer_seller" t-value="l.code"/>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                </t>
+
+                <!-- Verificar si el cliente no es una empresa y asignar el numero de la entidad -->
+                <t t-if="record.partner_id.is_company == False">
+                    
+                    <t t-if="record.partner_id">
+                         <t t-set="center" t-value="record.partner_id.x_center"/>
+                    </t>
+                    <t t-if="sale_id.partner_id">
+                        <t t-set="center" t-value="sale_id.partner_id.x_center"/>
+                    </t>
+                    
+                    <t t-if="record.partner_id.parent_id.x_gln">
+                        <t t-set="buyer_gln" t-value="record.partner_id.parent_id.x_gln"/>
+                    </t>                    
+
+                    <t t-if="sale_id.partner_id.parent_id.x_gln">
+                        <t t-set="buyer_gln" t-value="sale_id.partner_id.parent_id.x_gln"/>
+                    </t>                   
+
+                    <t t-if="record.partner_id">
+                        <t t-set="name" t-value="record.partner_id.parent_id.name"/>
+                        <t t-set="street_name" t-value="record.partner_id.parent_id.street_name"/>
+                        <t t-set="street_number" t-value="record.partner_id.parent_id.street_number"/>
+                        <t t-if="record.partner_id.parent_id.city_id">
+                            <t t-set="city" t-value="record.partner_id.parent_id.city_id.name"/>
+                        </t>
+                         <t t-if="record.partner_id.parent_id.city">
+                            <t t-set="city" t-value="record.partner_id.parent_id.city"/>
+                        </t>                        
+                        
+                    </t>
+
+                    <t t-if="record.partner_id.parent_id.x_partner_code">
+                        <t t-foreach="record.partner_id.parent_id.x_partner_code" t-as="l">
+                            <t t-if="record.partner_id.parent_id == l.name">
+                                <t t-if="record.company_id == l.companies">
+                                    <t t-set="customer_seller" t-value="l.code"/>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+
+                    <t t-if="sale_id.partner_id.parent_id.x_partner_code">
+                        <t t-foreach="sale_id.partner_id.parent_id.x_partner_code" t-as="l">
+                            <t t-if="sale_id.partner_id.parent_id == l.name">
+                                <t t-if="sale_id.company_id == l.companies">
+                                    <t t-set="customer_seller" t-value="l.code"/>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                </t>
+                
+                <!-- Obtenemos el total de la venta sin descuento -->
+                <t t-set="total_without_disc" t-value="0.00"/>
+                <t t-foreach="record.invoice_line_ids" t-as="b">
+                    <t t-set="product_total" t-value="b.price_unit * b.quantity"/>
+                    <t t-set="total_without_disc" t-value="total_without_disc + product_total"/>
+                </t>
+                
+                
+                 
+                <if:Emisor t-att-RI="record.company_id.partner_id.x_edi_identification" t-att-NumProveedor="customer_seller"/>
+                
+                <if:Receptor t-att-RI="record.partner_id.x_edi_identification"/>
+                
+                <if:Encabezado t-att-Total="record.amount_untaxed"
+                               t-att-Moneda="record.currency_id.name"
+                               t-att-SubTotal="round(total_without_disc,2)" 
+                               t-att-Serie="record.sequence_prefix"
+                               t-att-Folio="record.sequence_number"
+                               t-att-NumProveedor="customer_seller"
+                               t-att-FechaOrdenCompra="record.x_order_reference_date"
+                               t-att-GLNSucursal="buyer_gln"
+                               t-att-FolioNotaRecepcion="record.x_delivery_reference"
+                               t-att-FolioAvisoPrefactura="record.x_order_reference" 
+                               t-att-NumSucursal="center" 
+                               DepartamentoCliente=" " 
+                               t-att-DomicilioSucursalCliente="str(street_name) + ' ' + str(street_number)"
+                               t-att-MunicipioSucursalCliente="str(city)"
+                               IVAPCT="0"
+                               Iva="0">
+                    
+                    
+                    <t t-set="i" t-value="1"/>
+                    <t t-set="partner_name" t-value=""/>
+                    <t t-set="product_name" t-value=""/>
+                    <t t-set="uom" t-value=""/>
+                    
+                    <t t-foreach="record.invoice_line_ids" t-as="o">
+                        
+                        <!-- Obtenemos la unidad de medida proporcionada por el cliente -->
+                        <t t-if="record.partner_id.is_company">
+                            <t t-if="record.partner_id.x_product_info">
+                                <t t-foreach="record.partner_id.x_product_info" t-as="l">
+                                    <t t-if="record.partner_id == l.partner_name">
+                                        <t t-if="record.company_id == l.company">
+                                            <t t-if="o.product_id == l.product_name">
+                                                <t t-set="uom" t-value="l.uom"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                            </t>
+
+                            <t t-if="sale_id.partner_id.x_product_info">
+                                <t t-foreach="sale_id.partner_id.x_product_info" t-as="l">
+                                    <t t-if="sale_id.partner_id == l.partner_name">
+                                        <t t-if="sale_id.company_id == l.company">
+                                            <t t-if="o.product_id == l.product_name">
+                                                <t t-set="uom" t-value="l.uom"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                            </t>
+                        </t>
+
+                        <t t-if="record.partner_id.is_company == False">
+                            <t t-if="record.partner_id.parent_id.x_product_info">
+                                <t t-foreach="record.partner_id.parent_id.x_product_info" t-as="l">
+                                    <t t-if="record.partner_id.parent_id == l.partner_name">
+                                        <t t-if="record.company_id == l.company">
+                                            <t t-if="o.product_id == l.product_name">
+                                                <t t-set="uom" t-value="l.uom"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                            </t>
+
+                            <t t-if="sale_id.partner_id.parent_id.x_product_info">
+                                <t t-foreach="sale_id.partner_id.parent_id.x_product_info" t-as="l">
+                                    <t t-if="sale_id.partner_id.parent_id == l.partner_name">
+                                        <t t-if="sale_id.company_id == l.company">
+                                            <t t-if="o.product_id == l.product_name">
+                                                <t t-set="uom" t-value="l.uom"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                            </t>
+                        </t>        
+                        
+                        
+                        <if:Cuerpo t-att-SubTotal="round(o.quantity * o.price_unit,2)" 
+                                   t-att-Cantidad="o.quantity" 
+                                   t-att-Concepto="o.product_id.name" 
+                                   t-att-PUnitario="o.price_unit" 
+                                   t-att-FactorEmpaque="o.product_uom_id.factor_inv"
+                                   t-att-UnitarioLista="o.price_unit"
+                                   t-att-U_x0020_de_x0020_M="uom"
+                                   t-att-EAN13="o.product_id.barcode" 
+                                   Codigo=""/>
+                    </t>   
+                    
+                </if:Encabezado>                
+            </if:FacturaInterfactura>       
+        </template>
+
+        <record id="l10n_mx_edi_addenda_heb" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>
