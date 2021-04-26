@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+  <data>
+    <template id="l10n_mx_edi_addenda_farmacia_guadalajara" name="Addenda Farmacias Guadalajara">
+      <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
+      <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+      <t t-set="pos_model" t-value="'pos_order_ids' in record._fields"/>
+      <t t-set="pos_id" t-value="record.mapped('pos_order_ids') if pos_model else False"/> 
+    <requestForPayment
+            t-att-DeliveryDate="record.invoice_date"
+            documentStatus="ORIGINAL"
+            documentStructureVersion="AMC006"
+            contentVersion="1.3.1"
+            type="SimpleInvoiceType"
+            xmlns="http://www.farmaciasguadalajara.com.mx/AddendaFragua"
+    >
+        <requestForPaymentIdentification>
+            <entityType t-esc="INVOICE"/>
+            <uniqueCreatorIdentification t-esc="record.payment_reference"/>
+        </requestForPaymentIdentification>
+
+        <orderIdentification>
+            <referenceIdentification type="ON" t-esc="record.x_order_reference"/>
+            <ReferenceDate t-field="record.x_order_reference_date"/>
+        </orderIdentification>
+
+        <DeliveryNote>
+            <referenceIdentification t-esc="record.x_delivery_reference"/>
+            <referenceDate t-field="record.x_delivery_reference_date"/>
+        </DeliveryNote>  
+
+        <AdditionalInformation>
+            <referenceIdentification type="IV" t-esc="record.payment_reference"/>
+        </AdditionalInformation>             
+        
+        <!-- Valores para relacionar el nombre de como nos conoce el cliente -->
+        <t t-set="customer_seller" t-value=""/>
+        <t t-set="buyer_gln" t-value=""/>
+        <t t-set="partner_ref" t-value=""/>
+                    
+        <t t-if="record.partner_id.is_company">
+            <!-- Asignar gln de cliente -->
+            <t t-if="record.partner_id.x_gln">
+                 <t t-set="buyer_gln" t-value="record.partner_id.x_gln"/>
+            </t>
+            <t t-set="partner_ref" t-value="record.partner_id.ref"/>
+            
+            <t t-if="record.partner_id.x_partner_code">
+                <t t-foreach="record.partner_id.x_partner_code" t-as="l">
+                    <t t-if="record.partner_id == l.name">
+                        <t t-if="record.company_id == l.companies">
+                            <t t-set="customer_seller" t-value="l.code"/>
+                        </t>                                                               
+                    </t>
+                </t>
+            </t>                        
+                        
+            <t t-if="sale_id.partner_id.x_partner_code">
+                <t t-foreach="sale_id.partner_id.x_partner_code" t-as="l">
+                    <t t-if="sale_id.partner_id == l.name">
+                        <t t-if="sale_id.company_id == l.companies">
+                            <t t-set="customer_seller" t-value="l.code"/>
+                        </t>
+                    </t>
+                </t>
+            </t>                        
+        </t>
+                    
+        <!-- Verificar si el cliente no es una empresa y asignar el numero de la entidad -->
+        <t t-if="record.partner_id.is_company == False">
+            
+            <t t-if="record.partner_id.parent_id.x_gln">
+                <t t-set="buyer_gln" t-value="record.partner_id.parent_id.x_gln"/>
+            </t>
+            <t t-if="sale_id.partner_id.parent_id.x_gln">
+                <t t-set="buyer_gln" t-value="sale_id.partner_id.parent_id.x_gln"/>
+            </t>
+            
+            <t t-if="record.partner_id.parent_id.ref">
+                <t t-set="partner_ref" t-value="record.partner_id.parent_id.ref"/>
+            </t>
+            <t t-if="sale_id.partner_id.parent_id.ref">
+                <t t-set="partner_ref" t-value="sale_id.partner_id.parent_id.ref"/>
+            </t>
+            
+            <t t-if="record.partner_id.parent_id.x_partner_code">
+                <t t-foreach="record.partner_id.parent_id.x_partner_code" t-as="l">
+                    <t t-if="record.partner_id.parent_id == l.name">
+                        <t t-if="record.company_id == l.companies">
+                            <t t-set="customer_seller" t-value="l.code"/>
+                        </t>                                                               
+                    </t>
+                </t>
+            </t>                        
+                        
+            <t t-if="sale_id.partner_id.parent_id.x_partner_code">
+                <t t-foreach="sale_id.partner_id.parent_id.x_partner_code" t-as="l">
+                    <t t-if="sale_id.partner_id.parent_id == l.name">
+                        <t t-if="sale_id.company_id == l.companies">
+                            <t t-set="customer_seller" t-value="l.code"/>
+                        </t>
+                    </t>
+                </t>
+            </t>                        
+        </t>         
+       
+        <buyer>
+            <gln t-esc="buyer_gln"/>
+        </buyer>
+        
+        <seller>
+            <alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY" t-esc="customer_seller"/>
+        </seller>
+
+        <shipTo>
+            <alternatePartyIdentification type="ASSIGNED_IDENTIFIER_FOR_A_BUYER" t-esc="partner_ref"/>
+        </shipTo>
+
+        <t t-if="pos_id">
+            <currency t-att-currencyISOCode="record.currency_id.name">
+                <currencyFunction t-esc="BILLING_CURRENCY"/>
+                <rateOfChange t-esc="pos_id.currency_rate"/>
+            </currency>
+        </t>
+        
+        <t t-if="sale_id">
+            <currency t-att-currencyISOCode="record.currency_id.name">
+                <currencyFunction t-esc="BILLING_CURRENCY"/>
+                <rateOfChange t-esc="sale_id.currency_rate"/>
+            </currency>
+        </t>
+        
+
+        <t t-set="total_without_disc" t-value="0.00"/>
+        <t t-foreach="record.invoice_line_ids" t-as="b">
+            <t t-set="product_total" t-value="b.product_id.lst_price * b.quantity"/>
+            <t t-set="total_without_disc" t-value="total_without_disc + product_total"/>
+        </t>
+        <t t-set="disccount" t-value="(total_without_disc - record.amount_untaxed) * 100 / total_without_disc"/>
+
+        <allowanceCharge allowanceChargeType="ALLOWANCE_GLOBAL" settlementType="OFF_INVOICE">
+          <specialServicesType t-esc="CAC"/>
+          <monetaryAmountOrPercentage>
+            <rate base="INVOICE_VALUE">
+              <percentage t-esc="round(disccount,2)"/>
+            </rate>
+          </monetaryAmountOrPercentage>
+        </allowanceCharge>
+
+        <t t-set="i" t-value="1"/>
+        <t t-set="partner_name" t-value=""/>
+        <t t-set="product_name" t-value=""/>
+        <t t-set="uom" t-value=""/>
+        <t t-set="additional_uom" t-value=""/>
+        
+        <t t-foreach="record.invoice_line_ids" t-as="o">
+            <lineItem type="SimpleInvoiceLineItemType" t-att-number="i">
+
+                <tradeItemIdentification>
+                    <gtin t-field="o.product_id.barcode"/>
+                    <t t-set="i" t-value="i+1"/>
+                </tradeItemIdentification>
+
+                <alternateTradeItemIdentification type="BUYER_ASSIGNED" t-esc="o.product_id.barcode"/>
+
+                <tradeItemDescriptionInformation language="ES">
+                    <longText t-esc="o.product_id.name"/>
+                </tradeItemDescriptionInformation>
+                
+                <!-- Obtenemos la unidad de medida proporcionada por el cliente -->
+                <t t-if="record.partner_id.is_company">
+                    <t t-if="record.partner_id.x_product_info">
+                        <t t-foreach="record.partner_id.x_product_info" t-as="l">
+                            <t t-if="record.partner_id == l.partner_name">
+                                <t t-if="record.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">                                          
+                                        <t t-set="uom" t-value="l.uom"/>
+                                        <t t-set="additional_uom" t-value="l.uom_additional"/>
+                                    </t> 
+                                </t>                                                               
+                            </t>
+                        </t>
+                    </t>                        
+                        
+                    <t t-if="sale_id.partner_id.x_product_info">
+                        <t t-foreach="sale_id.partner_id.x_product_info" t-as="l">
+                            <t t-if="sale_id.partner_id == l.partner_name">
+                                <t t-if="sale_id.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">                                          
+                                        <t t-set="uom" t-value="l.uom"/>
+                                        <t t-set="additional_uom" t-value="l.uom_additional"/>
+                                    </t> 
+                                </t>
+                            </t>
+                        </t>
+                    </t>                        
+                </t>
+                        
+                <t t-if="record.partner_id.is_company == False">
+                    <t t-if="record.partner_id.parent_id.x_product_info">
+                        <t t-foreach="record.partner_id.parent_id.x_product_info" t-as="l">
+                            <t t-if="record.partner_id.parent_id == l.partner_name">
+                                <t t-if="record.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">                                          
+                                        <t t-set="uom" t-value="l.uom"/>
+                                        <t t-set="additional_uom" t-value="l.uom_additional"/>
+                                    </t> 
+                                </t>                                                               
+                            </t>
+                        </t>
+                    </t>                        
+                        
+                    <t t-if="sale_id.partner_id.parent_id.x_product_info">
+                        <t t-foreach="sale_id.partner_id.parent_id.x_product_info" t-as="l">
+                            <t t-if="sale_id.partner_id.parent_id == l.partner_name">
+                                <t t-if="sale_id.company_id == l.company">
+                                    <t t-if="o.product_id == l.product_name">                                          
+                                        <t t-set="uom" t-value="l.uom"/>
+                                        <t t-set="additional_uom" t-value="l.uom_additional"/>
+                                    </t> 
+                                </t>
+                            </t>
+                        </t>
+                    </t>                        
+                </t>                    
+
+                <invoiceQuantity t-att-unitOfMeasure="uom" t-esc="o.quantity"/>
+
+                <additionalQuantity t-att-unitOfMeasure="additional_uom"  QuantityType="NUM_CONSUMER_UNITS" t-esc="o.product_uom_id.factor_inv"/>
+                
+
+                <grossPrice>
+                    <Amount t-esc="o.price_unit"/>
+                </grossPrice>
+
+                <netPrice>
+                    <t t-if="o.quantity > 0">
+                        <Amount t-esc="round(o.price_subtotal / o.quantity,2)"/>
+                    </t>                    
+                </netPrice>
+
+                <allowanceCharge allowanceChargeType="ALLOWANCE_GLOBAL" sequenceNumber="0">
+                  <specialServicesType t-esc="CAC"/>
+                  <monetaryAmountOrPercentage>
+                    <percentagePerUnit t-esc="1"/>
+                    <ratePerUnit>
+                      <amountPerUnit t-esc="round(disccount,2)"/>
+                    </ratePerUnit>
+                  </monetaryAmountOrPercentage>
+                </allowanceCharge>
+
+                <totalLineAmount>
+
+                    <grossAmount>
+                        <Amount t-esc="round(o.price_unit * o.quantity,2)"/>
+                    </grossAmount>
+
+                    <netAmount>
+                        <Amount t-esc="o.price_subtotal"/>
+                    </netAmount>
+
+                </totalLineAmount>
+
+            </lineItem>
+        </t>
+
+
+        <totalAllowenceCharge allowenceOrChargeType="Allowance">
+            <t t-set="total_allowance_charge" t-value="total_without_disc - record.amount_untaxed"/>
+            <Amount t-esc="round(total_allowance_charge,2)"/>
+        </totalAllowenceCharge>
+
+    </requestForPayment>
+    </template>
+
+    <record id="l10n_mx_edi_addenda_farmacia_guadalajara" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+  </data>
+</odoo>
