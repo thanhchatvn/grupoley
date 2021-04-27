@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates id="ley_pos_custom" xml:space="preserve">
+
+    <t t-name="PaymentScreen" t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('customer-button')]" position="inside">
+            <div class="button" t-on-click="addAdenda">
+                <i class="fa fa-adn" role="img" aria-label="Customer" title="Customer"/> Addenda
+            </div>
+        </xpath>
+    </t>
+
+</templates>

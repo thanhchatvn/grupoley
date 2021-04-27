@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates id="pos_cantidad_stock" xml:space="preserve">
+
+    <t t-name="ProductsWidgetControlPanel" t-inherit="point_of_sale.ProductsWidgetControlPanel" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('rightpane-header')]" position="before">
+            <div style="display: flex;">
+                <div onclick="effectButtonE('tab-a')" id="tab-a" class="tab-existencia" style="min-width: 48px; border-right: 1px solid #c5c5c5; padding-right: 3px; background: rgb(229, 229, 229); border-bottom: 1px solid #c5c5c5;">
+                    <span class="breadcrumb-button breadcrumb-home" t-on-click="tot_existencia">
+                        <i class="fa fa-archive" role="img" aria-label="Productos" title="Productos" style="font-size: 22px;"></i>
+                    </span>
+                </div>
+                <div onclick="effectButtonE('tab-b')" id="tab-b" class="tab-existencia" style="width: 50%; background: #d3d3d3; border-right: solid 1px #d3d3d3; cursor: pointer;" t-on-click="con_existencia">
+                    <p style="margin: 15px 0 15px 0; font-size: 14px;">
+                        Existencia
+                    </p>
+                </div>
+                <div onclick="effectButtonE('tab-c')" id="tab-c" class="tab-existencia" style="width: 50%; background: rgb(229, 229, 229); cursor: pointer;" t-on-click="sin_existencia">
+                    <p style="margin: 15px 0 15px 0; font-size: 14px;">
+                        Sin Existencia
+                    </p>
+                </div>
+            </div>
+            <script>
+                function effectButtonE(id){
+                    Array.from(document.getElementsByClassName("tab-existencia")).forEach((value) => {
+                        document.getElementById(value.id).style.background = 'rgb(229, 229, 229)';
+                    });
+                    document.getElementById(id).style.background = '#d3d3d3';
+                }
+            </script>
+        </xpath>
+    </t>
+
+</templates>
