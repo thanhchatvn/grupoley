@@ -100,23 +100,35 @@ class AccountMoveCFDI(models.Model):
                                                          "Cash, Nominal Check, Credit Card, etc. Leave empty if unkown and the XML will show 'Unidentified'.",
                                                     compute= '_get_default_payment_method', store=True)
 
-    @api.depends('partner_id')
+      @api.depends('partner_id')
     def _get_default_usage(self):
         for rec in self:
             rec.ensure_one()
-            if rec.partner_id.x_l10n_mx_edi_usage:
-                rec.l10n_mx_edi_usage = rec.partner_id.x_l10n_mx_edi_usage
+            if rec.partner_shipping_id:
+                if rec.partner_shipping_id.x_l10n_mx_edi_usage:
+                    rec.l10n_mx_edi_usage = rec.partner_shipping_id.x_l10n_mx_edi_usage
+                else:
+                    rec.l10n_mx_edi_usage = 'P01'
             else:
-                rec.l10n_mx_edi_usage = 'P01'
+                if rec.partner_id.x_l10n_mx_edi_usage:
+                    rec.l10n_mx_edi_usage = rec.partner_id.x_l10n_mx_edi_usage
+                else:
+                    rec.l10n_mx_edi_usage = 'P01'
 
     @api.depends('partner_id')
     def _get_default_payment_method(self):
         for rec in self:
             rec.ensure_one()
-            if rec.partner_id.x_l10n_mx_edi_payment_method_id:
-                rec.l10n_mx_edi_payment_method_id = rec.partner_id.x_l10n_mx_edi_payment_method_id
+            if rec.partner_shipping_id:
+                if rec.partner_shipping_id.x_l10n_mx_edi_payment_method_id:
+                    rec.l10n_mx_edi_payment_method_id = rec.partner_shipping_id.x_l10n_mx_edi_payment_method_id
+                else:
+                    rec.l10n_mx_edi_payment_method_id = lambda self: self.env.ref('l10n_mx_edi.payment_method_otros', raise_if_not_found=False)
             else:
-                rec.l10n_mx_edi_payment_method_id = lambda self: self.env.ref('l10n_mx_edi.payment_method_otros', raise_if_not_found=False)
+                if rec.partner_id.x_l10n_mx_edi_payment_method_id:
+                    rec.l10n_mx_edi_payment_method_id = rec.partner_id.x_l10n_mx_edi_payment_method_id
+                else:
+                    rec.l10n_mx_edi_payment_method_id = lambda self: self.env.ref('l10n_mx_edi.payment_method_otros', raise_if_not_found=False)
 
 
 
