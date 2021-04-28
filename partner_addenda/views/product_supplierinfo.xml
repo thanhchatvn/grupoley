@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product_supplierinfo_sale_tree" model="ir.ui.view">
+            <field name="name">product.supplierinfo.sale.tree</field>
+            <field name="model">product.supplierinfo.sale</field>            
+            <field name="arch" type="xml">
+                <tree string="Additional info" create="true" delete="true" edit="false" editable="bottom" multi_edit="1">
+                    <field name="partner_name"/>
+                    <field name="product_name"/>
+                    <field name="company"/>
+                    <field name="product_code"/>
+                    <field name="vendor_code"/>
+                    <field name="uom"/>
+
+                </tree>
+            </field>
+        </record>
+        
+        <record id="product_supplierinfo_sale_form" model="ir.ui.view">
+            <field name="name">product.supplierinfo.sale.form</field>
+            <field name="model">product.supplierinfo.sale</field>
+            <field name="arch" type="xml">
+                <form string="Additional info" create="true" delete="true" edit="true">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="product_code" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_name"/>
+								<field name="product_name" placeholder="Product Name"/>
+                                <field name='company' placeholder="Company"/>
+                            </group>
+                            <group>
+                                <field name="product_code" placeholder="Product Code"/>
+                                <field name="vendor_code" placeholder="Vendor Code"/>
+                                <field name="uom" placeholder="Unit of measurement"/>
+                                <field name="uom_additional" placeholder="Unit of measurement additional"/>             
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="product_supplierinfo_sale_action" model="ir.actions.act_window">
+            <field name="name">Product additional info</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.supplierinfo.sale</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Assigned product with code  !
+                </p>
+            </field>
+        </record>
+
+		<menuitem
+			id="menu_product_supplierinfo_sale"
+			action="product_supplierinfo_sale_action"
+			name="Product additional info"
+			parent="sale.product_menu_catalog"			
+		/>
+    </data>
+</odoo>
