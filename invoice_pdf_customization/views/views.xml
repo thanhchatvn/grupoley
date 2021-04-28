@@ -259,6 +259,7 @@
 
             <xpath expr="//table[@name='invoice_line_table']" position="replace">
                 <br/>
+                <t t-set="cfdi_values" t-value="o.calculate_cfdi_values_pdf()"></t>
                 <table class="table table-xsm o_main_table" style="font-size: 14px" name="invoice_line_table">
                     <thead>
                         <tr class="text-center">
