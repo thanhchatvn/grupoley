@@ -259,7 +259,8 @@
 
             <xpath expr="//table[@name='invoice_line_table']" position="replace">
                 <br/>
-                <table class="table table-xsm o_main_table" name="invoice_line_table">
+                <t t-set="cfdi_values" t-value="o.calculate_cfdi_values_pdf()"></t>
+                <table class="table table-xsm o_main_table" style="font-size: 14px" name="invoice_line_table">
                     <thead>
                         <tr class="text-center">
                             <th name="th_quantity"><span>CANT.</span></th>
@@ -316,7 +317,7 @@
                                     <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                         <t t-esc="cfdi_values[line.id]['discount_amount_price_list']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"></t>
                                     </td>
-                                    <td t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                    <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                         <span class="text-nowrap">
                                             <t t-esc="cfdi_values[line.id]['discount_amount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"></t>
                                         </span>
