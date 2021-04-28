@@ -27,6 +27,7 @@
         # 'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
+        'views/custom_report_invoice_report_document.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
