@@ -1,0 +1,101 @@
+<odoo>
+    <data>
+
+        <template id="report_sale_order_inherit" inherit_id="purchase.report_purchaseorder_document">
+            <xpath expr="//t[@t-set='address']" position="replace">
+                <t t-set='address'></t>
+            </xpath>
+
+            <xpath expr="//div[hasclass('page')]" position="before">
+                <section class="addresses">
+                    <div class="container text-center">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <div>
+                                        <span t-field="o.company_id.partner_id.name"/>,
+                                    </div>
+                                    <div>
+                                        Col. <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,
+                                    </div>
+                                    <div>
+                                        <span t-field="o.company_id.partner_id.street"/>,
+                                    </div>
+                                    <div>
+                                        <span t-field="o.company_id.partner_id.city"/>, <span t-field="o.company_id.partner_id.state_id.name"/>, <span t-field="o.company_id.partner_id.zip"/>
+                                    </div>
+                                    <div t-if="o.company_id.partner_id.vat">
+                                        <t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label">R.F.C. </t>
+                                        <t t-else="">Tax ID</t>: <span t-field="o.company_id.partner_id.vat"/></div>
+                                    ORDEN DE COMPRA
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>ORDEN No. </div>
+                                <br/>
+                                <div>FECHA: </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="customer">
+                    <div class="container">
+                        <div class="row" style="border-top: solid 1px; border-bottom: solid 1px;">
+                            <div class="col-12">
+                                <div>
+                                    <div>
+                                        PROVEEDOR: <span t-field="o.partner_id.name"/>
+                                    </div>
+                                    <div>
+                                        DOMICILIO: <span t-field="o.partner_id.street"/>,
+                                    </div>
+                                    <div>
+                                        Col. <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,
+                                    </div>
+                                    <div>
+                                        LUGAR: <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.company_id.partner_id.zip"/>
+                                    </div>
+                                    <div>
+                                        CEL: <span t-field="o.partner_id.mobile"/>
+                                    </div>
+                                    <div>
+                                        No. PROVEEDOR: <span t-field="o.partner_id.ref"/>
+                                    </div>
+                                    <div>
+                                        <div t-if="o.partner_id.vat">
+                                            <t t-if="o.partner_id.country_id.vat_label" t-esc="o.partner_id.country_id.vat_label" id="inv_tax_id_label">R.F.C. </t>
+                                            <t t-else="">Tax ID</t>: <span t-field="o.company_id.partner_id.vat"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="buyer">
+                    <div class="container">
+                        <div class="row" style="border-bottom: solid 1px;">
+                            <div class="col-12">
+                                <div>
+                                    <div>
+                                        COMPRADOR: <span t-field="o.partner_id.name"/>
+                                    </div>
+                                    <div>
+                                        CONDICIONES: <span t-field="o.partner_id.street"/>,
+                                    </div>
+                                    <div>
+                                        ALMACÉN <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,
+                                    </div>
+                                    <div>
+                                        MEDIO DE ENVÍO: <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.company_id.partner_id.zip"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </xpath>
+        </template>
+    </data>
+</odoo>
