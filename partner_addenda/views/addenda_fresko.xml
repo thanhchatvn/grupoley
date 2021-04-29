@@ -7,30 +7,10 @@
       <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
       <t t-set="pos_model" t-value="'pos_order_ids' in record._fields"/>
       <t t-set="pos_id" t-value="record.mapped('pos_order_ids') if pos_model else False"/> 
-    <requestForPayment
-            t-att-DeliveryDate="record.invoice_date"
-            documentStatus="ORIGINAL"
-            documentStructureVersion="AMC7.1"
-            contentVersion="1.3.1"
-            type="SimpleInvoiceType"            
-    >
-        
-        <t t-if="pos_id">
-            <currency t-att-currencyISOCode="record.currency_id.name">
-                <currencyFunction t-esc="BILLING_CURRENCY"/>
-                <rateOfChange t-esc="pos_id.currency_rate"/>
-            </currency>
-        </t>
-        
-        <t t-if="sale_id">
-            <currency t-att-currencyISOCode="record.currency_id.name">
-                <currencyFunction t-esc="BILLING_CURRENCY"/>
-                <rateOfChange t-esc="sale_id.currency_rate"/>
-            </currency>
-        </t>
+    <requestForPayment t-att-DeliveryDate="record.invoice_date" documentStatus="ORIGINAL" documentStructureVersion="AMC7.1" contentVersion="1.3.1" type="SimpleInvoiceType">
         
         <requestForPaymentIdentification>
-            <entityType t-esc="INVOICE"/>
+            <entityType>INVOICE</entityType>
             <uniqueCreatorIdentification t-esc="record.payment_reference"/>
         </requestForPaymentIdentification>
         
@@ -46,10 +26,6 @@
         <AdditionalInformation>
             <referenceIdentification type="ATZ" t-esc="record.x_additional_reference"/>
         </AdditionalInformation>
-
-        <DeliveryNote>
-            <referenceIdentification t-esc="record.x_delivery_reference"/>
-        </DeliveryNote>
         
         <t t-set="customer_seller" t-value=""/>
         <t t-set="buyer_gln" t-value=""/>
@@ -60,9 +36,16 @@
         <t t-set="city" t-value=""/>
         <t t-set="state" t-value=""/>
         <t t-set="zip" t-value=""/>
-        
+        <t t-set="center" t-value=""/>
         
         <t t-if="record.partner_id.is_company">
+          
+                    <t t-if="record.partner_shipping_id">
+                         <t t-set="center" t-value="record.partner_id.x_center"/>
+                    </t>
+                    <t t-if="sale_id.partner_shipping_id">
+                        <t t-set="center" t-value="sale_id.partner_shipping_id.x_center"/>
+                    </t>
 
                     <!-- Asignar gln de cliente -->
                     <t t-if="record.partner_id.x_gln">
@@ -114,6 +97,17 @@
 
                 <!-- Verificar si el cliente no es una empresa y asignar el numero de la entidad -->
                 <t t-if="record.partner_id.is_company == False">
+                  
+                    <t t-if="record.partner_id">
+                         <t t-set="center" t-value="record.partner_id.x_center"/>
+                         <t t-set="RI" t-value="record.partner_id.x_edi_identification"/>
+
+                    </t>
+                    <t t-if="sale_id.partner_id">
+                        <t t-set="center" t-value="sale_id.partner_id.x_center"/>
+                        <t t-set="RI" t-value="sale_id.partner_id.x_edi_identification"/>
+                    </t>
+                    
                     <t t-if="record.partner_id.parent_id.x_gln">
                         <t t-set="buyer_gln" t-value="record.partner_id.parent_id.x_gln"/>
                     </t>
@@ -176,6 +170,10 @@
                         </t>
                     </t>
                 </t> 
+                
+        <DeliveryNote>
+            <referenceIdentification t-esc="str(center) + '-' + str(record.x_delivery_reference) + '-' + str(01) + '-' + str(000)"/>
+        </DeliveryNote>
         
         <buyer>
             <gln t-esc="buyer_gln"/>
@@ -199,7 +197,7 @@
         <t t-if="pos_id">
             <t t-set="payment_term" t-value="0"/>
             <currency t-att-currencyISOCode="record.currency_id.name">
-                <currencyFunction t-esc="BILLING_CURRENCY"/>
+                <currencyFunction>BILLING_CURRENCY</currencyFunction>
                 <rateOfChange t-esc="pos_id.currency_rate"/>
             </currency>
         </t>
@@ -207,12 +205,12 @@
         <t t-if="sale_id">
             <t t-set="payment_term" t-value="sale_id.payment_term_id.line_ids.days"/>
             <currency t-att-currencyISOCode="record.currency_id.name">
-                <currencyFunction t-esc="BILLING_CURRENCY"/>
+                <currencyFunction>BILLING_CURRENCY</currencyFunction>
                 <rateOfChange t-esc="sale_id.currency_rate"/>
             </currency>
         </t>
         
-        <paymentTerms t-att-PaymentTermsRelationTime="REFERENCE_AFTER" t-att-paymentTermsEvent="DATE_OF_INVOICE">
+        <paymentTerms PaymentTermsRelationTime="REFERENCE_AFTER" paymentTermsEvent="DATE_OF_INVOICE">
             <netPayment netPaymentTermsType="BASIC_NET">
                 <paymentTimePeriod>
                     <timePeriodDue timePeriod="DAYS"/>
@@ -293,14 +291,14 @@
                     </t>                        
                 </t>                    
 
-                <invoiceQuantity t-att-unitOfMeasure="uom" t-esc="o.quantity"/>
+                <invoicedQuantity t-att-unitOfMeasure="uom" t-esc="o.quantity"/>
                 
                 <grossPrice>
                     <Amount t-esc="o.price_unit"/>
                 </grossPrice>
 
                 <netPrice>
-                    <t t-if="o.quantity > 0">
+                    <t t-if="o.quantity &gt; 0">
                         <Amount t-esc="round(o.price_subtotal / o.quantity,2)"/>
                     </t>                    
                 </netPrice>

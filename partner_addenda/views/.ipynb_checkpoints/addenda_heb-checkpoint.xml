@@ -7,9 +7,18 @@
             <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
             <t t-set="pos_model" t-value="'pos_order_ids' in record._fields"/>
             <t t-set="pos_id" t-value="record.mapped('pos_order_ids') if pos_model else False"/>
+            
+            <t t-set="type_document" t-value="" /> 
+            <t t-if="record.type_name == 'Facturas de clientes'">
+              <t t-set="type_document" t-value="'Factura'"/>
+            </t>
+            <t t-elif="record.type_name == 'Nota de crédito'">
+              <t t-set="type_document" t-value="'Nota de crédito'"/>
+            </t>
+            
             <if:FacturaInterfactura xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                                     xmlns:if="https://www.interfactura.com/Schemas/Documentos" 
-                                    TipoDocumento="Factura">
+                                    t-att-TipoDocumento="str(type_document)">
                 
                 <!-- Valores para relacionar el nombre de como nos conoce el cliente -->
                 <t t-set="customer_seller" t-value=""/>
@@ -18,14 +27,17 @@
                 <t t-set="street_name" t-value=""/>
                 <t t-set="street_number" t-value=""/>
                 <t t-set="city" t-value=""/>
+                <t t-set="RI" t-value=""/>
 
                 <t t-if="record.partner_id.is_company">
                     
                     <t t-if="record.partner_shipping_id">
                          <t t-set="center" t-value="record.partner_id.x_center"/>
+                         <t t-set="RI" t-value="record.partner_id.x_edi_identification"/>
                     </t>
                     <t t-if="sale_id.partner_shipping_id">
-                         <t t-set="center" t-value="sale_id.partner_shipping_id.x_center"/>
+                        <t t-set="center" t-value="sale_id.partner_shipping_id.x_center"/>
+                        <t t-set="RI" t-value="sale_id.partner_shipping_id.x_edi_identification"/>
                     </t>
 
                     <!-- Asignar gln de cliente -->
@@ -62,9 +74,12 @@
                     
                     <t t-if="record.partner_id">
                          <t t-set="center" t-value="record.partner_id.x_center"/>
+                         <t t-set="RI" t-value="record.partner_id.x_edi_identification"/>
+
                     </t>
                     <t t-if="sale_id.partner_id">
                         <t t-set="center" t-value="sale_id.partner_id.x_center"/>
+                        <t t-set="RI" t-value="sale_id.partner_id.x_edi_identification"/>
                     </t>
                     
                     <t t-if="record.partner_id.parent_id.x_gln">
@@ -120,7 +135,7 @@
                  
                 <if:Emisor t-att-RI="record.company_id.partner_id.x_edi_identification" t-att-NumProveedor="customer_seller"/>
                 
-                <if:Receptor t-att-RI="record.partner_id.x_edi_identification"/>
+                <if:Receptor t-att-RI="RI"/>
                 
                 <if:Encabezado t-att-Total="record.amount_untaxed"
                                t-att-Moneda="record.currency_id.name"
@@ -205,15 +220,15 @@
                                    t-att-Cantidad="o.quantity" 
                                    t-att-Concepto="o.product_id.name" 
                                    t-att-PUnitario="o.price_unit" 
-                                   t-att-FactorEmpaque="o.product_uom_id.factor_inv"
-                                   t-att-UnitarioLista="o.price_unit"
+                                   t-att-FactorEmpaque="int(o.product_uom_id.factor_inv)"
+                                   t-att-CUnitarioLista="o.price_unit"
                                    t-att-U_x0020_de_x0020_M="uom"
                                    t-att-EAN13="o.product_id.barcode" 
                                    Codigo=""/>
                     </t>   
                     
                 </if:Encabezado>                
-            </if:FacturaInterfactura>       
+            </if:FacturaInterfactura>
         </template>
 
         <record id="l10n_mx_edi_addenda_heb" model="ir.ui.view">
