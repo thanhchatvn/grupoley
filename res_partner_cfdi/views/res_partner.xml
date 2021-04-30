@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    /*************************************************************************
+    * Description
+    * Se modifico la vista del módelo 'res.partner' para añadir un campo nuevo que nos
+      permita seleccionar el uso de CFDI dentro del catalogo de contactos y poder asignarlo
+      individualmente.
+      Se modifico la vista de módelo 'res.partner' para añadir un campo nuevo que nos
+      permita seleccionar el metodo de pago dentro del catalogo de contactos y poder asignarlo
+      individualmente.
+    * 1.1
+    * Author:
+    * Erick Enrique Abrego Gonzalez
+    * Date:
+    * 21/04/2021
+    *************************************************************************/
+-->
+<odoo>
+    <data>
+        <record id="res_partner_form_cfdi_custom" model="ir.ui.view">
+            <field name="name">res.partner.form.cfdi</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='property_account_position_id']" position="after">
+                    <field name="x_l10n_mx_edi_usage"/>
+                    <field name="x_l10n_mx_edi_payment_method_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
