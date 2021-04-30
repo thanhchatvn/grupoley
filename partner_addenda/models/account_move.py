@@ -24,18 +24,33 @@ class AccountMove(models.Model):
     @api.depends('partner_id','invoice_line_ids.product_id')
     def _get_vendor_code(self):
         for rec in self:
+            rec.ensure_one()
             if rec.invoice_line_ids:
                 for product in rec.invoice_line_ids:
                     if product.product_id:
                         for code in product.product_id.x_product_supplierinfo:
-                            if code.vendor_code and code.partner_name == rec.partner_id:
-                                vendor = code.vendor_code
-                                rec.x_vendor_code = vendor
-                                break
+                            if rec.partner_shipping_id:
+                                if code.vendor_code and code.partner_name == rec.partner_shipping_id:
+                                    vendor = code.vendor_code
+                                    self.x_vendor_code = vendor
+                                    break
+                                else:                                
+                                    self.x_vendor_code = ""
+                                    continue
                             else:
-                                continue
+                                if code.vendor_code and code.partner_name == rec.partner_id:
+                                    vendor = code.vendor_code
+                                    self.x_vendor_code = vendor
+                                    break
+                                else:                                
+                                    self.x_vendor_code = ""
+                                    continue
+                                
+                    else:                        
+                        self.x_vendor_code = " "
+                        
             else:
-                rec.x_vendor_code = ""
+                self.x_vendor_code = " "
 
     
     

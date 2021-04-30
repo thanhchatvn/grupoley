@@ -4,14 +4,8 @@
     <data>
         <template id="l10n_mx_edi_addenda_casa_ley" name="Addenda Casa Ley">
             <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
-            <t t-set="sale_id"
-               t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
-            <cley:ADDENDA_CLEY
-                    VERSION="1.0"
-                    xmlns:cley="http://servicios.casaley.com.mx/factura_electronica"
-                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                    CORREO="Facturacion@laguacamaya.com"
-                    xsi:SchemaLocation="http://servicios.casaley.com.mx/factura_electronica http://servicios.casaley.com.mx/factura_electronica/XSD_ADDENDA_CASALEY.xsd">
+            <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+            <cley:ADDENDA_CLEY xmlns:cley="http://servicios.casaley.com.mx/factura_electronica" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" VERSION="1.0" CORREO="Facturacion@laguacamaya.com" xsi:schemaLocation="http://servicios.casaley.com.mx/factura_electronica http://servicios.casaley.com.mx/factura_electronica/XSD_ADDENDA_CASALEY.xsd">
                 <cley:MERCADERIAS>
 
                     <!-- Valores para relacionar el nombre de como nos conoce el cliente -->
@@ -69,10 +63,7 @@
                     <!-- Descuento total -->
                     <t t-set="desc" t-value="total_without_disc - record.amount_untaxed"/>
 
-                    <cley:PA t-att-DESCUENTO="round(desc, 2)" NO_REMISION="" PROVEEDOR-SAP="000R104704"
-                             t-att-FECHA_ENTRADA="record.x_delivery_reference_date"
-                             t-att-NUMERO_ENTRADA="record.x_delivery_reference" t-att-CENTRO="center"
-                             t-att-PROVEEDOR="record.x_vendor_code"/>
+                    <cley:PA t-att-DESCUENTO="round(desc, 2)" t-att-NO_REMISION="record.x_order_reference" PROVEEDOR_SAP="000R104704" t-att-FECHA_ENTRADA="record.x_delivery_reference_date" t-att-NUMERO_ENTRADA="record.x_delivery_reference" t-att-CENTRO="center" t-att-PROVEEDOR="record.x_vendor_code"/>
 
                     <!-- Iteradores y contenedores -->
                     <t t-set="i" t-value="1"/>
@@ -99,10 +90,10 @@
                                 </t>
                             </t>
 
-                            <t t-if="sale_id.partner_id.x_product_info">
-                                <t t-foreach="sale_id.partner_id.x_product_info" t-as="l">
-                                    <t t-if="sale_id.partner_id == l.partner_name">
-                                        <t t-if="sale_id.company_id == l.company">
+                            <t t-if="record.partner_shipping_id.x_product_info">
+                                <t t-foreach="record.partner_shipping_id.x_product_info" t-as="l">
+                                    <t t-if="record.partner_shipping_id == l.partner_name">
+                                        <t t-if="record.company_id == l.company">
                                             <t t-if="o.product_id == l.product_name">
                                                 <t t-set="uom" t-value="l.uom"/>
                                                 <t t-set="product_code" t-value="l.product_code"/>
@@ -127,10 +118,10 @@
                                 </t>
                             </t>
 
-                            <t t-if="sale_id.partner_id.parent_id.x_product_info">
-                                <t t-foreach="sale_id.partner_id.parent_id.x_product_info" t-as="l">
-                                    <t t-if="sale_id.partner_id.parent_id == l.partner_name">
-                                        <t t-if="sale_id.company_id == l.company">
+                            <t t-if="record.partner_shipping_id.x_product_info">
+                                <t t-foreach="record.partner_shipping_id.x_product_info" t-as="l">
+                                    <t t-if="record.partner_shipping_id == l.partner_name">
+                                        <t t-if="record.company_id == l.company">
                                             <t t-if="o.product_id == l.product_name">
                                                 <t t-set="uom" t-value="l.uom"/>
                                                 <t t-set="product_code" t-value="l.product_code"/>
@@ -142,10 +133,7 @@
                         </t>
 
                         <!-- Detalle del pedido -->
-                        <cley:DETALLE DESCUENTO="0.00" TASA_IEPS="0" IMPUESTO_IEPS="0.00"
-                                      TASA_IVA="0" IMPUESTO_IVA="0.00"
-                                      t-att-PRECIO_LISTA="o.price_unit" t-att-UMC="uom"
-                                      t-att-CANTIDAD="o.quantity" t-att-RENGLON="i">
+                        <cley:DETALLE DESCUENTO="0.00" TASA_IEPS="0" IMPUESTO_IEPS="0.00" TASA_IVA="0" IMPUESTO_IVA="0.00" t-att-PRECIO_LISTA="o.price_unit" t-att-UMC="uom" t-att-CANTIDAD="o.quantity" t-att-RENGLON="i">
 
                             <t t-set="i" t-value="i+1"/>
                             <cley:CODBAR_ARTICULO t-att-COD_BAR="o.product_id.barcode"/>
