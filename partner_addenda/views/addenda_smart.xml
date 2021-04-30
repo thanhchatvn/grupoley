@@ -9,8 +9,8 @@
       <t t-set="pos_id" t-value="record.mapped('pos_order_ids') if pos_model else False"/> 
     <requestForPayment xmlns="http://repository.edicoment.com/schemas/mx/cfd/addenda" type="SimpleInvoiceType" contentVersion="1.3.1" documentStructureVersion="AMC7.1" documentStatus="ORIGINAL" t-att-DeliveryDate="record.invoice_date" schemaLocation="http://repository.edicomnet.com/schemas/mx/cfd/addenda http://repository.edicomnet.com/schemas/mx/cfd/addenda/requestForPayment.xsd">
         <requestForPaymentIdentification>
-            <entityType t-esc="INVOICE"/>
-            <uniqueCreatorIdentification t-field="record.payment_reference"/>
+            <entityType>INVOICE</entityType>
+            <uniqueCreatorIdentification t-esc="record.payment_reference"/>
         </requestForPaymentIdentification>
         
         <specialInstruction code="ZZZ">
@@ -19,13 +19,13 @@
 
         <orderIdentification>
             <referenceIdentification type="ON" t-esc="record.x_order_reference"/>
-            <ReferenceDate t-field="record.x_order_reference_date"/>
+            <ReferenceDate t-esc="record.x_order_reference_date"/>
         </orderIdentification>
 
 
         <DeliveryNote>
             <referenceIdentification t-esc="record.x_delivery_reference"/>
-            <referenceDate t-field="record.x_delivery_reference_date"/>
+            <referenceDate t-esc="record.x_delivery_reference_date"/>
         </DeliveryNote>
 
         <AdditionalInformation>
@@ -43,9 +43,17 @@
         <t t-set="city" t-value=""/>
         <t t-set="state" t-value=""/>
         <t t-set="zip_code" t-value=""/>
+        <t t-set="center" t-value=""/>
         
         
         <t t-if="record.partner_id.is_company">
+            
+            <t t-if="record.partner_shipping_id">
+                <t t-set="center" t-value="record.partner_id.x_center"/>
+            </t>
+            <t t-if="record.partner_shipping_id">
+                <t t-set="center" t-value="record.partner_shipping_id.x_center"/>
+            </t>
 
             <!-- Asignar gln de cliente -->
             <t t-if="record.partner_id.x_gln">
@@ -70,18 +78,18 @@
                 <t t-set="zip_code" t-value="record.partner_id.zip"/>
             </t>
             
-            <t t-if="sale_id.partner_id">
-                <t t-set="name" t-value="sale_id.partner_shipping_id.name"/>
-                <t t-set="street_name" t-value="sale_id.partner_shipping_id.street_name"/>
-                <t t-set="street_number" t-value="sale_id.partner_shipping_id.l10n_mx_edi_colony"/>
-                <t t-if="sale_id.partner_shipping_id.city_id">
-                    <t t-set="city" t-value="sale_id.partner_shipping_id.city_id.name"/>
+            <t t-if="record.partner_shipping_id">
+                <t t-set="name" t-value="record.partner_shipping_id.name"/>
+                <t t-set="street_name" t-value="record.partner_shipping_id.street_name"/>
+                <t t-set="street_number" t-value="record.partner_shipping_id.l10n_mx_edi_colony"/>
+                <t t-if="record.partner_shipping_id.city_id">
+                    <t t-set="city" t-value="record.partner_shipping_id.city_id.name"/>
                 </t>
-                <t t-if="sale_id.partner_shipping_id.city">
-                    <t t-set="city" t-value="sale_id.partner_shipping_id.city"/>
+                <t t-if="record.partner_shipping_id.city">
+                    <t t-set="city" t-value="record.partner_shipping_id.city"/>
                 </t>
-                    <t t-set="state" t-value="sale_id.partner_shipping_id.state_id.code"/>
-                    <t t-set="zip_code" t-value="sale_id.partner_shipping_id.zip"/>
+                    <t t-set="state" t-value="record.partner_shipping_id.state_id.code"/>
+                    <t t-set="zip_code" t-value="record.partner_shipping_id.zip"/>
             </t>
 
             <t t-if="record.partner_id.x_partner_code">
@@ -97,6 +105,13 @@
 
                 <!-- Verificar si el cliente no es una empresa y asignar el numero de la entidad -->
         <t t-if="record.partner_id.is_company == False">
+          
+            <t t-if="record.partner_id">
+                <t t-set="center" t-value="record.partner_id.x_center"/>
+            </t>
+            <t t-if="sale_id.partner_id">
+                <t t-set="center" t-value="sale_id.partner_id.x_center"/>
+            </t>
             <t t-if="record.partner_id.parent_id.x_gln">
                 <t t-set="buyer_gln" t-value="record.partner_id.parent_id.x_gln"/>
             </t>
@@ -126,17 +141,17 @@
                 <t t-set="zip_code" t-value="record.partner_id.zip"/>
             </t>
                     
-            <t t-if="sale_id.partner_id">
-                <t t-set="name" t-value="sale_id.partner_shipping_id.name"/>
-                <t t-set="street_name" t-value="sale_id.partner_shipping_id.street_name"/>
-                <t t-set="street_number" t-value="sale_id.partner_shipping_id.l10n_mx_edi_colony"/>
-                <t t-if="sale_id.partner_shipping_id.city_id">
-                    <t t-set="city" t-value="sale_id.partner_shipping_id.city_id.name"/>
+            <t t-if="record.partner_shipping_id">
+                <t t-set="name" t-value="record.partner_shipping_id.name"/>
+                <t t-set="street_name" t-value="record.partner_shipping_id.street_name"/>
+                <t t-set="street_number" t-value="record.partner_shipping_id.l10n_mx_edi_colony"/>
+                <t t-if="record.partner_shipping_id.city_id">
+                    <t t-set="city" t-value="record.partner_shipping_id.city_id.name"/>
                 </t>
-                <t t-if="sale_id.partner_shipping_id.city">
-                    <t t-set="city" t-value="sale_id.partner_shipping_id.city"/>
-                </t>                        <t t-set="state" t-value="sale_id.partner_shipping_id.state_id.code"/>
-                <t t-set="zip_code" t-value="sale_id.partner_shipping_id.zip"/>
+                <t t-if="record.partner_shipping_id.city">
+                    <t t-set="city" t-value="record.partner_shipping_id.city"/>
+                </t>                        <t t-set="state" t-value="record.partner_shipping_id.state_id.code"/>
+                <t t-set="zip_code" t-value="record.partner_shipping_id.zip"/>
             </t>
 
             <t t-if="record.partner_id.parent_id.x_partner_code">
@@ -170,10 +185,10 @@
         </seller>
 
         <shipTo>
-            <gln t-esc="ship_to_gln"/>
+            <gln t-esc="center"/>
             <NameAndAddress>
-                <name t-esc="ship_to_gln"/>
-                <name t-esc="ship_to_gln"/>                    
+                <name t-esc="center"/>
+                <name t-esc="center"/>                    
             </NameAndAddress>
         </shipTo>
         
@@ -197,7 +212,7 @@
                     <t t-set="i" t-value="i+1"/>
                 </tradeItemIdentification>
 
-                <tradeItemDescriptionInformation language="ES">
+                <tradeItemDescriptionInformation>
                     <longText t-esc="o.product_id.name"/>
                 </tradeItemDescriptionInformation>
                 
@@ -254,7 +269,7 @@
                     </t>
                 </t>
 
-                <invoiceQuantity t-att-unitOfMeasure="uom" t-field="o.quantity"/>
+                <invoicedQuantity t-att-unitOfMeasure="uom" t-esc="round(o.quantity,2)"/>
 
                 <grossPrice>
                     <Amount t-esc="o.price_unit"/>
@@ -262,7 +277,7 @@
 
                 <netPrice>
                     <t t-if="o.quantity &gt; 0">
-                        <Amount t-esc="round(o.price_subtotal / o.quantity,2)"/>
+                        <Amount t-esc="o.price_unit"/>
                     </t>                    
                 </netPrice>
 
@@ -273,7 +288,7 @@
                     </grossAmount>
 
                     <netAmount>
-                        <Amount t-esc="o.price_subtotal"/>
+                        <Amount t-esc="round(o.price_unit * o.quantity,2)"/>
                     </netAmount>
 
                 </totalLineAmount>
@@ -289,20 +304,15 @@
         <totalAmount>
             <Amount t-esc="round(total_without_disc,2)"/>
         </totalAmount>
-
-        <totalAllowenceCharge allowenceOrChargeType="ALLOWANCE">
-            <t t-set="total_allowance_charge" t-value="total_without_disc - record.amount_untaxed"/>
-            <Amount t-esc="round(total_allowance_charge,2)"/>
-        </totalAllowenceCharge>
         
         <baseAmount>
-            <Amount t-esc="record.amount_untaxed"/>
+            <Amount t-esc="round(total_without_disc,2)"/>
         </baseAmount>
 
         <tax type="VAT">
-            <taxPercentage t-esc="record.invoice_line_ids.tax_ids.amount"/>
-            <taxAmount t-esc="record.amount_tax"/>
-            <taxCategory t-esc="record.invoice_line_ids.tax_ids.tax_group_id.name"/>  
+            <taxPercentage/>
+            <taxAmount/>
+            <taxCategory>TRANSFERIDO</taxCategory>
         </tax>
 
         <payableAmount>
