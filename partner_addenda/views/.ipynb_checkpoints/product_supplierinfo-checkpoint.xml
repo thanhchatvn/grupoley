@@ -11,8 +11,6 @@
                     <field name="company"/>
                     <field name="product_code"/>
                     <field name="vendor_code"/>
-                    <field name="uom"/>
-
                 </tree>
             </field>
         </record>
@@ -36,9 +34,7 @@
                             </group>
                             <group>
                                 <field name="product_code" placeholder="Product Code"/>
-                                <field name="vendor_code" placeholder="Vendor Code"/>
-                                <field name="uom" placeholder="Unit of measurement"/>
-                                <field name="uom_additional" placeholder="Unit of measurement additional"/>             
+                                <field name="vendor_code" placeholder="Vendor Code"/>                                       
                             </group>
                         </group>
                     </sheet>

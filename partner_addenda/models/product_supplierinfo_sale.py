@@ -10,9 +10,7 @@ class ProductSupplierinfoSale(models.Model):
     
     partner_name = fields.Many2one('res.partner', ondelete='cascade', required=True)
     product_name = fields.Many2one('product.product', ondelete='cascade', required=True)     
-    product_code = fields.Char(string='Product code', help='Code that customer know the product')
-    uom = fields.Char(string='UOM', help='Unit Of Measurement')
-    uom_additional = fields.Char(string='UOM Additional', help='Unit Of Measurement Additional')
+    product_code = fields.Char(string='Product code', help='Code that customer know the product')    
     company = fields.Many2one('res.company','Company', default=lambda self: self.env.company)
     vendor_code = fields.Char(string="Vendor code", help="Code of the vendor assigned by the customer")
 
