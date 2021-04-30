@@ -100,7 +100,7 @@ class AccountMoveCFDI(models.Model):
                                                          "Cash, Nominal Check, Credit Card, etc. Leave empty if unkown and the XML will show 'Unidentified'.",
                                                     compute= '_get_default_payment_method', store=True)
 
-      @api.depends('partner_id')
+    @api.depends('partner_id')
     def _get_default_usage(self):
         for rec in self:
             rec.ensure_one()
