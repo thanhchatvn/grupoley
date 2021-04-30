@@ -63,7 +63,7 @@
                     <!-- Descuento total -->
                     <t t-set="desc" t-value="total_without_disc - record.amount_untaxed"/>
 
-                    <cley:PA t-att-DESCUENTO="round(desc, 2)" t-att-NO_REMISION="record.x_order_reference" PROVEEDOR_SAP="000R104704" t-att-FECHA_ENTRADA="record.x_delivery_reference_date" t-att-NUMERO_ENTRADA="record.x_delivery_reference" t-att-CENTRO="center" t-att-PROVEEDOR="record.x_vendor_code"/>
+                    <cley:PA t-att-DESCUENTO="round(desc, 2)" t-att-NO_REMISION="record.x_order_reference" PROVEEDOR_SAP="000R104704" t-att-FECHA_DE_ENTRADA="record.x_delivery_reference_date" t-att-NUMERO_ENTRADA="record.x_delivery_reference" t-att-CENTRO="center" t-att-PROVEEDOR="record.x_vendor_code"/>
 
                     <!-- Iteradores y contenedores -->
                     <t t-set="i" t-value="1"/>
