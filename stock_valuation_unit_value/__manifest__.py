@@ -22,7 +22,6 @@
     'depends': ['base','stock','account'],
 
     'data': [
-        'views/stock_valuation.xml',
     ],
 
     'demo': [
