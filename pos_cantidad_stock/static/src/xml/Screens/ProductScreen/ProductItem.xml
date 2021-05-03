@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates id="pos_cantidad_stock" xml:space="preserve">
+
+    <t t-name="ProductItem" t-inherit="point_of_sale.ProductItem" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('price-tag')]" position="after">
+            <span class="stock-tag">
+                <t t-esc="cantidad"/>
+            </span>
+<!--            <span class="qty-tag">-->
+<!--                <t t-esc="rounded_qty"/>-->
+<!--            </span>-->
+        </xpath>
+    </t>
+
+</templates>
