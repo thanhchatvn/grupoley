@@ -8,16 +8,12 @@
                t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
             <t t-set="pos_model" t-value="'pos_order_ids' in record._fields"/>
             <t t-set="pos_id" t-value="record.mapped('pos_order_ids') if pos_model else False"/>
-            <requestForPayment
-                    t-att-DeliveryDate="sale_id.effective_date"
-                    documentStatus="ORIGINAL"
-                    documentStructureVersion="AMC7.1"
-                    contentVersion="1.3.1"
-                    type="SimpleInvoiceType"
-            >
+            <requestForPayment t-att-DeliveryDate="record.invoice_date" type="SimpleInvoiceType"
+                               documentStructureVersion="AMC7.1"
+                               contentVersion="1.3.1" documentStatus="ORIGINAL">
                 <requestForPaymentIdentification>
-                    <entityType t-esc="INVOICE"/>
-                    <uniqueCreatorIdentification t-esc="record.payment_reference"/>
+                    <entityType t-esc="'INVOICE'"/>
+                    <uniqueCreatorIdentification t-esc="str(record.payment_reference)"/>
                 </requestForPaymentIdentification>
 
                 <specialInstruction code="ZZZ">
@@ -25,21 +21,19 @@
                 </specialInstruction>
 
                 <orderIdentification>
-                    <referenceIdentification type="ON" t-esc="record.x_order_reference"/>
-                    <ReferenceDate t-esc="record.x_order_reference_date"/>
+                    <referenceIdentification type="ON" t-esc="str(record.x_order_reference)"/>
+                    <ReferenceDate t-esc="str(record.x_order_reference_date)"/>
                 </orderIdentification>
 
                 <AdditionalInformation>
-                    <referenceIdentification type="ATZ" t-esc="record.x_additional_reference"/>
+                    <referenceIdentification type="ATZ" t-esc="str(record.x_additional_reference)"/>
                 </AdditionalInformation>
 
                 <DeliveryNote>
-                    <referenceIdentification t-esc="record.x_delivery_reference"/>
-                    <referenceDate t-esc="record.x_delivery_reference_date"/>
+                    <referenceIdentification t-esc="str(record.x_delivery_reference)"/>
+                    <ReferenceDate t-esc="str(record.x_delivery_reference_date)"/>
                 </DeliveryNote>
 
-
-                <!-- Valores para relacionar el nombre de como nos conoce el cliente -->
                 <t t-set="customer_seller" t-value=""/>
                 <t t-set="buyer_gln" t-value=""/>
                 <t t-set="ship_to_gln" t-value=""/>
@@ -50,34 +44,23 @@
                 <t t-set="state" t-value=""/>
                 <t t-set="zip_code" t-value=""/>
 
-                <t t-if="record.partner_id.is_company">
-
-                    <!-- Asignar gln de cliente -->
-                    <t t-if="record.partner_id.x_gln">
-                        <t t-set="buyer_gln" t-value="record.partner_id.x_gln"/>
+                <t t-if="record.partner_shipping_id">
+                    <t t-set="buyer_gln" t-value="record.partner_id.x_gln"/>
+                    <t t-set="ship_to_gln" t-value="record.partner_shipping_id.x_gln"/>
+                    <t t-set="name" t-value="record.partner_shipping_id.name"/>
+                    <t t-set="street_name" t-value="record.partner_shipping_id.street_name"/>
+                    <t t-set="street_number" t-value="record.partner_shipping_id.street_number"/>
+                    <t t-if="record.partner_shipping_id.city_id">
+                        <t t-set="city" t-value="record.partner_shipping_id.city_id.name"/>
                     </t>
-                    <t t-if="record.partner_shipping_id.x_gln">
-                        <t t-set="ship_to_gln" t-value="record.partner_shipping_id.x_gln"/>
+                    <t t-if="record.partner_shipping_id.city">
+                        <t t-set="city" t-value="record.partner_shipping_id.city"/>
                     </t>
-
-                    <!-- Asignar direccion de cliente -->
-                    <t t-if="record.partner_id">
-                        <t t-set="name" t-value="record.partner_id.name"/>
-                        <t t-set="street_name" t-value="record.partner_id.street_name"/>
-                        <t t-set="street_number" t-value="record.partner_id.street_number"/>
-                        <t t-if="record.partner_id.city_id">
-                            <t t-set="city" t-value="record.partner_id.city_id.name"/>
-                        </t>
-                         <t t-if="record.partner_id.city">
-                            <t t-set="city" t-value="record.partner_id.city"/>
-                        </t>
-                        <t t-set="state" t-value="record.partner_id.state_id.code"/>
-                        <t t-set="zip_code" t-value="record.partner_id.zip"/>
-                    </t>
-
-                    <t t-if="record.partner_id.x_partner_code">
-                        <t t-foreach="record.partner_id.x_partner_code" t-as="l">
-                            <t t-if="record.partner_id == l.name">
+                    <t t-set="state" t-value="record.partner_shipping_id.state_id.code"/>
+                    <t t-set="zip_code" t-value="record.partner_shipping_id.zip"/>
+                    <t t-if="record.partner_shipping_id.parent_id.x_partner_code">
+                        <t t-foreach="record.partner_shipping_id.parent_id.x_partner_code" t-as="l">
+                            <t t-if="record.partner_shipping_id.parent_id == l.name">
                                 <t t-if="record.company_id == l.companies">
                                     <t t-set="customer_seller" t-value="l.code"/>
                                 </t>
@@ -86,37 +69,20 @@
                     </t>
                 </t>
 
-                <!-- Verificar si el cliente no es una empresa y asignar el numero de la entidad -->
-                <t t-if="record.partner_id.is_company == False">
-                    <t t-if="record.partner_id.parent_id.x_gln">
-                        <t t-set="buyer_gln" t-value="record.partner_id.parent_id.x_gln"/>
+                <t t-else="">
+                    <t t-set="buyer_gln" t-value="record.partner_id.x_gln"/>
+                    <t t-set="ship_to_gln" t-value="record.partner_id.x_gln"/>
+                    <t t-set="name" t-value="record.partner_id.name"/>
+                    <t t-set="street_name" t-value="record.partner_id.street_name"/>
+                    <t t-set="street_number" t-value="record.partner_id.street_number"/>
+                    <t t-if="record.partner_id.city_id">
+                        <t t-set="city" t-value="record.partner_id.city_id.name"/>
                     </t>
-                    <t t-if="record.partner_id.x_gln">
-                        <t t-set="ship_to_gln" t-value="record.partner_id.x_gln"/>
+                    <t t-if="record.partner_id.city">
+                        <t t-set="city" t-value="record.partner_id.city"/>
                     </t>
-
-                    <t t-if="sale_id.partner_id.parent_id.x_gln">
-                        <t t-set="buyer_gln" t-value="sale_id.partner_id.parent_id.x_gln"/>
-                    </t>
-                    <t t-if="sale_id.partner_shipping_id.x_gln">
-                        <t t-set="ship_to_gln" t-value="sale_id.partner_shipping_id.x_gln"/>
-                    </t>
-
-                    <t t-if="record.partner_id">
-                        <t t-set="name" t-value="record.partner_id.parent_id.name"/>
-                        <t t-set="street_name" t-value="record.partner_id.parent_id.street_name"/>
-                        <t t-set="street_number" t-value="record.partner_id.parent_id.street_number"/>
-                        <t t-if="record.partner_id.parent_id.city_id">
-                            <t t-set="city" t-value="record.partner_id.parent_id.city_id.name"/>
-                        </t>
-                         <t t-if="record.partner_id.parent_id.city">
-                            <t t-set="city" t-value="record.partner_id.parent_id.city"/>
-                        </t>
-                        
-                        <t t-set="state" t-value="record.partner_id.parent_id.state_id.code"/>
-                        <t t-set="zip_code" t-value="record.partner_id.parent_id.zip"/>
-                    </t>
-
+                    <t t-set="state" t-value="record.partner_id.state_id.code"/>
+                    <t t-set="zip_code" t-value="record.partner_id.zip"/>
                     <t t-if="record.partner_id.parent_id.x_partner_code">
                         <t t-foreach="record.partner_id.parent_id.x_partner_code" t-as="l">
                             <t t-if="record.partner_id.parent_id == l.name">
@@ -126,54 +92,42 @@
                             </t>
                         </t>
                     </t>
-
-                    <t t-if="sale_id.partner_id.parent_id.x_partner_code">
-                        <t t-foreach="sale_id.partner_id.parent_id.x_partner_code" t-as="l">
-                            <t t-if="sale_id.partner_id.parent_id == l.name">
-                                <t t-if="sale_id.company_id == l.companies">
-                                    <t t-set="customer_seller" t-value="l.code"/>
-                                </t>
-                            </t>
-                        </t>
-                    </t>
                 </t>
 
                 <buyer>
-                    <gln t-esc="buyer_gln"/>
+                    <gln t-esc="str(buyer_gln)"/>
                 </buyer>
 
                 <seller>
-                    <gln t-esc="record.company_id.partner_id.x_gln"/>
+                    <gln t-esc="str(record.company_id.partner_id.x_gln)"/>
                     <alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"
-                                                  t-esc="customer_seller"/>
+                                                  t-esc="str(customer_seller)"/>
                 </seller>
 
                 <shipTo>
-                    <gln t-esc="ship_to_gln"/>
-                    <NameAndAddress>
-                        <name t-esc="name"/>
-                        <streetAddressOne t-esc="street_name + ' ' + street_number"/>
-                        <city t-esc="str(city) + ' ' + str(state)"/>                 
-                        <postalCode t-esc="zip_code"/>
-                    </NameAndAddress>
+                    <gln t-esc="str(ship_to_gln)"/>
+                    <nameAndAddress>
+                        <name t-esc="str(name)"/>
+                        <streetAddressOne t-esc="str(street_name) + ' ' + str(street_number)"/>
+                        <city t-esc="str(city) + ' ' + str(state)"/>
+                        <postalCode t-esc="str(zip_code)"/>
+                    </nameAndAddress>
                 </shipTo>
 
-                <t t-if="pos_id">
-                    <currency t-att-currencyISOCode="record.currency_id.name">
-                        <currencyFunction t-esc="BILLING_CURRENCY"/>
-                        <rateOfChange t-esc="pos_id.currency_rate"/>
-                    </currency>
-                </t>
+                <currency t-att-currencyISOCode="record.currency_id.name">
+                    <currencyFunction>BILLING_CURRENCY</currencyFunction>
+                    <t t-if="pos_id">
+                        <rateOfChange t-esc="str(pos_id.currency_rate)"/>
+                    </t>
+                    <t t-if="sale_id">
+                        <rateOfChange t-esc="str(sale_id.currency_rate)"/>
+                    </t>
+                    <t t-else="">
+                        <rateOfChange t-esc="' '"/>
+                    </t>
+                </currency>
 
-                <t t-if="sale_id">
-                    <currency t-att-currencyISOCode="record.currency_id.name">
-                        <currencyFunction t-esc="BILLING_CURRENCY"/>
-                        <rateOfChange t-esc="sale_id.currency_rate"/>
-                    </currency>
-                </t>
-
-                <paymentTerms PaymentTermsRelationTime="REFERENCE_AFTER"
-                              paymentTermsEvent="DATE_OF_INVOICE">
+                <paymentTerms paymentTermsEvent="DATE_OF_INVOICE" PaymentTermsRelationTime="REFERENCE_AFTER">
                     <netPayment netPaymentTermsType="BASIC_NET">
                         <paymentTimePeriod>
                             <timePeriodDue timePeriod="DAYS"/>
@@ -198,63 +152,18 @@
                         </tradeItemDescriptionInformation>
 
 
-                        <!-- Obtenemos la unidad de medida proporcionada por el cliente -->
-                        <t t-if="record.partner_id.is_company">
-                            <t t-if="record.partner_id.x_product_info">
-                                <t t-foreach="record.partner_id.x_product_info" t-as="l">
-                                    <t t-if="record.partner_id == l.partner_name">
-                                        <t t-if="record.company_id == l.company">
-                                            <t t-if="o.product_id == l.product_name">
-                                                <t t-set="uom" t-value="l.uom"/>
-                                            </t>
-                                        </t>
-                                    </t>
-                                </t>
-                            </t>
-
-                            <t t-if="sale_id.partner_id.x_product_info">
-                                <t t-foreach="sale_id.partner_id.x_product_info" t-as="l">
-                                    <t t-if="sale_id.partner_id == l.partner_name">
-                                        <t t-if="sale_id.company_id == l.company">
-                                            <t t-if="o.product_id == l.product_name">
-                                                <t t-set="uom" t-value="l.uom"/>
-                                            </t>
-                                        </t>
-                                    </t>
-                                </t>
-                            </t>
+                        <!-- Obtenemos las unidades de medida -->
+                        <t t-if="o.product_id.uom_id.unspsc_code_id.code == 'XBX'">
+                            <t t-set="uom" t-value="'CA'"/>
                         </t>
-
-                        <t t-if="record.partner_id.is_company == False">
-                            <t t-if="record.partner_id.parent_id.x_product_info">
-                                <t t-foreach="record.partner_id.parent_id.x_product_info" t-as="l">
-                                    <t t-if="record.partner_id.parent_id == l.partner_name">
-                                        <t t-if="record.company_id == l.company">
-                                            <t t-if="o.product_id == l.product_name">
-                                                <t t-set="uom" t-value="l.uom"/>
-                                            </t>
-                                        </t>
-                                    </t>
-                                </t>
-                            </t>
-
-                            <t t-if="sale_id.partner_id.parent_id.x_product_info">
-                                <t t-foreach="sale_id.partner_id.parent_id.x_product_info" t-as="l">
-                                    <t t-if="sale_id.partner_id.parent_id == l.partner_name">
-                                        <t t-if="sale_id.company_id == l.company">
-                                            <t t-if="o.product_id == l.product_name">
-                                                <t t-set="uom" t-value="l.uom"/>
-                                            </t>
-                                        </t>
-                                    </t>
-                                </t>
-                            </t>
+                        <t t-elif="o.product_id.uom_id.unspsc_code_id.code == 'H87'">
+                            <t t-set="uom" t-value="'PCE'"/>
                         </t>
 
 
-                        <invoiceQuantity t-att-unitOfMeasure="uom" t-esc="o.quantity"/>
+                        <invoicedQuantity t-att-unitOfMeasure="str(uom)" t-esc="o.quantity"/>
 
-                        <additionalQuantity QuantityType="NUM_CONSUMER_UNITS" t-esc="o.product_uom_id.factor_inv"/>
+                        <aditionalQuantity QuantityType="NUM_CONSUMER_UNITS" t-esc="int(o.product_uom_id.factor_inv)"/>
 
                         <grossPrice>
                             <Amount t-esc="o.price_unit"/>
@@ -287,10 +196,10 @@
                     <Amount t-esc="round(total_without_disc,2)"/>
                 </totalAmount>
 
-                <totalAllowenceCharge allowenceOrChargeType="ALLOWANCE">
+                <TotalAllowenceCharge allowenceOrChargeType="ALLOWANCE">
                     <t t-set="total_allowance_charge" t-value="total_without_disc - record.amount_untaxed"/>
                     <Amount t-esc="round(total_allowance_charge,2)"/>
-                </totalAllowenceCharge>
+                </TotalAllowenceCharge>
 
                 <baseAmount>
                     <Amount t-esc="record.amount_untaxed"/>
