@@ -56,5 +56,16 @@
     <menuitem name="Server to list" id="transfer_remission_report" parent="transfer_remission_report.menu_2"
               action="transfer_remission_report.action_server"/>
 -->
+
+      <record id="report_picking_remision_view" model="ir.actions.report">
+    <field name="name">Remision</field>
+    <field name="model">stock.picking</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">transfer_remission_report.report_picking_remission</field>
+    <field name="report_file">transfer_remission_report.report_picking_remission</field>
+    <field name="binding_model_id" ref="stock.model_stock_picking"/>
+    <field name="binding_type">report</field>
+
+    </record>
   </data>
 </odoo>
