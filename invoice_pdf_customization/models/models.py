@@ -55,3 +55,53 @@ class AccountInvoice(models.Model):
 
         return response
 
+    def is_invoice_client(self):
+        invoice = self
+        if 'in_invoice' in invoice.move_type:
+            return False
+        if 'out_invoice' in invoice.move_type:
+            return True
+    def calculate_lines_details(self):
+        self.ensure_one()
+        invoice = self.sudo()
+        details_move_lines = {}
+
+        code_iva = "14020001"
+        subtotal_products = 0
+        subtotal_iva = 0
+        subtotal_credit = 0
+
+        total_debit = 0
+        total_credit = 0
+        for line in invoice.line_ids:
+            #extraccion de detalles del producto
+            if code_iva not in line.account_id.code and line.debit > 0:
+               """" details_move_lines["details_product"]["account_name"] = invoice.description
+                details_move_lines["details_product"]["product_name"] = line.name
+                details_move_lines["details_product"]["credit"] = line.credit
+                details_move_lines["details_product"]["debit"] = line.debit
+                details_move_lines["details_product"]["price_unit"] = line.price_unit"""
+               subtotal_products = subtotal_products + line.price_subtotal
+               subtotal_products = subtotal_products + line.price_total
+               details_move_lines["details_product"] = line
+
+            elif code_iva in line.account_id.code and line.debit > 0:
+                """details_move_lines["details_tax"]["account_name"] = line.account_id.name
+                details_move_lines["details_tax"]["debit"] = line.debit
+                details_move_lines["details_tax"]["credit"] = line.credit"""
+                subtotal_iva = subtotal_iva + line.price_subtotal
+                subtotal_iva = subtotal_iva + line.price_total
+                details_move_lines["details_tax"] = line
+            elif code_iva not in line.account_id.code and line.credit > 0:
+                subtotal_credit = subtotal_credit + line.price_subtotal
+                subtotal_credit = subtotal_credit + line.price_total
+                details_move_lines["details_credit"] = line
+
+        total_debit = subtotal_products + subtotal_iva
+        total_credit = subtotal_credit
+        details_move_lines.update({"subtotal_products": subtotal_products})
+        details_move_lines.update({"subtotal_tax" : subtotal_iva})
+        details_move_lines.update({"total_debit" : total_debit})
+        details_move_lines.update({"total_credit": total_credit})
+
+        return details_move_lines
