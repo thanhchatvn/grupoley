@@ -15,7 +15,6 @@
 
     'data': [
         'views/templates.xml',
-        'views/account_move_views.xml',
     ],
 
     'qweb': [

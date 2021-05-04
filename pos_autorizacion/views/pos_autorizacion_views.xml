@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="pos_autorizacion_tree_view" model="ir.ui.view">
+        <field name="name">pos.autorizacion.tree.view</field>
+        <field name="model">pos.autorizacion</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false">
+                <field name="name"/>
+                <field name="date_order"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+<!--                <field name="total"/>-->
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pos_autorizacion_form_view" model="ir.ui.view">
+        <field name="name">pos.autorizacion.form.view</field>
+        <field name="model">pos.autorizacion</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <header>
+                    <button name="aprobar" string="Aprobar" type="object" states="pendiente" class="btn-primary"/>
+                    <button name="rechazar" string="Rechazar" type="object" states="pendiente" class="btn-secondary"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="pricelist_id"/>
+                        </group>
+                        <group>
+                            <field name="date_order"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                    <field name="detalle_ids">
+                        <tree>
+                            <field name="product_id"/>
+                            <field name="cantidad"/>
+                            <field name="unitario"/>
+                            <field name="descuento"/>
+                            <field name="impuesto" widget="many2many_tags"/>
+                            <field name="subtotal_sin_impuestos"/>
+                            <field name="subtotal_con_impuestos"/>
+                            <field name="currency_id" invisible="1"/>
+                        </tree>
+                    </field>
+                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                        <field name="tot_impuestos" widget="monetary"/>
+                        <div class="oe_subtotal_footer_separator oe_inline">
+                            <label for="tot"/>
+                        </div>
+                        <field name="tot" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="motivo"/>
+                    </group>
+                    <div class="oe_clear"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
