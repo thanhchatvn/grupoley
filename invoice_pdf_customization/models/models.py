@@ -61,6 +61,7 @@ class AccountInvoice(models.Model):
             return False
         if 'out_invoice' in invoice.move_type:
             return True
+
     def calculate_lines_details(self):
         self.ensure_one()
         invoice = self.sudo()
@@ -76,25 +77,15 @@ class AccountInvoice(models.Model):
         for line in invoice.line_ids:
             #extraccion de detalles del producto
             if code_iva not in line.account_id.code and line.debit > 0:
-               """" details_move_lines["details_product"]["account_name"] = invoice.description
-                details_move_lines["details_product"]["product_name"] = line.name
-                details_move_lines["details_product"]["credit"] = line.credit
-                details_move_lines["details_product"]["debit"] = line.debit
-                details_move_lines["details_product"]["price_unit"] = line.price_unit"""
-               subtotal_products = subtotal_products + line.price_subtotal
-               subtotal_products = subtotal_products + line.price_total
+               subtotal_products = subtotal_products + line.debit
                details_move_lines["details_product"] = line
-
-            elif code_iva in line.account_id.code and line.debit > 0:
-                """details_move_lines["details_tax"]["account_name"] = line.account_id.name
-                details_move_lines["details_tax"]["debit"] = line.debit
-                details_move_lines["details_tax"]["credit"] = line.credit"""
-                subtotal_iva = subtotal_iva + line.price_subtotal
-                subtotal_iva = subtotal_iva + line.price_total
+            #Extracción para los detalles de iva
+            elif code_iva in line.account_id.code: #and line.debit > 0:
+                subtotal_iva = subtotal_iva + line.debit
                 details_move_lines["details_tax"] = line
+            #Exctracción de otros conceptos
             elif code_iva not in line.account_id.code and line.credit > 0:
-                subtotal_credit = subtotal_credit + line.price_subtotal
-                subtotal_credit = subtotal_credit + line.price_total
+                subtotal_credit = subtotal_credit + line.credit
                 details_move_lines["details_credit"] = line
 
         total_debit = subtotal_products + subtotal_iva
