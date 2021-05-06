@@ -1,0 +1,32 @@
+<odoo>
+  <data>
+      
+      <!-- Se modifican las vistas heredadas -->
+      <record id="helpdesk_ticket_search_inherited" model="ir.ui.view">
+          <field name="name">helpdesk.ticket.search</field>
+          <field name="model">helpdesk.ticket</field>
+          <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_search"/>          
+          <field name="arch" type="xml">
+              <search string="Tickets Search">                 
+                  <group expand="0" string="Group By">
+                      <filter name="group_company" context="{'group_by':'x_parent_id'}"/>                      
+                  </group>
+              </search>
+          </field>
+      </record>
+      
+      <record id="helpdesk_ticket_search_analysis_inherited" model="ir.ui.view">
+          <field name="name">helpdesk.ticket.search</field>
+          <field name="model">helpdesk.ticket</field>
+          <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_search_analysis"/>
+          <field name="arch" type="xml">
+              <search string="Tickets Search">
+                  <group expand="0" string="Group By">
+                      <filter name="group_company" context="{'group_by':'x_parent_id'}"/> 
+                  </group>
+              </search>
+          </field>
+      </record>
+      
+    </data>
+</odoo>
