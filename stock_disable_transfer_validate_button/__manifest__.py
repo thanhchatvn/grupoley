@@ -21,7 +21,6 @@
     'depends': ['base','stock'],
 
     'data': [
-        'views/stock_picking.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
