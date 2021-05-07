@@ -74,19 +74,23 @@ class AccountInvoice(models.Model):
 
         total_debit = 0
         total_credit = 0
+
+        details_move_lines["details_product"] = []
+        details_move_lines["details_credit"] = []
+        details_move_lines["details_credit"] = []
         for line in invoice.line_ids:
             #extraccion de detalles del producto
-            if code_iva not in line.account_id.code and line.debit > 0:
+            if line.product_id:
                subtotal_products = subtotal_products + line.debit
-               details_move_lines["details_product"] = line
+               details_move_lines["details_product"].append(line)
             #Extracción para los detalles de iva
-            elif code_iva in line.account_id.code: #and line.debit > 0:
+            elif not line.product_id and line.tax_line_id:
                 subtotal_iva = subtotal_iva + line.debit
-                details_move_lines["details_tax"] = line
+                details_move_lines["details_tax"].append(line)
             #Exctracción de otros conceptos
-            elif code_iva not in line.account_id.code and line.credit > 0:
+            elif not line.product_id and not line.tax_line_id:
                 subtotal_credit = subtotal_credit + line.credit
-                details_move_lines["details_credit"] = line
+                details_move_lines["details_credit"].append(line)
 
         total_debit = subtotal_products + subtotal_iva
         total_credit = subtotal_credit
@@ -96,3 +100,10 @@ class AccountInvoice(models.Model):
         details_move_lines.update({"total_credit": total_credit})
 
         return details_move_lines
+
+    def calculate_no_entrada(self):
+        #se obtiene el ultimo insertado según las fechas
+        response = self.env["stock.picking"].search([('origin','=',self.invoice_origin),('partner_id','=',self.partner_id.id),('date_done', '<=',self.invoice_date)], order= 'date_done desc', limit=1)
+        if response:
+            return response
+        return {}
