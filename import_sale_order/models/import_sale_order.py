@@ -174,7 +174,7 @@ class ImportChartAccount(models.TransientModel):
             if folio == folio_pedido:
                 counter += 1
                 barcode = str(line.get('ARTICULO', "")).strip()
-                product_id = product_obj.search([('x_product_supplierinfo.product_code','=', barcode)])
+                product_id = product_obj.search([('x_product_supplierinfo.product_code','like', barcode)], limit=1)
                 quantity = line.get('CANTIDAD PEDIDA',0)
 
                 # Si existe una orden de venta y producto que coincidan se llenara nuestro linea de pedido
