@@ -156,11 +156,24 @@ class ImportChartAccount(models.TransientModel):
         company = self.env.company
         customer = self.env['res.partner'].search([('x_center', '=', tienda), ('company_id', '=', company.id),('parent_id.name','ilike','ley')], limit=1)
         customer_id = customer.id
+        if customer.user_id:
+            comercial = customer.user_id.id
+            if customer.user_id.property_warehouse_id:
+                warehouse_id = customer.user_id.property_warehouse_id.id
+            else:
+                error = ("El comercial [{}] no tiene asignado un almacen:").format(customer.user_id.name)
+                raise UserError(error)
+        else:
+            error = ("El cliente [{}] no tiene asignado un comercial").format(customer.name)
+            raise UserError(error)       
+            
         folio_pedido = values.get('folio_pedido')
         fecha_pedido = parser.parse(values.get('fecha_pedido'))
 
         data = {
             'partner_id' : customer_id,
+            'user_id' : comercial,
+            'warehouse_id' : warehouse_id,
             'x_order_reference' : folio_pedido,
             'x_order_reference_date' : fecha_pedido,
         }
