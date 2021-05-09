@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 class PosAutorizacion(models.Model):
     _name = "pos.autorizacion"
-    _order = "date_order desc, name desc"
+    _order = "create_date desc, name desc"
 
     def _compute_tot(self):
         for record in self:
@@ -23,13 +23,13 @@ class PosAutorizacion(models.Model):
         comodel_name='res.partner',
         string='Cliente'
     )
-    date_order = fields.Datetime(
-        string='Fecha',
-        default=fields.Datetime.now(),
-    )
     user_id = fields.Many2one(
         comodel_name='res.users',
         string='Cajero'
+    )
+    autorizador_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Autorizador'
     )
     state = fields.Selection(selection=[
         ('pendiente', 'Pendiente'),
@@ -58,9 +58,27 @@ class PosAutorizacion(models.Model):
 
     def aprobar(self):
         self.state = 'aprobado'
+        self.autorizador_id = self.env.user
 
     def rechazar(self):
         self.state = 'rechazado'
+        self.autorizador_id = self.env.user
+
+    def comprobar(self, data):
+        if self.partner_id.id != data['partner_id']:
+            return False
+        if self.pricelist_id.id != data['pricelist_id']:
+            return False
+        for num, linea in enumerate(self.detalle_ids):
+            if linea.product_id.id != data['detalles'][num][0]['product_id']:
+                return False
+            if linea.cantidad != data['detalles'][num][0]['cantidad']:
+                return False
+            if linea.unitario != data['detalles'][num][0]['unitario']:
+                return False
+            if linea.descuento != data['detalles'][num][0]['descuento']:
+                return False
+        return True
 
 
 class PosAutorizacionLine(models.Model):

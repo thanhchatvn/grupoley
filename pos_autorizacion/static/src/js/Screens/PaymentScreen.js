@@ -24,24 +24,24 @@ odoo.define('pos_autorizacion.PaymentScreen', function (require) {
                     }
                     let orderlines = this.currentOrder.orderlines.models
                     for (var i = 0; i < orderlines.length; i++){
-                        if (orderlines[0].discount){
+                        if (orderlines[i].discount){
                             es_bloqueado = true;
-                            motivo += 'Se ha ingresado un descuento de ' + orderlines[0].discount + '% para el producto ' + orderlines[0].product.display_name + '. '
+                            motivo += 'Se ha ingresado un descuento de ' + orderlines[i].discount + '% para el producto ' + orderlines[i].product.display_name + '. '
                         }
-                        let precio = orderlines[0].product.get_price(this.currentOrder.pricelist, 1)
-                        if (precio != orderlines[0].price){
+                        let precio = orderlines[i].product.get_price(this.currentOrder.pricelist, 1)
+                        if (precio != orderlines[i].price){
                             es_bloqueado = true;
-                            motivo += 'Se ha cambiado el precio a ' + orderlines[0].price + ' del producto ' + orderlines[0].product.display_name + '. '
+                            motivo += 'Se ha cambiado el precio a ' + orderlines[i].price + ' del producto ' + orderlines[i].product.display_name + '. '
                         }
                     }
-
                     if (es_bloqueado) {
                         let self = this
                         if (this.currentOrder.autorizacion){
+                            let autorizacion = this.currentOrder.autorizacion
                             const result = await this.rpc({
                                 model: 'pos.autorizacion',
                                 method: 'revisar_estado',
-                                args: [this.currentOrder.autorizacion],
+                                args: [autorizacion],
                             })
                             if (result == 'pendiente'){
                                 self.showPopup('ErrorPopup', {
@@ -51,7 +51,33 @@ odoo.define('pos_autorizacion.PaymentScreen', function (require) {
                                 return false;
                             } else if (result == 'aprobado'){
                                 self.currentOrder.autorizacion = null;
-                                return true;
+                                let detalles = []
+                                for (var i = 0; i < orderlines.length; i++) {
+                                    detalles.push([{
+                                        'product_id': orderlines[i].product.id,
+                                        'cantidad': orderlines[i].quantity,
+                                        'unitario': orderlines[i].price,
+                                        'descuento': orderlines[i].discount,
+                                    }]);
+                                }
+                                const comprobar = await this.rpc({
+                                    model: 'pos.autorizacion',
+                                    method: 'comprobar',
+                                    args: [[autorizacion], {
+                                        'partner_id': cliente.id,
+                                        'pricelist_id': self.currentOrder.pricelist.id,
+                                        'detalles': detalles,
+                                    }],
+                                })
+                                if (comprobar){
+                                    return true;
+                                } else {
+                                    self.showPopup('ErrorPopup', {
+                                        title: 'Venta modificada',
+                                        body: 'La autorización aprobada y la presente venta presentan diferencias.',
+                                    });
+                                    return false;
+                                }
                             } else if (result == 'rechazado'){
                                 self.showPopup('ErrorPopup', {
                                     title: 'Venta bloqueada',

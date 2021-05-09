@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+    <report id="internal_report_action"
+            model="stock.internal.transfer"
+            string="Internal Transfer Report"
+            report_type="qweb-pdf"
+            name="internal_stock_transfer_app.internal_template_report"
+            paperformat="paperformat_transfer_report2"
+            />
+    </data>
+</odoo>

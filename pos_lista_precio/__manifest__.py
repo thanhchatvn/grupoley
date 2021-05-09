@@ -4,6 +4,7 @@
     'version': '1.0',
     'depends': [
         'point_of_sale',
+        'pos_restaurant',
     ],
     'author': "DataWorks",
     'category': 'Custom',
@@ -12,9 +13,11 @@
 
     'data': [
         'views/pos_assets_common.xml',
+        'views/pos_config_views.xml',
     ],
 
     'qweb': [
-
+        'static/src/xml/Screens/ClientListScreen/ClientLine.xml',
+        'static/src/xml/Screens/ClientListScreen/ClientDetailsEdit.xml',
     ],
 }
