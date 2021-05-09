@@ -128,9 +128,11 @@
                             </tr>
                         <tr></tr>
                         <tr></tr>
+                         <tr><td class="tb-blanked-title">&amp;nbsp;</td></tr>
                     </tbody>
                 </table>
-            <table class="table table-condensed mt48 rp-line-33" t-if="o.move_line_ids and o.state=='done'">
+                 <Br></Br>
+            <table class="table table-condensed mt48 rp-line-33" style="margin-top:5%;" t-if="o.move_line_ids and o.state=='done'">
                         <thead>
                             <tr>
                                 <th class="col-xs-4"><strong>Distribución Contable</strong></th>
