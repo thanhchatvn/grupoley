@@ -2,16 +2,16 @@
 <odoo>
     <template id ="report_stock_custom" inherit_id="stock.report_picking">
         <xpath expr="//div[@class='page']" position="replace">
-        <div class="page" style="font-family: Helvetica, Arial;">
+        <div class="page" style="font-family: 'Arvo';">
             <div class="oe_structure"/>
             <t t-set="sum_row2" t-value="0"/>
             <xpath expr="//div[@class='header]" position="replace">
-                <div class = "header" style = "font-family: Helvetica, Arial; font-weight: bold; " >
+                <div class = "header" style = "font-family: Helvetica, Arial; font-weight: bold;" >
                     <span>
                     </span>
                 </div>
             </xpath>
-                <left>
+                <left class="rp-title-11">
 
                     <p style="font-size: 18px;top:10px;padding-bottom: 1px;margin-bottom:0% ;">
                             <strong t-esc="o.company_id.name"/>
@@ -19,7 +19,7 @@
                     <div style="font-size: 18px;font-weight: bold;">Recibo de Recepción de Mercancía con Distribución Contable</div>
                 </left>
             <br></br>
-                <table style="width: 100%">
+                <table class="rp-title-33" style="width: 100%">
                     <tr>
                         <td class='col-xs-12' style="">
                             <table style="width: 90%">
@@ -59,8 +59,8 @@
                     </tr>
                 </table>
                 <t t-set="i" t-value="1"/>
-                <table style="position:relative; top:30px;width: 96%;">
-                    <thead style="text-align: left;font-size:14px;">
+                <table class="rp-line-33" style="position:relative; top:30px;width: 96%;">
+                    <thead style="text-align:center;">
                         <tr>
                             <th class="tb-head" style="text-align:center; width:40px;" >Remis</th>
                             <th class="tb-head" style="text-align:center; width:230px;" >Fecha</th>
@@ -74,9 +74,10 @@
                             <th class="tb-head" style="margin-right: 10px; width:105px;">INS</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="text-align:center;">
                         <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>
                             <tr t-foreach="lines" t-as="move">
+                                <t t-if="move.quantity_done > 0">
                                    <td>
                                      <span t-field="o.x_remis"/>
                                    </td>
@@ -111,6 +112,7 @@
                                   <td>
 
                                 </td>
+                                </t>
                             </tr>
                            <tr class=" col-xs-12 ">
                                <td t-att-colspan="7"></td>
@@ -124,10 +126,11 @@
                                    <t t-esc="sum_row2"/>
                                </td>
                             </tr>
+                        <tr></tr>
+                        <tr></tr>
                     </tbody>
                 </table>
-            <table class="table table-condensed mt48" t-if="o.move_line_ids and o.state=='done'">
-                        <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')" groups="stock.group_production_lot"/>
+            <table class="table table-condensed mt48 rp-line-33" t-if="o.move_line_ids and o.state=='done'">
                         <thead>
                             <tr>
                                 <th class="col-xs-4"><strong>Distribución Contable</strong></th>
@@ -138,7 +141,10 @@
                             </tr>
                         </thead>
                         <tbody class="inv-rasel-table-cell-center">
-                            <tr class='col-xs-12' t-foreach="o.move_line_ids" t-as="move_line">
+                            <t t-set="counter" t-value="0"/>
+                            <tr class='col-xs-12' t-foreach=" o.move_line_ids" t-as="move_line">
+                                <t t-set="counter" t-value="counter + 1"/>
+                                <t t-if="counter == 1">
                                 <td class="col-xs-12">
                                  <tr>
                                         <td>
@@ -167,6 +173,7 @@
                                 </td>
                             </tr>
                                 </td>
+                                 </t>
                             </tr>
                               <tr class=" col-xs-12 border-black o_total">
                                   <td ></td>
