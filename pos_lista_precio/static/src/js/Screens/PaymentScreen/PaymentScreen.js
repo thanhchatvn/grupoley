@@ -1,4 +1,3 @@
-console.log('pos_lista_precio.PaymentScreen')
 odoo.define('pos_lista_precio.PaymentScreen', function (require) {
     "use strict";
 
