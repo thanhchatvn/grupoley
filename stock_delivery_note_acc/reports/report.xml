@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_one_delivery_slip_with_multiple_orders" model="ir.actions.report">
+            <field name="name">Multiple Orders</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">stock_delivery_report.report_multiple_delivery_slip</field>
+            <field name="report_file">stock_delivery_report.report_multiple_delivery_slip</field>
+            <field name="binding_model_id" ref="model_stock_picking"/>
+            <field name="binding_type">report</field>
+    </record>
+</odoo>
+
