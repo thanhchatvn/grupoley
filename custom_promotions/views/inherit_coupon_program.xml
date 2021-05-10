@@ -10,6 +10,9 @@
                         <!--<attribute name="invisible">1</attribute>-->
                     </field>
                 </xpath>
+                <!--radiogroup xpath -->
+                <!--AGREGAR NUEVO radio button-->
+
             </field>
         </record>
 
