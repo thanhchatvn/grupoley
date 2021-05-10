@@ -1,4 +1,3 @@
-console.log('PrintBillButtonLey');
 odoo.define('pos_impresion_ticket.PrintBillButtonLey', function(require) {
     'use strict';
 

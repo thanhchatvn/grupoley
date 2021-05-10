@@ -1,4 +1,3 @@
-console.log('ImprimirTicketScreen')
 odoo.define('pos_impresion_ticket.ImprimirTicketScreen', function (require) {
     'use strict';
 
