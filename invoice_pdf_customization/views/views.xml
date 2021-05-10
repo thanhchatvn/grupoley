@@ -269,7 +269,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th name="th_quantity"><span>CANT.</span></th>
-                                    <th name="th_uom"><span>UM</span></th>i
+                                    <th name="th_uom"><span>UM</span></th>
                                     <th name="th_barcode"><span>CODIGO</span></th>
                                     <th name="th_clv_uni"><span>CLV UNI</span></th>
                                     <th name="th_clv_prod_serv"><span>CLV PROD SERV</span></th>
