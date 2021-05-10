@@ -25,8 +25,9 @@
     'data': [
         'views/item_web.xml',
         'reports/delivery_note_report_acc.xml',
-        'views/styles_css.xml',
         'reports/delivery_note_report_view.xml',
+        'views/styles_css.xml',
+
     ],
 
     'demo': [

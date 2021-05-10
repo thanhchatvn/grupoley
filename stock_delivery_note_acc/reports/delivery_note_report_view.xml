@@ -5,8 +5,8 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
 
-                <div class="page" style="font-family: 'Arvo';">
-                    <div class="oe_structure" style="font-family: 'Arvo';"/>
+                <div class="page" >
+                    <div class="oe_structure"/>
                     <div class = "header" style = "font-weight: bold;" >
                         <center >
                             <p  class="rp-title-2" style="top:10px;padding-bottom: 1px;margin-bottom:0% ;">
@@ -33,7 +33,7 @@
 
                         </table>
                     </div>
-                    <table class="rp-title-33" style="font-family: 'Arvo'; width: 100%; margin-top:5%;">
+                    <table style="font-family:'ReportLight-Regular'; width: 100%; margin-top:5%;">
                         <tr  class="rp-title-33" >
                             <td class='col-xs-12'>
                                 <table style="width: 90%">
@@ -176,7 +176,7 @@
     </template>
 
     <record id="report_one_delivery_slip" model="ir.actions.report">
-        <field name="name">Delivery Slip without accounting</field>
+        <field name="name">Recepcion de material sin contabilizacion</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">stock_delivery_note_acc.report_delivery_note_report_view</field>
