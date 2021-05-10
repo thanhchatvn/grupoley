@@ -7,8 +7,25 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
     is_promo = fields.Boolean(default=False, string="¿es promo?")
 
+    discount_rate = fields.Float(default = 0)
+    discount_promotions = fields.Float(default = 0)
+    is_discount_calculated = fields.Boolean(default = False)
+    discount_original = fields.Float(default=0)
+
+
+
+
 class CouponProgram(models.Model):
     _inherit = 'coupon.program'
+
+    """reward_type = fields.Selection([
+        ('discount', 'Discount'),
+        ('product', 'Free Product'),
+        ('same_product', 'Mismo Producto gratis'),
+    ], string='Reward Type', default='discount',
+        help="Discount - Reward will be provided as discount.\n" +
+             "Free Product - Free product will be provide as reward \n" +
+             "Free Shipping - Free shipping will be provided as reward (Need delivery module)")"""
 
     @api.model
     def _filter_programs_from_common_rules(self, order, next_order=False):
@@ -251,7 +268,16 @@ class SaleOrder(models.Model):
         order = self
         for line in order.order_line:
             if order._is_valid_product(program, line) and not line.is_reward_line:
-                line.update({'discount': program.discount_percentage})
+                tmp_discount_sum = program.discount_percentage + line.discount_original
+                if(line.is_discount_calculated and line.discount == tmp_discount_sum):
+                    line.write({'discount_original': line.discount_original, 'discount_rate': line.discount_original})
+                else:
+                    line.write({'discount_original': line.discount, 'discount_rate': line.discount, 'is_discount_calculated': True})
+
+                line.write({'discount_promotions': program.discount_percentage})
+                discount_sum = line.discount_rate + line.discount_promotions
+
+                line.write({'discount': discount_sum})
 
         return line
 
