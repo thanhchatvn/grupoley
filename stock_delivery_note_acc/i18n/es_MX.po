@@ -140,6 +140,11 @@ msgid "Delivery Slip with accounting"
 msgstr "Vale de entrega con contabilizacion"
 
 #. module: stock_delivery_note_acc
+#: model:ir.model,name:stock_delivery_note_acc.model_report_stock_delivery_note_acc_report_delivery_slip_acc
+msgid "Delivery Slip without accounting"
+msgstr "Recepcion de material sin contabilizacion"
+
+#. module: stock_delivery_note_acc
 #: model:ir.model.fields,field_description:stock_delivery_note_acc.field_stock_picking__remis
 msgid "Remis"
 msgstr "Remis"
