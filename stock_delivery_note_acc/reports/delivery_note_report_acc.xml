@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_stock_custom" inherit_id="stock.report_picking">
+        <xpath expr="//div[@class='page']" position="replace">
+            <div class="page" style="font-family: 'Arvo';">
+                <div class="oe_structure"/>
+                <t t-set="sum_row2" t-value="0"/>
+                <left class="rp-title-11">
+                    <p style="font-size: 18px;top:10px;padding-bottom: 1px;margin-bottom:0% ;">
+                        <strong t-esc="o.company_id.name"/>
+                    </p>
+                    <div style="font-size: 18px;font-weight: bold;">Recibo de Recepción de Mercancía con Distribución
+                        Contable
+                    </div>
+                </left>
+                <br></br>
+                <table class="rp-title-33" style="width: 100%">
+                    <tr>
+                        <td class='col-xs-12' style="">
+                            <table style="width: 90%">
+                                <tr class='col-xs-12'>
+                                    <td class=" col-xs-3 td-title-invoice-left">Factura:</td>
+                                    <td style="text-align:left">&amp;nbsp;
+                                        <t t-esc="0"/>
+                                    </td>
+
+                                    <td class="col-xs-3 td-title-invoice-right">Orden de compra #:</td>
+                                    <td style="text-align:left">&amp;nbsp;
+                                        <t t-esc="o.origin"/>
+                                    </td>
+
+
+                                    <td class="col-xs-3 td-title-invoice-right">Fecha</td>
+                                    <td style="text-align:left">&amp;nbsp;
+                                        <t t-esc="o.date_done" t-options='{"widget": "date"}'/>
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                <td class="col-xs-3 td-title-invoice-right">Total costo de envio:</td>
+                                    <td style="text-align:center">&amp;nbsp;<!--<t t-esc="o.carrier_price"/>--></td>
+                                </tr>
+                                <tr>
+                                    <td  class="col-xs-4 td-title-invoice-left">Proveedor:</td>
+                                    <td t-att-colspan="4" class="col-xs-6  td-title-invoice-left-2" style="text-align:left">&amp;nbsp;
+                                        <t t-esc="o.partner_id.name"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-12">
+                            <table style="width: 90%;">
+                                <tr class="col-xs-12">
+                                    <td class=" col-xs-3 td-title-invoice-left">Vale de entrega #
+                                        <span class=" col-xs-3">&amp;nbsp;
+                                            <t t-esc="o.name"/>
+                                        </span>
+                                    </td>
+
+                                    <td class=" col-xs-3 td-title-invoice-left"></td>
+                                    <td class=" col-xs-3 td-title-invoice-left"></td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-blanked-title">&amp;nbsp;</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <t t-set="i" t-value="1"/>
+                <table class="rp-line-33" style="position:relative; top:30px;width: 96%;">
+                    <thead style="text-align:center;">
+                        <tr>
+                            <th class="tb-head" style="text-align:center; width:40px;">Remis</th>
+                            <th class="tb-head" style="text-align:center; width:230px;">Fecha</th>
+                            <th class="tb-head" style="text-align:center; width:230px;">Producto</th>
+                            <th class="tb-blanked-title" style="width:10px;">&amp;nbsp;</th>
+                            <th class="tb-head" style=" margin:10px 0 0 10px; width:105px;">Ordenado</th>
+                            <th class="tb-head" style="margin-right: 10px; width:105px; ">Recibido</th>
+                            <th class="tb-head" style="margin-right: 10px; width:105px;">Precio</th>
+                            <th class="tb-head" style="margin-right: 10px; width:105px;">Precio/Env</th>
+                            <th class="tb-head" style="margin-right: 10px; width:105px;">Monto</th>
+                            <th class="tb-head" style="margin-right: 10px; width:105px;">INS</th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align:center;">
+                        <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+                        <tr t-foreach="lines" t-as="move">
+                            <t t-if="move.quantity_done > 0">
+                                <td>
+                                    <span t-field="o.x_remis"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.date" t-options='{"widget": "date"}'/>
+                                </td>
+                                <td t-att-colspan="2">
+                                    <span t-field="move.product_id"/>
+                                    <p t-if="o.picking_type_code == 'outgoing'">
+                                        <span t-field="move.product_id.sudo().description_pickingout"/>
+                                    </p>
+                                    <p t-if="o.picking_type_code == 'incoming'">
+                                        <span t-field="move.product_id.sudo().description_pickingin"/>
+                                    </p>
+                                </td>
+
+                                <td>
+                                    <span t-field="move.product_uom_qty"  t-options='{"widget": "float", "precision": 2}'/>
+                                </td>
+                                <td>
+                                    <span t-field="move.quantity_done"  t-options='{"widget": "float", "precision": 2}'/>
+                                </td>
+                                <td>
+                                    <span t-field="move.price_unit"  t-options='{"widget": "float", "precision": 2}'/>
+                                </td>
+                                <td>
+                                    <span t-field="move.price_unit"  t-options='{"widget": "float", "precision": 2}'/>
+                                </td>
+                                <td>
+                                    <span t-esc="move.quantity_done*move.price_unit"  t-options='{"widget": "float", "precision": 2}'/>
+                                </td>
+                                <td>
+
+                                </td>
+                            </t>
+                        </tr>
+                        <tr class=" col-xs-12 ">
+                            <td t-att-colspan="7"></td>
+                            <td class=" col-xs-8">
+                                <t t-foreach="o.move_lines" t-as="line">
+                                    <t t-set="sum_row2"
+                                       t-value="sum(abs(line.quantity_done*line.price_unit) for line in o.move_lines)"/>
+                                </t>
+
+                            </td>
+                            <td class="  col-xs-8 border-black o_total">
+                                <t t-esc="sum_row2" t-options='{"widget": "float", "precision": 2}'/>
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr>
+                            <td class="tb-blanked-title">&amp;nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br></br>
+                <table class="table table-condensed mt48 rp-line-33" style="margin-top:5%;"
+                       t-if="o.move_line_ids and o.state=='done'">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-4">
+                                <strong>Distribución Contable</strong>
+                            </th>
+                            <th class="col-xs-3">
+                                Cargo
+                            </th>
+                            <th class=" col-xs-3 text-center">
+                                <strong>Abono</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="inv-rasel-table-cell-center">
+                        <t t-set="counter" t-value="0"/>
+                        <tr class='col-xs-12' t-foreach=" o.move_line_ids" t-as="move_line">
+                            <t t-set="counter" t-value="counter + 1"/>
+                            <t t-if="counter == 1">
+                                <td class="col-xs-12">
+                                    <tr>
+                                        <td>
+                                            <span t-field="move_line.product_id.categ_id.property_stock_valuation_account_id.code"/>
+                                            <span t-field="move_line.product_id.categ_id.property_stock_valuation_account_id.name"/>
+                                        </td>
+                                        <td class="col-xs-3 text-center">
+
+                                            <span t-esc="((sum_row2))" t-options='{"widget": "float", "precision": 2}'/>
+                                            <span t-esc="0"/>
+                                            <tr></tr>
+                                        </td>
+                                    </tr>
+                                    <tr class="col-xs-4">
+                                        <td class="tb-blanked-title">
+                                            <span t-field="move_line.product_id.categ_id.property_stock_account_input_categ_id.code"/>
+                                            <span t-field="move_line.product_id.categ_id.property_stock_account_input_categ_id.name"/>
+                                            <!-- </td>
+                                         </tr>-->
+                                        </td>
+                                        <td class="tb-blanked-title" style="width:10px;">&amp;nbsp;</td>
+                                        <td class="col-xs-3 text-center">
+                                            <span t-esc="0"/>
+                                            <span t-esc="(sum_row2)" t-options='{"widget": "float", "precision": 2}'/>
+                                            <tr></tr>
+                                        </td>
+                                    </tr>
+                                </td>
+                            </t>
+                        </tr>
+                        <tr class=" col-xs-12 border-black o_total">
+                            <td></td>
+
+                            <td class="col-xs-4 text-right">
+                                <t t-esc="sum_row2"/>
+                            </td>
+                            <td class="col-xs-4 text-right">
+                                <t t-esc="sum_row2"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br></br>
+                <br></br>
+                <table style="position:relative; top:30px; border:0px;width: 96%;">
+                    <tr>
+                        <th class="tb-blanked-title" style="width:40px;border-top:0px;">&amp;nbsp;</th>
+                        <th style="width:230px; font-weight: bold;font-size: 10px;text-align:left; border-top:1.5px solid black">
+                            &amp;nbsp;Signature / Stamp
+                        </th>
+                        <th class="tb-blanked-title" style="width:10px;">&amp;nbsp;</th>
+                        <th class="tb-blanked-title" style="width:105px;border-top:0px;">&amp;nbsp;</th>
+                        <th class="tb-blanked-title" style="width:105px;border-top:0px;">&amp;nbsp;</th>
+                    </tr>
+                </table>
+                <div class="oe_structure"/>
+            </div>
+        </xpath>
+    </template>
+    <report
+            string="Picking Operations"
+            id="stock.action_report_picking"
+            model="stock.picking"
+            report_type="qweb-pdf"
+            name="stock.report_picking"
+            file="stock.report_picking_operations"
+            print_report_name="'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)"
+            menu="False"
+    />
+    <record id="report_one_delivery_slip_with_accounting" model="ir.actions.report">
+        <field name="name">Delivery Slip with accounting</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock_delivery_note_acc.report_stock_custom</field>
+        <field name="report_file">stock_delivery_note_acc.report_stock_custom</field>
+        <field name="binding_model_id" ref="model_stock_picking"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
