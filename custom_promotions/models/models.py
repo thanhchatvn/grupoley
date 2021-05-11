@@ -50,6 +50,21 @@ class CouponProgram(models.Model):
             # Checking if rewards are in the SO should not be performed for rewards on_next_order
             programs += programs_curr_order._filter_not_ordered_reward_programs(order)
         return programs
+    def _filter_not_ordered_reward_programs(self, order):
+        """
+        Returns the programs when the reward is actually in the order lines
+        """
+        programs = self.env['coupon.program']
+        for program in self:
+            """if program.reward_type == 'product' and \
+               not order.order_line.filtered(lambda line: line.product_id == program.reward_product_id):
+                continue
+            el"""
+            if program.reward_type == 'discount' and program.discount_apply_on == 'specific_products' and \
+               not order.order_line.filtered(lambda line: line.product_id in program.discount_specific_product_ids):
+                continue
+            programs |= program
+        return programs
 
     def _filter_programs_on_products(self, order):
         """
@@ -184,7 +199,7 @@ class SaleOrder(models.Model):
 
         order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id))
         max_product_qty = sum(order_lines.mapped('product_uom_qty')) or 1
-        total_qty = sum(self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).mapped('product_uom_qty'))
+        total_qty = sum(self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).mapped('product_uom_qty')) or 1
         # Remove needed quantity from reward quantity if same reward and rule product
         if program._get_valid_products(program.reward_product_id):
             # number of times the program should be appliedd
