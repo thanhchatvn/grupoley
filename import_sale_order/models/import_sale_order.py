@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 '''
     /*************************************************************************
     * Description
@@ -138,9 +138,9 @@ class ImportChartAccount(models.TransientModel):
                     values.update({
                         'tienda': field[2],
                         'folio_pedido': field[9],
-                        'fecha_pedido' : field[18],
+                        'fecha_pedido': field[18],
                     })
-                    self.create_chart_accounts(values,archive_lines)
+                    self.create_chart_accounts(values, archive_lines)
                 else:
                     pass
 
@@ -154,7 +154,8 @@ class ImportChartAccount(models.TransientModel):
         product_obj = self.env['product.product']
         tienda = values.get('tienda')
         company = self.env.company
-        customer = self.env['res.partner'].search([('x_center', '=', tienda), ('company_id', '=', company.id),('parent_id.name','ilike','ley')], limit=1)
+        customer = self.env['res.partner'].search(
+            [('x_center', '=', tienda), ('company_id', '=', company.id), ('parent_id.name', 'ilike', 'ley')], limit=1)
         customer_id = customer.id
         if customer.user_id:
             comercial = customer.user_id.id
@@ -165,30 +166,34 @@ class ImportChartAccount(models.TransientModel):
                 raise UserError(error)
         else:
             error = ("El cliente [{}] no tiene asignado un comercial").format(customer.name)
-            raise UserError(error)       
-            
+            raise UserError(error)
+        if customer.property_payment_term_id:
+            payment_term = customer.property_payment_term_id.id
+        else:
+            payment_term = None
+
         folio_pedido = values.get('folio_pedido')
         fecha_pedido = parser.parse(values.get('fecha_pedido'))
 
         data = {
-            'partner_id' : customer_id,
-            'user_id' : comercial,
-            'warehouse_id' : warehouse_id,
-            'x_order_reference' : folio_pedido,
-            'x_order_reference_date' : fecha_pedido,
+            'partner_id': customer_id,
+            'user_id': comercial,
+            'payment_term_id': payment_term,
+            'warehouse_id': warehouse_id,
+            'client_order_ref': folio_pedido,
+            'x_order_reference': folio_pedido,
+            'x_order_reference_date': fecha_pedido,
         }
-
         sale_order_id = sale_order_obj.create(data)
-        counter = 0
+
         for line in archive_lines:
             folio = line.get('FOLIO PEDIDO')
-
             # Verificamos si existe un folio de pedio de compra en el archivo
             if folio == folio_pedido:
-                counter += 1
                 barcode = str(line.get('ARTICULO', "")).strip()
-                product_id = product_obj.search([('x_product_supplierinfo.product_code','like', barcode)], limit=1)
-                quantity = line.get('CANTIDAD PEDIDA',0)
+                product_id = product_obj.search([('x_product_supplierinfo.product_code', 'like', barcode)], limit=1)
+                quantity = line.get('CANTIDAD PEDIDA', 0)
+                route = customer.x_studio_ruta.id
 
                 # Si existe una orden de venta y producto que coincidan se llenara nuestro linea de pedido
                 if sale_order_id and product_id:
@@ -196,12 +201,14 @@ class ImportChartAccount(models.TransientModel):
                         'order_id': sale_order_id.id,
                         'product_id': product_id.id,
                         'product_uom_qty': float(quantity),
-                        'name': product_id.name,
+                        'name': product_id.display_name,
+                        'route_id': route,
                     }
                     sale_order_line_obj.create(vals)
+
             else:
                 pass
-
+        sale_order_id.update_prices()
         return {'type': 'ir.actions.act_window_close'}
 
     # Validación de existencia y duplicidad de productos en el sistema
@@ -222,14 +229,14 @@ class ImportChartAccount(models.TransientModel):
                     duplicated_product.append(product.name)
                 error = ("Linea de pedido: {}\n\n"
                          "Existen productos con el mismo código [{}] en el sistema\n\n"
-                         "Productos con código duplicado: {}.").format(counter,code,duplicated_product)
+                         "Productos con código duplicado: {}.").format(counter, code, duplicated_product)
                 raise UserError(error)
 
             # Si no se encuentran productos que coincidan con el código
             if not product_id:
                 error = ("Linea de pedido: {}\n\n"
                          "No existe ningun producto con el código [{}] en el sistema.\n\n"
-                         "Nombre del producto [{} {}]").format(counter,code,product_name,product_content)
+                         "Nombre del producto [{} {}]").format(counter, code, product_name, product_content)
                 raise UserError(error)
 
     # Validación de existencia y duplicidad de clientes en el sistema
@@ -240,18 +247,21 @@ class ImportChartAccount(models.TransientModel):
             counter += 1
             tienda = str(line.get('TIENDA', "")).strip()
             company = self.env.company
-            partner_id = customer_obj.search([('x_center', '=', tienda), ('company_id', '=', company.id),('parent_id.name','ilike','ley')])
+            partner_id = customer_obj.search(
+                [('x_center', '=', tienda), ('company_id', '=', company.id), ('parent_id.name', 'ilike', 'ley')])
 
             # Si se encuentran más clientes con la misma tienda
             if len(partner_id) > 1:
                 error = ("Linea de pedido: {}\n\n"
-                         "Los clientes [{}] [{}] tienen la misma tienda.").format(counter, partner_id[0].name, partner_id[1].name)
+                         "Los clientes [{}] [{}] tienen la misma tienda.").format(counter, partner_id[0].name,
+                                                                                  partner_id[1].name)
                 raise UserError(error)
 
             # Si no se encuentran clientes que coincidan con su tienda
             if not partner_id:
                 error = ("Linea de pedido: {}\n\n"
-                         "El cliente no se encuentra en el sistema o su tienda {} no está establecida.").format(counter, tienda)
+                         "El cliente no se encuentra en el sistema o su tienda {} no está establecida.").format(counter,
+                                                                                                                tienda)
                 raise UserError(error)
 
     # Validación de extensión del archivo

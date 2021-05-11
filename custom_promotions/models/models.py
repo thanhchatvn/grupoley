@@ -7,8 +7,25 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
     is_promo = fields.Boolean(default=False, string="¿es promo?")
 
+    discount_rate = fields.Float(default = 0)
+    discount_promotions = fields.Float(default = 0)
+    is_discount_calculated = fields.Boolean(default = False)
+    discount_original = fields.Float(default=0)
+
+
+
+
 class CouponProgram(models.Model):
     _inherit = 'coupon.program'
+
+    """reward_type = fields.Selection([
+        ('discount', 'Discount'),
+        ('product', 'Free Product'),
+        ('same_product', 'Mismo Producto gratis'),
+    ], string='Reward Type', default='discount',
+        help="Discount - Reward will be provided as discount.\n" +
+             "Free Product - Free product will be provide as reward \n" +
+             "Free Shipping - Free shipping will be provided as reward (Need delivery module)")"""
 
     @api.model
     def _filter_programs_from_common_rules(self, order, next_order=False):
@@ -32,6 +49,21 @@ class CouponProgram(models.Model):
         if programs_curr_order:
             # Checking if rewards are in the SO should not be performed for rewards on_next_order
             programs += programs_curr_order._filter_not_ordered_reward_programs(order)
+        return programs
+    def _filter_not_ordered_reward_programs(self, order):
+        """
+        Returns the programs when the reward is actually in the order lines
+        """
+        programs = self.env['coupon.program']
+        for program in self:
+            """if program.reward_type == 'product' and \
+               not order.order_line.filtered(lambda line: line.product_id == program.reward_product_id):
+                continue
+            el"""
+            if program.reward_type == 'discount' and program.discount_apply_on == 'specific_products' and \
+               not order.order_line.filtered(lambda line: line.product_id in program.discount_specific_product_ids):
+                continue
+            programs |= program
         return programs
 
     def _filter_programs_on_products(self, order):
@@ -167,7 +199,7 @@ class SaleOrder(models.Model):
 
         order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id))
         max_product_qty = sum(order_lines.mapped('product_uom_qty')) or 1
-        total_qty = sum(self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).mapped('product_uom_qty'))
+        total_qty = sum(self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).mapped('product_uom_qty')) or 1
         # Remove needed quantity from reward quantity if same reward and rule product
         if program._get_valid_products(program.reward_product_id):
             # number of times the program should be appliedd
@@ -251,7 +283,16 @@ class SaleOrder(models.Model):
         order = self
         for line in order.order_line:
             if order._is_valid_product(program, line) and not line.is_reward_line:
-                line.update({'discount': program.discount_percentage})
+                tmp_discount_sum = program.discount_percentage + line.discount_original
+                if(line.is_discount_calculated and line.discount == tmp_discount_sum):
+                    line.write({'discount_original': line.discount_original, 'discount_rate': line.discount_original})
+                else:
+                    line.write({'discount_original': line.discount, 'discount_rate': line.discount, 'is_discount_calculated': True})
+
+                line.write({'discount_promotions': program.discount_percentage})
+                discount_sum = line.discount_rate + line.discount_promotions
+
+                line.write({'discount': discount_sum})
 
         return line
 
