@@ -128,7 +128,7 @@
 	          <tr class="border-black">
 				  <td><strong>Concepto</strong>
 	              <span colspan="8" class="text-center">
-	                 <span t-field="o.communication"/>
+	                 <span t-field="o.ref"/>
 				 </span>
 				  </td>
 	            <td colspan="5"><strong>Total</strong></td>
