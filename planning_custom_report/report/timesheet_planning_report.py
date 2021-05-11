@@ -38,7 +38,7 @@ class TimesheetPlanningReport(models.Model):
 # -----------------------------------------------------------------------------------------------------------------------
 
     # Sobreexcribimos el metodo init con el cual podremos crear nuestra vista dinámicamente
-        def init(self):
+    def init(self):
         tools.drop_view_if_exists(self.env.cr, self._table)
         self.env.cr.execute("""
             CREATE or REPLACE VIEW %s as (
