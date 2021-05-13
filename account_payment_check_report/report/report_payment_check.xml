@@ -17,13 +17,13 @@
   </t>
 
   <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
-    <!--HEADER-->
-    <div class="header"  style="margin-bottom: 0px !important;">
-		<div class="row" style="border: 1px solid black; border-radius: 10px; margin-bottom: 0px !important;">
+     <!--HEADER-->
+     <div class="header" style=" border: 1px solid black;">
+		<div class="row" style="border: 1px solid black; border-radius: 10px; border-color: blue; height:2cm !important;">
 			<!--COMPANY LOGO-->
 			<div class="col-3 text-left">
-				<!--<img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="display: block !important; float: left !important; position: absolute !important; margin-top: 0px !important; margin-bottom: 0px !important; top: 10px !important; left: 10px !important; bottom: auto !important; max-height: 95px;"/>-->
-				<img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-width: 230px; max-height: 60px; margin-top: 30px;" alt="Logo"/>
+				<!--<img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="display: block !important; float: left !important; position: absolute !important; margin-top: 0px !important; margin-bottom: 0px !important; top: 10px !important; left: 10px !important; bottom: auto !important; max-height: 95px;"/>
+				<img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-width: 230px; max-height: 60px; margin-top: 30px;" alt="Logo"/>-->
 			</div><!--END COMPANY LOGO-->
 			<!--FE-->
 			<div class="col-2 text-center" style="margin-top: 42px !important;">
@@ -38,14 +38,14 @@
 			  </div>
 			</div><!--END DOCUMENT LETTER-->
 			<!--TIPO,NRO Y FECHA FACTURA-->
-			<div class="col-5 text-left" name="company_address" style="padding-left: 80px !important;">
+			<div class="col-5 text-left" name="company_address" style="border: 1px solid black; border-radius: 10px; border-color: green; padding-left: 80px !important;">
 			  <h3 style="color:#ffffff; margin-top:5%;">
                  titulo margen
 			  </h3>
 			  <span t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
 					  Fecha: <span t-field="o.date"/><br/>
 			  </span>
-			  <span t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
+			  <span style="border: 1px solid black;" t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
 						<!--<span t-field="o.display_name"/>-->
 			  </span>
 			</div>
@@ -53,26 +53,26 @@
 		</div>
 
   	</div>
+
 	 <!--FIN HEADER-->
 
-	  <div class="page" style="margin-top: 0px !important;">
+	  <div class="page" style=" border: 1px solid black; border-radius: 10px; padding-top: -5%; ">
 		  <!--MY COMPANY CHECK-->
-  		 <div class="row" style="border: 1px solid black; border-radius: 10px; margin-top: 0px !important;">
-  			 <div class="col-10" style="margin-top: 8px !important;">
+  		 <div class="row" style="  border: 1px solid black; border-color:red; border-radius: 10px;">
+  			 <div class="col-10" style= "margin-top: 8px !important;">
   			   <span t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 18px; font-weight: bold; margin-left:20%;"/>
-  			   <div t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: true}"/>
+  			   <div t-field="o.partner_id"/>
   			   <div><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
   			 </div>
   			 <div class="col-2">
-  			   <p><br/></p>
-  			   <p><strong> <span t-field="o.company_id.vat"/>  <span t-field="o.amount"/></strong></p>
+  			   <p><strong> <span t-esc="0"/>  <span t-field="o.amount"/></strong></p>
                 <p><strong><span t-esc="'o.check_amount_in_words'"  style="color:#ffffff;"></span></strong></p>
   			 </div>
   		 </div>
   		 <!--END MY COMPANY-->
   		 <br/>
   		 <!-- Beneficiario -->
-  		 <div class="row" style="border: 1px solid black; border-radius: 10px;">
+  		 <div class="row" style="border: 1px solid black; border-radius: 10px; margin-top:30% !important;">
 
   		   <div name="invoice_address" class="col-4"  style="margin-top: 8px !important;">
 			     <span t-field="o.company_id.name" style="font-size: 18px; font-weight: bold;"/>
@@ -85,7 +85,7 @@
   		   </div>
   		   <div name="invoice_address" class="col-4">
 			   <p><br/></p>
-  			 <address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+  			 <address t-field="o.partner_id" />
   		   </div>
 			  <div name="check_number" class="col-4"  style="margin-top: 8px !important;">
 				<strong>Nro </strong>  <span t-field="o.check_number" style="font-size: 18px; font-weight: bold;"/>
@@ -96,7 +96,7 @@
   		 </div>
   		 <!-- END PROVEEDOR -->
 
-	    <table class="table">
+	    <table class="table" >
 	        <thead>
 	            <tr class="border-black">
 	                <th>Nro Comprobante</th>
@@ -123,16 +123,17 @@
 
 	  </div>
 	  <footer style="margin-top:50%;">
-			  <table>
+			  <table class="table">
 	          <tbody>
 	          <tr class="border-black">
-				  <td><strong>Concepto</strong>
-	              <span colspan="8" class="text-center">
+				  <td colspan="4"><strong>Concepto</strong>
+	              <span  class="text-center">
 	                 <span t-field="o.ref"/>
+					  <!--<span t-field="o.ref"/>-->
 				 </span>
 				  </td>
-	            <td colspan="5"><strong>Total</strong></td>
-	            <td class="text-right">
+	            <td ><strong>Total</strong></td>
+	            <td colspan="2" class="text-right">
 	                 <span t-field="o.amount" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
 	            </td>
 	          </tr>
@@ -152,6 +153,23 @@
         </t>
     </t>
 </template>
+	<!--Para customizar el formato*/-->
+	<record id="paperformat_euro_lowmargin" model="report.paperformat">
+    <field name="name">European A4 low margin</field>
+    <field name="default" eval="True"/>
+    <field name="format">A4</field>
+    <field name="page_height">0</field>
+    <field name="page_width">0</field>
+    <field name="orientation">Portrait</field>
+    <field name="margin_top">30</field>
+    <field name="margin_bottom">5</field>
+    <field name="margin_left">5</field>
+    <field name="margin_right">5</field>
+    <field name="header_line" eval="False"/>
+    <field name="header_spacing">25</field>
+    <field name="dpi">80</field>
+</record>
+
 
         <!-- QWeb Reports -->
         <report
@@ -161,7 +179,10 @@
             report_type="qweb-pdf"
             name="account_payment_check_report.report_payment_check"
             file="account_payment_check_report.report_payment_check"
+			paperformat="account_payment_check_report.paperformat_euro_lowmargin"
+
         />
+<!--Asignando formato personalizado paperformat="account_payment_check_report.paperformat_euro_lowmargin"/>-->
 <!--attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"-->
 
 </data>
