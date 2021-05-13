@@ -7,10 +7,10 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
     is_promo = fields.Boolean(default=False, string="¿es promo?")
 
-    discount_rate = fields.Float(default = 0)
-    discount_promotions = fields.Float(default = 0)
-    is_discount_calculated = fields.Boolean(default = False)
-    discount_original = fields.Float(default=0)
+    discount_rate = fields.Float()
+    discount_promotions = fields.Float()
+    is_discount_calculated = fields.Boolean()
+    discount_original = fields.Float()
 
 
 
@@ -50,6 +50,9 @@ class CouponProgram(models.Model):
             # Checking if rewards are in the SO should not be performed for rewards on_next_order
             programs += programs_curr_order._filter_not_ordered_reward_programs(order)
         return programs
+
+
+
     def _filter_not_ordered_reward_programs(self, order):
         """
         Returns the programs when the reward is actually in the order lines
@@ -98,6 +101,12 @@ class CouponProgram(models.Model):
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
+
+    def _get_reward_values_discount(self, program):
+        res = super(SaleOrder, self)._get_reward_values_discount(program)
+        if program.discount_apply_on in ['specific_products', 'on_order']:
+            return dict()
+        return res
 
     def recompute_coupon_lines(self):
         for order in self:
@@ -212,10 +221,13 @@ class SaleOrder(models.Model):
             if program.rule_minimum_amount:
                 order_total = sum(order_lines.mapped('price_total')) - (program.reward_product_quantity * program.reward_product_id.lst_price)
                 reward_product_qty = min(reward_product_qty, order_total // program.rule_minimum_amount)
+            reward_qty = reward_product_qty
         else:
-            reward_product_qty = min(max_product_qty, total_qty)
+            reward_qty = int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity)
+            #reward_product_qty = min(max_product_qty, total_qty)
 
-        reward_qty = min(int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity), reward_product_qty)
+
+        #reward_qty = min(int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity), reward_product_qty)
         # Take the default taxes on the reward product, mapped with the fiscal position
         taxes = self.fiscal_position_id.map_tax(program.reward_product_id.taxes_id)
         return {
