@@ -10,12 +10,14 @@ odoo.define('pos_cliente_almacen.ClientListScreen', function (require) {
     const PosClienteAlmacenClientListScreen = (ClientListScreen) => class extends ClientListScreen {
         get clients() {
             if (this.state.query && this.state.query.trim() !== '') {
+                console.log('entro 1')
                 let warehouse_id = this.env.pos.config.property_warehouse_id[0]
                 let clientes = this.env.pos.db.search_partner(this.state.query.trim()).filter(e => e.property_warehouse_id[0] == warehouse_id);
                 return clientes;
             } else {
+                console.log('entro 2')
                 let warehouse_id = this.env.pos.config.property_warehouse_id[0]
-                let clientes = this.env.pos.db.get_partners_sorted(1000).filter(e => e.property_warehouse_id[0] == warehouse_id);
+                let clientes = this.env.pos.db.get_partners_sorted().filter(e => e.property_warehouse_id[0] == warehouse_id);
                 return clientes;
             }
         }
