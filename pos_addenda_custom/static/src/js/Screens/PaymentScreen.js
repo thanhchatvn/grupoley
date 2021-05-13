@@ -43,6 +43,8 @@ odoo.define('pos_addenda_custom.LeyCustomPaymentScreen', function (require) {
                         } else {
                             return true;
                         }
+                    } else {
+                        return true;
                     }
                 }
             } else {
