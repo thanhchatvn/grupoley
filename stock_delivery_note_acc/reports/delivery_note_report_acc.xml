@@ -113,10 +113,10 @@
                                     <span t-field="move.quantity_done"  t-options='{"widget": "float", "precision": 2}'/>
                                 </td>
                                 <td>
-                                    <span t-field="move.price_unit"  t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-field="move.price_unit"  t-options='{"widget": "float", "precision": 6}'/>
                                 </td>
                                 <td>
-                                    <span t-field="move.price_unit"  t-options='{"widget": "float", "precision": 2}'/>
+                                    <span t-field="move.price_unit"  t-options='{"widget": "float", "precision": 6}'/>
                                 </td>
                                 <td>
                                     <span t-esc="move.quantity_done*move.price_unit"  t-options='{"widget": "float", "precision": 2}'/>
