@@ -28,3 +28,8 @@ class PosOrder(models.Model):
             res['x_delivery_reference'] = self.inputValue3
             res['x_delivery_reference_date'] = self.inputValue4
         return res
+
+    def buscar_addenda_parent(self, partner):
+        if self.env['res.partner'].browse(partner).l10n_mx_edi_addenda:
+            return True
+        return False
