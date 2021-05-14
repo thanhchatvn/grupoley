@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "PDV Addenda",
+    'name': "PDV Metodo pago por cliente",
     'version': '1.0',
     'depends': [
         'point_of_sale',
         'account',
-        'l10n_mx_edi',
-        'partner_addenda',
         'res_partner_cfdi',
     ],
     'author': "DataWorks",
     'category': 'Custom',
-    'description': "Personalizacion para agregar Addenda en el PDV",
-    'summary': "Personalizacion para agregar Addenda en el PDV",
+    'description': "Personalizacion para limitar Metodo pago por cliente por cliente en el PDV",
+    'summary': "Personalizacion para limitar Metodo pago por cliente por cliente en el PDV",
 
     'data': [
         'views/templates.xml',
@@ -20,6 +18,5 @@
 
     'qweb': [
         'static/src/xml/Screens/PaymentScreen/PaymentScreen.xml',
-        'static/src/xml/Popups/AdendaPopup.xml'
     ],
 }

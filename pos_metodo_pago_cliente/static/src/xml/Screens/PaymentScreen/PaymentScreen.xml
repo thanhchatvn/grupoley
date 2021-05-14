@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates id="pos_metodo_pago_cliente" xml:space="preserve">
+
+    <t t-name="PaymentScreen" t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('paymentmethods')]" position="replace">
+            <div class="paymentmethods">
+                <t t-if="env.pos.get_client().property_payment_term_id and env.pos.get_client().x_l10n_mx_edi_payment_method_id">
+                    <t t-if="env.pos.get_client().property_payment_term_id[1] == 'Contado'">
+                        <t t-foreach="env.pos.payment_methods.filter(e => e.name == 'Efectivo')" t-as="paymentMethod" t-key="paymentMethod.id">
+                            <PaymentMethodButton paymentMethod="paymentMethod" />
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <t t-if="env.pos.get_client().x_l10n_mx_edi_payment_method_id[1] == 'Transferencia electrónica de fondos'">
+                            <t t-foreach="env.pos.payment_methods.filter(e => e.name == 'Transferencia electrónica')" t-as="paymentMethod" t-key="paymentMethod.id">
+                                <PaymentMethodButton paymentMethod="paymentMethod" />
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <t t-foreach="env.pos.payment_methods.filter(e => e.name == 'Crédito')" t-as="paymentMethod" t-key="paymentMethod.id">
+                                <PaymentMethodButton paymentMethod="paymentMethod" />
+                            </t>
+                        </t>
+                    </t>
+                </t>
+                <t t-else="">
+                    <t t-foreach="env.pos.payment_methods.filter(e => e.name == 'Efectivo')" t-as="paymentMethod" t-key="paymentMethod.id">
+                        <PaymentMethodButton paymentMethod="paymentMethod" />
+                    </t>
+                </t>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

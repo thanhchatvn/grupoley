@@ -4,7 +4,7 @@ odoo.define('pos_addenda_custom.adenda', function (require) {
     var models = require('point_of_sale.models');
     var order_super = models.Order.prototype;
 
-    models.load_fields('res.partner','l10n_mx_edi_addenda');
+    models.load_fields('res.partner', ['parent_id', 'l10n_mx_edi_addenda']);
 
     models.Order = models.Order.extend({
         set_adenda: function(adenda) {
