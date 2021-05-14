@@ -60,11 +60,12 @@
 		  <!--MY COMPANY CHECK-->
   		 <div class="row" style="  border: 1px solid black; border-color:red; border-radius: 10px;">
   			 <div class="col-10" style= "margin-top: 8px !important;">
-  			   <span t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 18px; font-weight: bold; margin-left:20%;"/>
+  			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 18px; font-weight: bold; margin-left:30%;"/>
   			   <div t-field="o.partner_id"/>
   			   <div><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
   			 </div>
   			 <div class="col-2">
+                           <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
   			   <p><strong> <span t-esc="0"/>  <span t-field="o.amount"/></strong></p>
                 <p><strong><span t-esc="'o.check_amount_in_words'"  style="color:#ffffff;"></span></strong></p>
   			 </div>
@@ -99,9 +100,9 @@
 	    <table class="table" >
 	        <thead>
 	            <tr class="border-black">
-	                <th>Nro Comprobante</th>
+	                <th>Nro Comprob</th>
 	                <th>Nro Factura</th>
-	                <th>Concepto</th>
+	                <th colspan="2"> <span>Concepto</span></th>
 	                <th>Orden de Compra</th>
 					<th>Monto Factura</th>
 					<th>Neto a pagar</th>
@@ -111,8 +112,8 @@
 	            <tr t-foreach="o.reconciled_invoice_ids" t-as="p">
 	              <td><span t-field="p.name"/></td>
 	              <td><span t-field="p.name"/></td>
-	              <td><span t-field="p.invoice_payment_ref"/></td>
-	              <td><span t-esc="00000"/></td>
+	              <td colspan="2"><span t-field="p.ref"/></td>
+	              <td><span t-esc="p.ref"/></td>
 					<td><span t-field="p.amount_total"></span></td>
 					<td><span t-esc="o._get_invoice_payment_amount(p)"></span></td>
 
@@ -126,13 +127,13 @@
 			  <table class="table">
 	          <tbody>
 	          <tr class="border-black">
-				  <td colspan="4"><strong>Concepto</strong>
+				  <td colspan="3"><strong>Concepto</strong>
 	              <span  class="text-center">
-	                 <span t-field="o.ref"/>
+
 					  <!--<span t-field="o.ref"/>-->
 				 </span>
 				  </td>
-	            <td ><strong>Total</strong></td>
+	            <td colspan="2" class="text-right" ><strong>Total</strong></td>
 	            <td colspan="2" class="text-right">
 	                 <span t-field="o.amount" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
 	            </td>
@@ -166,7 +167,7 @@
     <field name="margin_left">5</field>
     <field name="margin_right">5</field>
     <field name="header_line" eval="False"/>
-    <field name="header_spacing">25</field>
+    <field name="header_spacing">24</field>
     <field name="dpi">80</field>
 </record>
 
