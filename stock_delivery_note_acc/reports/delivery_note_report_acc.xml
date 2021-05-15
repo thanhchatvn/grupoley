@@ -14,7 +14,7 @@
                     </div>
                 </left>
                 <br></br>
-                <table class="rp-title-33" style="width: 100%">
+                <table class="rp-title-43" style="width: 100%">
                     <tr>
                         <td class='col-xs-12' style="">
                             <table style="width: 90%">
@@ -24,8 +24,8 @@
                                         <t t-esc="0"/>
                                     </td>
 
-                                    <td class="col-xs-3 td-title-invoice-right">Orden de compra #:</td>
-                                    <td style="text-align:left">&amp;nbsp;
+                                    <td class="col-xs-3 ">Orden de compra #:</td>
+                                    <td class="text-left">&amp;nbsp;
                                         <t t-esc="o.origin"/>
                                     </td>
 
@@ -41,10 +41,11 @@
                                 <td class="col-xs-3 td-title-invoice-right">Total costo de envio:</td>
                                     <td style="text-align:center">&amp;nbsp;<!--<t t-esc="o.carrier_price"/>--></td>
                                 </tr>
-                                <tr>
-                                    <td  class="col-xs-4 td-title-invoice-left">Proveedor:</td>
-                                    <td t-att-colspan="4" class="col-xs-6  td-title-invoice-left-2" style="text-align:left">&amp;nbsp;
+                                <tr class="col-xs-12">
+                                    <td  class="col-xs-6 td-title-invoice-left">Proveedor:
+                                    <span t-att-colspan="4" class="col-xs-6 text-left">&amp;nbsp;
                                         <t t-esc="o.partner_id.name"/>
+                                    </span>
                                     </td>
                                 </tr>
                             </table>
@@ -71,7 +72,7 @@
                     </tr>
                 </table>
                 <t t-set="i" t-value="1"/>
-                <table class="rp-line-33" style="position:relative; top:30px;width: 96%;">
+                <table class="rp-line-43" style="position:relative; top:30px;width: 96%;">
                     <thead style="text-align:center;">
                         <tr>
                             <th class="tb-head" style="text-align:center; width:40px;">Remis</th>
@@ -147,7 +148,7 @@
                     </tbody>
                 </table>
                 <br></br>
-                <table class="table table-condensed mt48 rp-line-33" style="margin-top:5%;"
+                <table class="table table-condensed mt48 rp-line-43" style="margin-top:5%;"
                        t-if="o.move_line_ids and o.state=='done'">
                     <thead>
                         <tr>

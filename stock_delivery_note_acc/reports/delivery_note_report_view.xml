@@ -1,23 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_delivery_note_report_view">
-        <xpath expr="//div[@class='page']" position="replace">
             <t t-call="web.html_container">
-                <style type="text/css">
-                    @font-face {
-                    font-family: 'MonixRegular';
-                    src: local('MonixRegular'), local('MonixRegular'),
-                    url(/stock_delivery_note_acc/static/src/fonts/monix/Monix-Regular.otf) format('opentype');
-                    }
-                    .h1-title-rp-2 {
-                    font-family: MonixRegular;
-                    font-size: 60px;
-                    }
-                </style>
                 <t t-foreach="docs" t-as="o">
-                    <div class="page" style=" font-family: 'MonixRegular;">
-                        <div class="oe_structure"/>
-                        <div class="header" style="font-weight: bold;">
+                     <t t-call="web.external_layout">
+                          <header class="header" style="font-weight: bold;">
                             <center>
                                 <p class="h1-title-rp-2" style="top:10px;padding-bottom: 1px;margin-bottom:0% ;">
                                     <strong t-esc="o.company_id.name"/>
@@ -49,31 +36,26 @@
                                 </tr>
 
                             </table>
-                        </div>
-                        <table class="rp-tittle-43" style="width: 100%; margin-top:5%;">
+                        </header>
+                     <xpath expr="//div[@class='page']" position="replace">
+                     <div class="page" style="font-family:'SourceCodePro-Regular';">
+
+
+                        <table class="rp-title-11" style="width: 100%; margin-top:5%;">
                             <tr>
                                 <td class='col-xs-12'>
                                     <table style="width: 90%">
-                                        <!-- <tr class="col-xs-12">
-                                             <td class="rp-title-44-r">Id Lote:</td>
-                                             <td style="text-center">&amp;nbsp;<t t-esc="0"/></td>
-                                         </tr>
-                                         <tr><td class="tb-blanked-title">&amp;nbsp;</td></tr>
-                                         <tr>
-                                             <td class="rp-title-44-r col-xs-4 td-title-invoice-left" >Usuario &amp;nbsp;&amp;nbsp;&amp;nbsp; :</td>
-                                             <td style="text-center">&amp;nbsp;<t t-esc="o.user_id.name"/></td>
-                                         </tr>-->
                                         <tr class="col-xs-12">
-                                            <td class="col-xs-4 rp-title-44-r td-title-invoice-left">Proveedor &amp;nbsp;&amp;nbsp;
+                                            <td class="col-xs-4 rp-title-44-r">Proveedor &amp;nbsp;&amp;nbsp;
                                                 :
-                                                <span t-att-colspan="6" class="col-xs-6  td-title-invoice-left-2"
+                                                <span t-att-colspan="6" class="col-xs-6"
                                                       style="text-align:left">
                                                     <t t-esc="o.partner_id.name"/>
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="rp-title-44-r td-title-invoice-right">Nro.de Orden
+                                            <td class="rp-title-44-r ">Nro.de Orden
                                                 <span class="td-title-invoice-right-2" style="text-align:center">
                                                     <t t-esc="o.origin"/>
                                                 </span>
@@ -81,7 +63,7 @@
                                             <!--<td t-att-colspan="8"  class="td-title-invoice-left">Condición de pago:
                                             <span>&amp;nbsp;<t t-esc="o.partner_id.property_supplier_payment_term_id.name"/></span>
                                             </td>-->
-                                            <td class=" col-xs-3 td-title-invoice-left">Factura
+                                            <td class=" col-xs-3 rp-title-44-r">Factura
                                                 <span>
                                                     <t t-esc="o.name"/>
                                                 </span>
@@ -90,26 +72,7 @@
                                     </table>
                                 </td>
                             </tr>
-                            <!--<tr>
-                                <td class="col-xs-12">
-                                    <table style="width: 90%;">
-                                        <tr class="col-xs-12">
-                                            <td class=" col-xs-3 td-title-invoice-left">Vale de entrega #
-                                                <span>&amp;nbsp;
-                                                    <t t-esc="o.name"/>
-                                                </span>
-                                            </td>
-                                            <td t-att-colspan="6"  class="rp-title-44-r td-title-invoice-right" >Moneda:</td>
-                                            <td class="td-title-invoice-right-2" style="text-align:center">
-                                                <t t-esc="o.partner_id.property_product_pricelist.currency_id.name"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="tb-blanked-title">&amp;nbsp;</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>-->
+
                         </table>
                         <t t-set="i" t-value="1"/>
                         <table class="rp-line-43 table table-condensed mt48"
@@ -204,9 +167,12 @@
                         </table>
                         <div class="oe_structure"/>
                     </div>
+                     </xpath>
+
+                </t>
                 </t>
             </t>
-        </xpath>
+
     </template>
 
     <record id="report_one_delivery_slip" model="ir.actions.report">
