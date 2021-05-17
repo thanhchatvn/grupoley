@@ -24,9 +24,9 @@ class DeliverySlipCustomReport(models.Model):
             if i == 0:
                 folio_filter = record.x_order_folio
                 partner_filter = record.partner_id.id
-                effective_year = int(record.date_done.year)
-                effective_month = int(record.date_done.month)
-                effective_day = int(record.date_done.day)
+                effective_year = int(record.purchase_id.effective_date.year)
+                effective_month = int(record.purchase_id.effective_date.month)
+                effective_day = int(record.purchase_id.effective_date.day)
                 initial_effective_date = datetime.datetime(effective_year,effective_month,effective_day,0,0)
                 final_effective_date = datetime.datetime(effective_year,effective_month,effective_day,23,59,59)
                 
@@ -41,7 +41,7 @@ class DeliverySlipCustomReport(models.Model):
                 pass
 
         # Agrupamos los registros por medio del folio
-        records = self.env['stock.picking'].search(['&','&','&',('date_done','>=',initial_effective_date),('date_done','<=',final_effective_date),('partner_id','=',partner_filter),('x_order_folio','=',folio_filter)])
+        records = self.env['stock.picking'].search(['&','&','&',('purchase_id.effective_date','>=',initial_effective_date),('purchase_id.effective_date','<=',final_effective_date),('partner_id','=',partner_filter),('x_order_folio','=',folio_filter)])
 
         return {
             'docs':docs,
