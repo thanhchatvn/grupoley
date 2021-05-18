@@ -43,7 +43,7 @@
                  titulo margen
 			  </h3>
 			  <span t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
-					  Fecha: <span t-field="o.payment_date"/><br/>
+					  Fecha: <span t-field="o.date"/><br/>
 			  </span>
 			  <span style="border: 1px solid black;" t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
 						<!--<span t-field="o.display_name"/>-->
@@ -93,7 +93,7 @@
 			  <div name="check_number" class="col-4"  style="margin-top: 8px !important;">
 				<strong>Nro </strong>  <span t-field="o.check_number" style="font-size: 18px; font-weight: bold;"/>
   			    <p><strong></strong><span t-esc="0"/></p>
-				  <strong>Fecha </strong><span t-field="o.payment_date"/>
+				  <strong>Fecha </strong><span t-field="o.date"/>
 
   		   </div>
   		 </div>
