@@ -1,7 +1,19 @@
 <odoo>
     <data>
-
+        <template id="report_without_payment_lang_inherit" inherit_id="account.report_invoice">
+             <xpath expr="//t[@t-set='lang']" position="after">
+<!--                <t t-set="lang" t-value="'en_US'"/>-->
+                 <t t-set="lang" t-value="'en_US' if o.l10n_mx_edi_external_trade else lang"/>
+            </xpath>
+        </template>
+        <template id="report_with_payment_lang_inherit" inherit_id="account.report_invoice_with_payments">
+             <xpath expr="//t[@t-set='lang']" position="after">
+<!--                <t t-set="lang" t-value="'en_US'"/>-->
+                 <t t-set="lang" t-value="'en_US' if o.l10n_mx_edi_external_trade else lang"/>
+            </xpath>
+        </template>
         <template id="report_invoice_inherit" inherit_id="account.report_invoice_document">
+
             <xpath expr="//t[@t-value='o.with_context(lang=lang)']" position="after">
                 <t t-set="invoice_client" t-value="o.is_invoice_client()"></t>
             </xpath>
@@ -239,7 +251,7 @@
                                         <td style="padding: 5px; width:50%;">
                                             <div style="border: 1px solid; display: grid; grid-gap: 5px;height: 100px; width: 100%; padding: 10px;">
                                                 <div>DÍAS DE CRÉDITO:</div><br/>
-                                                <span>crédito <span t-field="o.invoice_payment_term_id"/></span>
+                                                <span>crédito <span t-field="o.with_context({'lang': 'en_US'}).invoice_payment_term_id" context="{lang:'en_US'}"/></span>
                                             </div>
                                         </td>
                                     </tr>
@@ -608,7 +620,7 @@
 
         <template id="report_footer_invoice_inherit" inherit_id="l10n_mx_edi.report_invoice_document_mx">
             <xpath expr="//p[@t-if='o.narration']" position="after">
-                <div class="footer_custom container text-center" style="border: 1px solid; padding: 20px; border-radius: 25px;" t-if="invoice_client">
+                <div class="footer_custom container text-center" style="border: 1px solid; padding: 20px; border-radius: 25px;page-break-inside: avoid !important;" t-if="invoice_client">
                     <t t-set="footer_values" t-value="o.get_footer_values()"></t>
 
                     <div id="footer_first_section" class="row">

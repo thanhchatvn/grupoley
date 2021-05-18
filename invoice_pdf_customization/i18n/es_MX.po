@@ -1,0 +1,4 @@
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "DOMICILIO DE EXPEDICIÓN"
+msgstr "Address expedition"
