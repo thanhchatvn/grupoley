@@ -43,7 +43,7 @@
                  titulo margen
 			  </h3>
 			  <span t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
-					  Fecha: <span t-field="o.date"/><br/>
+					  Fecha: <span t-field="o.payment_date"/><br/>
 			  </span>
 			  <span style="border: 1px solid black;" t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
 						<!--<span t-field="o.display_name"/>-->
@@ -62,11 +62,11 @@
   			 <div class="col-10" style= "margin-top: 8px !important;">
   			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 18px; font-weight: bold; margin-left:30%;"/>
   			   <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
-				 <div t-field="o.partner_id"/>
-  			   <div><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
+				 <div  style= "padding: 2px !important;" t-field="o.partner_id"/>
+  			   <div  style= "padding-top: 4% !important; padding-left:4%;"><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
   			 </div>
   			 <div class="col-2">
-				<span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
+				<span t-esc="0"/>  <span t-field="o.check_number"/><br/>
                            <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
   			   <p><strong> <span t-esc="0"/>  <span t-field="o.amount"/></strong></p>
                 <p><strong><span t-esc="'o.check_amount_in_words'"  style="color:#ffffff;"></span></strong></p>
@@ -93,7 +93,7 @@
 			  <div name="check_number" class="col-4"  style="margin-top: 8px !important;">
 				<strong>Nro </strong>  <span t-field="o.check_number" style="font-size: 18px; font-weight: bold;"/>
   			    <p><strong></strong><span t-esc="0"/></p>
-				  <strong>Fecha </strong><span t-field="o.date"/>
+				  <strong>Fecha </strong><span t-field="o.payment_date"/>
 
   		   </div>
   		 </div>
