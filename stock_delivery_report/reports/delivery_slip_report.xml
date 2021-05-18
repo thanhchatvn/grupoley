@@ -60,6 +60,7 @@
                     <br/>
                     VALES DE ENTREGA
                 </h2>
+                
             </div>
 
             <table style="width:100%;">
@@ -73,6 +74,9 @@
                         </th>
                         <th>
                             <strong>Orden de compra</strong>
+                        </th>
+                        <th>
+                            <strong>Fecha de entrega</strong>
                         </th>
                         <th>
                             <strong>Folio</strong>
@@ -90,6 +94,9 @@
                         </td>
                         <td>
                             <span t-field="o.origin"/>
+                        </td>
+                        <td>
+                            <span t-field="o.date_done"/>
                         </td>
                         <td>
                             <span t-field="o.x_order_folio"/>
