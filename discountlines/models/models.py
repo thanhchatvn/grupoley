@@ -4,7 +4,7 @@ from odoo import models, fields, api
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare
 
-ACCOUNTS_ = {1: {'SALES': 32, 'DISCOUNT': 6228}}
+ACCOUNTS_ = {2: {'SALES': 127, 'DISCOUNT': 2088}}
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
