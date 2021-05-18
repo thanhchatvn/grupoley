@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <data>
-<template id="report_payment_check_document">
+<template id="report_payment_check_document_s">
 
   <t t-if="not o and doc">
       <t t-set="o" t-value="doc"/>
@@ -133,6 +133,7 @@
 	              <span  class="text-center">
 
 					  <span t-field="o.ref"/>
+                       <span t-field="o.journal_id"/>
 				 </span>
 				  </td>
 	            <td colspan="2" class="text-right" ><strong style="color:#ffffff;">Total</strong></td>
@@ -149,15 +150,15 @@
 
 </template>
 
-<template id="report_payment_check">
+<template id="report_payment_check_santander">
     <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
-            <t t-call="account_payment_check_report.report_payment_check_document" t-lang="o.partner_id.lang"/>
+            <t t-call="account_payment_check_report.report_payment_check_document_s" t-lang="o.partner_id.lang"/>
         </t>
     </t>
 </template>
 	<!--Para customizar el formato*/-->
-	<record id="paperformat_euro_lowmargin" model="report.paperformat">
+	<record id="paperformat_euro_lowmargin_s" model="report.paperformat">
     <field name="name">European A4 low margin</field>
     <field name="default" eval="True"/>
     <field name="format">A4</field>
@@ -176,13 +177,13 @@
 
         <!-- QWeb Reports -->
         <report
-            id="account_payment_check_report.account_payment_check_report"
+            id="account_payment_check_report.account_payment_check_report_santander"
             model="account.payment"
-            string="Cheque Bancomer"
+            string="Cheque Santander"
             report_type="qweb-pdf"
-            name="account_payment_check_report.report_payment_check"
-            file="account_payment_check_report.report_payment_check"
-			paperformat="account_payment_check_report.paperformat_euro_lowmargin"
+            name="account_payment_check_report.report_payment_check_santander"
+            file="account_payment_check_report.report_payment_check_santander"
+			paperformat="account_payment_check_report.paperformat_euro_lowmargin_s"
 
         />
 <!--Asignando formato personalizado paperformat="account_payment_check_report.paperformat_euro_lowmargin"/>-->
