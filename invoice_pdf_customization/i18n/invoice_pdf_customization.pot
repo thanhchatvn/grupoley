@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-13 18:01+0000\n"
-"PO-Revision-Date: 2021-05-13 18:01+0000\n"
+"POT-Creation-Date: 2021-05-20 17:20+0000\n"
+"PO-Revision-Date: 2021-05-20 17:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -54,6 +54,16 @@ msgstr ""
 
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>% DESC. PRECIO</span>"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>% DESC. PROMOCIÓN</span>"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
 msgid "<span>123456789</span>"
 msgstr ""
 
@@ -65,6 +75,11 @@ msgstr ""
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
 msgid "<span>CANT.</span>"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>CANTIDAD ADUANA</span>"
 msgstr ""
 
 #. module: invoice_pdf_customization
@@ -174,6 +189,21 @@ msgstr ""
 
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>UNIDAD ADUANA</span>"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>VALOR DOLARES</span>"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>VALOR UNITARIO ADUANA</span>"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
 msgid "<strong class=\"mr16\">Subtotal</strong>"
 msgstr ""
 
@@ -252,6 +282,16 @@ msgid "AVAL"
 msgstr ""
 
 #. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "CERTIFICADO ORIGEN:"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "CLAVE PEDIMIENTO:"
+msgstr ""
+
+#. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_footer_invoice_inherit
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
 msgid "Col."
@@ -303,6 +343,21 @@ msgid "ID"
 msgstr ""
 
 #. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "IDENTIDAD TRIBUTARIA:"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "INCOTERM:"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "INFORMACIÓN ADUANA:"
+msgstr ""
+
+#. module: invoice_pdf_customization
 #: model:ir.model,name:invoice_pdf_customization.model_account_move
 msgid "Journal Entry"
 msgstr ""
@@ -334,7 +389,22 @@ msgstr ""
 
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "RFC PROVEEDOR:"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
 msgid "Referencia  <span/>"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "TIPO DE CAMBIO:"
+msgstr ""
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "TIPO OPERACIÓN:"
 msgstr ""
 
 #. module: invoice_pdf_customization

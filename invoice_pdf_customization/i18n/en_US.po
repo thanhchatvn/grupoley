@@ -72,7 +72,7 @@ msgstr "<span>QUANTITY</span>"
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
 msgid "<span>CLV PROD SERV</span>"
-msgstr "<span>Serv Prod key</span>"
+msgstr "<span>SERV PROD KEY</span>"
 
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
@@ -87,7 +87,7 @@ msgstr "<span>COD</span>"
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
 msgid "<span>CODIGO</span>"
-msgstr "<span>CODIGO</span>"
+msgstr "<span>CODE</span>"
 
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
@@ -102,7 +102,7 @@ msgstr "<span>Cargo</span>"
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
 msgid "<span>DESC PROM</span>"
-msgstr "<span>DESC PRO</span>"
+msgstr "<span>DISC PRO</span>"
 
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
@@ -112,7 +112,7 @@ msgstr "<span>DESCRIPTION OF GOODS</span>"
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
 msgid "<span>DESCUENTO</span>"
-msgstr "<span>DESCUENTO</span>"
+msgstr "<span>DISCOUNT</span>"
 
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
@@ -177,7 +177,7 @@ msgstr "<span>UM</span>"
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
 msgid "<strong class=\"mr16\">Subtotal</strong>"
-msgstr "<strong class=\"mr16\">SUB-TOTAL</strong>"
+msgstr "SUB-TOTAL"
 
 #. module: invoice_pdf_customization
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
@@ -358,3 +358,33 @@ msgstr "CUSTOMER"
 #: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
 msgid "crédito"
 msgstr "credit"
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>UNIDAD ADUANA</span>"
+msgstr "CUSTOM UNIT"
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>CANTIDAD ADUANA</span>"
+msgstr "CUSTOM QUANTITY"
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>VALOR UNITARIO ADUANA</span>"
+msgstr "UNIT VALUE CUSTOMS"
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>VALOR DOLARES</span>"
+msgstr "VALUE DOLLARS"
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>% DESC. PRECIO</span>"
+msgstr "%DISC. PRICE"
+
+#. module: invoice_pdf_customization
+#: model_terms:ir.ui.view,arch_db:invoice_pdf_customization.report_invoice_inherit
+msgid "<span>% DESC. PROMOCIÓN</span>"
+msgstr "%DISC. PROMOTION"
