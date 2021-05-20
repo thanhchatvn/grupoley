@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-import pyodbc
 
 
 class prueba(models.Model):
@@ -14,6 +13,16 @@ class prueba(models.Model):
     description = fields.Text()
 
     @api.depends('value')
-    def _value_pc(self):
+    def _value_pc(self):        
         for record in self:
             record.value2 = float(record.value) / 100
+            
+            servidor = 'Servertao\CONTPAQ'
+            db = 'nomGenerales'
+            uid = 'sa'
+            passwo = 'syssql'
+            try:
+                conexion = pymssql.connect(servidor,uid,passwo,db)
+                record.description = 'Conexion exitosa'
+            except Exception as e:
+                record.description = str(e)
