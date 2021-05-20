@@ -18,8 +18,8 @@
 
   <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
      <!--HEADER-->
-     <div class="header" style=" border: 1px solid black;">
-		<div class="row" style="border: 1px solid black; border-radius: 10px; border-color: blue; height:2cm !important;">
+     <div class="header">
+		<div class="row" style=" height:2cm !important;">
 			<!--COMPANY LOGO-->
 			<div class="col-3 text-left">
 				<!--<img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="display: block !important; float: left !important; position: absolute !important; margin-top: 0px !important; margin-bottom: 0px !important; top: 10px !important; left: 10px !important; bottom: auto !important; max-height: 95px;"/>
@@ -38,7 +38,7 @@
 			  </div>
 			</div><!--END DOCUMENT LETTER-->
 			<!--TIPO,NRO Y FECHA FACTURA-->
-			<div class="col-5 text-left" name="company_address" style="border: 1px solid black; border-radius: 10px; border-color: green; padding-left: 80px !important;">
+			<div class="col-5 text-left" name="company_address" style=" padding-left: 80px !important;">
 			  <h3 style="color:#ffffff; margin-top:5%;">
                  titulo margen
 			  </h3>
@@ -56,9 +56,9 @@
 
 	 <!--FIN HEADER-->
 
-	  <div class="page" style=" border: 1px solid black; border-radius: 10px; padding-top: -5%; ">
+	  <div class="page" style="border-radius: 10px; padding-top: -5%; ">
 		  <!--MY COMPANY CHECK-->
-  		 <div class="row" style="  border: 1px solid black; border-color:red; border-radius: 10px;">
+  		 <div class="row">
   			 <div class="col-10" style= "margin-top: 8px !important;">
   			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 18px; font-weight: bold; margin-left:30%;"/>
   			   <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
@@ -75,7 +75,7 @@
   		 <!--END MY COMPANY-->
   		 <br/>
   		 <!-- Beneficiario -->
-  		 <div class="row" style="border: 1px solid black; border-radius: 10px; margin-top:22% !important;">
+  		 <div class="row" style="margin-top:22% !important;">
 
   		   <div name="invoice_address" class="col-4"  style="margin-top: 8px !important;">
 			     <span t-field="o.company_id.name" style=" color:#ffffff; font-size: 18px; font-weight: bold;"/>
