@@ -53,67 +53,65 @@ class AccountAnalyticLine(models.Model):
                  'task_id.is_closed', 'task_id.effective_hours')
     def _get_achived_task_in_time(self):
         for task in self:
-            task.ensure_one()
-            if task.task_id.remaining_hours >= 0 and task.task_id.x_in_validation == True:
+            remaining_hours = round(task.task_id.remaining_hours,2)
+            if remaining_hours == 0 or remaining_hours == -0.00:
+                remaining_hours = 0
+            if remaining_hours >= 0 and task.task_id.x_in_validation == True:
                 task.x_achived_task_in_time = True
-            elif task.task_id.remaining_hours >= 0 and task.task_id.is_closed == True:
+            elif remaining_hours >= 0 and task.task_id.is_closed == True:
                 task.x_achived_task_in_time = True
             else:
                 task.x_achived_task_in_time = False
-
 
     # Método para calcular si la tarea se realizó con retraso, teniendo en cuenta las horas iniciales planeadas
     @api.depends('task_id.planned_hours', 'task_id.x_in_validation',
                  'task_id.is_closed', 'task_id.effective_hours')
     def _get_achived_task_with_overtime(self):
         for task in self:
-            task.ensure_one()
-            if (task.task_id.remaining_hours < 0 and task.task_id.x_in_validation == True):
+            remaining_hours = round(task.task_id.remaining_hours, 2)
+            if remaining_hours == 0 or remaining_hours == -0.00:
+                remaining_hours = 0
+            if remaining_hours < 0 and task.task_id.x_in_validation == True:
                 task.x_achived_task_with_overtime = True
-            elif task.task_id.remaining_hours < 0 and task.task_id.is_closed == True:
+            elif remaining_hours < 0 and task.task_id.is_closed == True:
                 task.x_achived_task_with_overtime = True
             else:
                 task.x_achived_task_with_overtime = False
-                
-    # Metodo para calcular la diferencia entre las horas reales y las horas planificadas inicialmente
-    @api.depends('task_id.planned_hours', 'task_id.total_hours_spent')
+
+    @api.depends('task_id.planned_hours', 'task_id.effective_hours')
     def _get_difference_planned_and_effective_hours(self):
         for record in self:
-            record.ensure_one()
-            self.x_remaining_hours = record.task_id.planned_hours - record.task_id.total_hours_spent
-    
-    
-    # Metodo para obtener un indicador de cumplimiento en fecha
+            record.x_remaining_hours = round(round(record.task_id.planned_hours,2) - round(record.task_id.effective_hours,2),2)
+
     @api.depends('task_id.date_end', 'task_id.date_deadline',
                  'task_id.x_validation_date')
     def _get_achived_task_in_date(self):
         for record in self:
-            record.ensure_one()
             date_deadline = str(record.task_id.date_deadline)
 
             if date_deadline == False:
-                self.x_achived_task_in_date = False
+                record.x_achived_task_in_date = False
 
             elif date_deadline and record.task_id.date_end:
                 date_end = record.task_id.date_end
                 date_end = str(datetime.date(date_end))
 
                 if date_end <= date_deadline:
-                    self.x_achived_task_in_date = True
+                    record.x_achived_task_in_date = True
                 else:
-                    self.x_achived_task_in_date = False
+                    record.x_achived_task_in_date = False
 
             elif date_deadline and record.task_id.x_validation_date:
                 validation_date = record.task_id.x_validation_date
                 validation_date = str(datetime.date(validation_date))
 
                 if validation_date <= date_deadline:
-                    self.x_achived_task_in_date = True
+                    record.x_achived_task_in_date = True
                 else:
-                    self.x_achived_task_in_date = False
+                    record.x_achived_task_in_date = False
 
             else:
-                self.x_achived_task_in_date = False
+                record.x_achived_task_in_date = False
    
 
 # -----------------------------------------------------------------------------------------------------------------------
