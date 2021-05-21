@@ -106,6 +106,7 @@
 	                <th colspan="1">Nro Comprob</th>
 	                <th colspan="1">Nro Factura</th>
 	                <th colspan="3"> <span>Concepto</span></th>
+					<th></th>
 	                <th colspan="1">Orden de Compra</th>
 					<th colspan="1">Monto Factura</th>
 					<th colspan="1">Neto a pagar</th>
