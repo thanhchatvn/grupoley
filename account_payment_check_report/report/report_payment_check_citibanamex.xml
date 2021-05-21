@@ -60,16 +60,16 @@
 		  <!--MY COMPANY CHECK-->
   		 <div class="row" style="  border: 1px solid black; border-color:red; border-radius: 10px;">
   			 <div class="col-10" >
-  			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 18px; font-weight: bold; margin-left:30%;"/>
-  			   <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
+  			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 14px; font-weight: bold; margin-left:30%;"/>
+  			   <span t-esc="0"/>
 				 <div t-field="o.partner_id"/>
+				  <span style="color:#ffffff;" t-field="o.amount"/>
   			   <div  style= "padding-top: 1% !important; padding-left:4%;"><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
   			 </div>
   			 <div class="col-2">
-
 				<span t-esc="0"/>  <span t-field="o.check_number"/><br/>
-				 <p><strong> <span t-esc="0"/>  <span t-field="o.amount"/></strong></p>
-				 <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
+				 <p><strong> <span t-esc="0"/>  <span  style="padding-top: 1% !important;" t-field="o.amount"/></strong></p>
+				 <span t-esc="0"/>
                 <p><strong><span t-esc="'o.check_amount_in_words'"  style="color:#ffffff;"></span></strong></p>
   			 </div>
   		 </div>
@@ -87,7 +87,7 @@
 
 
 			  <div name="check_number" class="col-6"  style=" font-size: 12px; margin-top: 8px !important;">
-				<strong >FIRMA CHEQUE RECIBIDO </strong>  <span t-field="o.check_number" style="font-size: 18px; font-weight: bold;"/>
+				<strong >FIRMA CHEQUE RECIBIDO </strong>  <span t-field="o.check_number" style="font-size: 12px; font-weight: bold;"/>
   			    <p><strong></strong><span t-esc="0"/></p>
 				  <strong style="color:#ffffff;">Fecha </strong><span t-field="o.date"/>
 
@@ -95,7 +95,7 @@
   		 </div>
   		 <!-- END PROVEEDOR -->
 
-	    <table class="table" style="width:100%;" >
+	    <table class="table" style="width:100%;font-size: 12px;" >
 	        <thead colspan="8">
 	            <tr class="border-black">
 	                <th colspan="1">CUENTA</th>

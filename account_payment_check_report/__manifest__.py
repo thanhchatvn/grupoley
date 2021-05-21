@@ -21,6 +21,7 @@
         'report/report_payment_check_santander.xml',
         'report/report_payment_check_banorte.xml',
         'report/report_payment_check_citibanamex.xml',
+         'report/report_payment_check_banamexgpi.xml',
     ],
     "demo": [
     ],

@@ -68,7 +68,7 @@
   			 <div class="col-2">
 				<span t-esc="0"/>
 				 <p><strong> <span t-esc="0"/>  <span t-field="o.amount"/></strong></p>
-				 <span t-field="o.check_number"/><br/>
+				 <span  style="color:#ffffff;" t-field="o.check_number"/><br/>
                            <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
 
                 <p><strong><span t-esc="'o.check_amount_in_words'"  style="color:#ffffff;"></span></strong></p>
@@ -101,7 +101,7 @@
   		 </div>
   		 <!-- END PROVEEDOR -->
 
-	    <table class="table" style="width:100%;" >
+	    <table class="table" style="width:100%; font-size: 12px;" >
 	        <thead colspan="8">
 	            <tr class="border-black">
 	                <th colspan="1">Nro Comprob</th>
@@ -117,6 +117,7 @@
 	              <td colspan="1"><span t-field="p.name"/></td>
 	              <td colspan="1"><span t-field="p.name"/></td>
 	              <td colspan="3"><span t-field="p.payment_reference"/></td>
+					<td></td>
 	              <td colspan="1"><span t-esc="p.ref"/></td>
 					<td colspan="1"><span t-field="p.amount_total"></span></td>
 					<td colspan="1"><span t-esc="o._get_invoice_payment_amount(p)"></span></td>
