@@ -109,7 +109,6 @@
 					 <th colspan="1"></th>
 	                <th style="text-align:center; width:40px;">Orden de Compra</th>
 					<th style="text-align:center; width:40px;">Monto Factura</th>
-					<th colspan="1">Monto Factura</th>
 					<th colspan="1">Neto a pagar</th>
 	            </tr>
 	        </thead>
