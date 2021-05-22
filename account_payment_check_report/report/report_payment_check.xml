@@ -100,12 +100,13 @@
   		 <!-- END PROVEEDOR -->
 
 	    <table class="table" style="width:100%;" >
-	        <thead colspan="8">
+	        <thead colspan="10">
 	            <tr class="border-black">
 	                <th colspan="1">Nro Comprob</th>
 	                <th colspan="1">Nro Factura</th>
-	                <th colspan="3"> <span>Concepto</span></th>
-					<th></th>
+	                 <th t-att-colspan="4"> <span t-att-colspan="4">Concepto</span></th>
+					<th colspan="1"></th>
+					<th colspan="1"></th>
 	                <th colspan="1">Orden de Compra</th>
 					<th colspan="1">Monto Factura</th>
 					<th colspan="1">Neto a pagar</th>
@@ -115,8 +116,9 @@
 	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
 	              <td colspan="1"><span t-field="p.name"/></td>
 	              <td colspan="1"><span t-field="p.name"/></td>
-	              <td colspan="3"><span t-field="p.payment_reference"/></td>
-					<td></td>
+	               <td t-att-colspan="4"><span t-att-colspan="4" t-field="p.payment_reference"/>
+				   <td class="tb-blanked-title">&amp;nbsp;</td>
+				  <td></td></td>
 	              <td colspan="1"><span t-esc="p.ref"/></td>
 					<td colspan="1"><span t-field="p.amount_total"></span></td>
 					<td colspan="1"><span t-esc="o._get_invoice_payment_amount(p)"></span></td>

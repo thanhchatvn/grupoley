@@ -44,7 +44,7 @@
 			  </h3>
 			  <span t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
 					 <span t-field="o.date"/>
-				   <span class="text-right" style="padding-left:5%;" t-field="o.check_number"/>
+				   <span class="text-right" style="padding-left:20%;" t-field="o.check_number"/>
 			  </span>
 			  <span style="border: 1px solid black;" t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
 						<!--<span t-field="o.display_name"/>-->
@@ -57,18 +57,18 @@
 
 	 <!--FIN HEADER-->
 
-	  <div class="page" style=" border: 1px solid black; border-radius: 10px; padding-top: -5%; ">
+	  <div class="page" style=" width:100% !important; padding-top: -5%; ">
 		  <!--MY COMPANY CHECK-->
-  		 <div class="row" style="  border: 1px solid black; border-color:red; border-radius: 10px;">
+  		 <div class="row">
   			 <div class="col-10" style= "margin-top: 6px !important;">
   			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 14px; font-weight: bold; margin-left:30%;"/>
-  			   <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
+  			   <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/>
 				 <div t-field="o.partner_id"/>
-  			   <div  style= "padding-top:0.5%; padding-left:4%;"><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
+  			   <div  style= "padding-left:4%;"><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
   			 </div>
   			 <div class="col-2">
 				<span t-esc="0"/> <p><strong> <span t-esc="0"/>
-                           <span  style= " padding-top:0.5%;" t-field="o.amount"/></strong></p><br/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
+                           <span  style= " padding-top:2%;" t-field="o.amount"/></strong></p><br/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
 
                 <p><strong><span t-esc="'o.check_amount_in_words'"  style="color:#ffffff;"></span></strong></p>
   			 </div>
@@ -76,7 +76,7 @@
   		 <!--END MY COMPANY-->
   		 <br/>
   		 <!-- Beneficiario -->
-  		 <div class="row" style="border: 1px solid black; border-radius: 10px; margin-top:22% !important;">
+  		 <div class="row" style="margin-top:22% !important;">
 
   		   <div name="invoice_address" class="col-4"  style="margin-top: 8px !important;">
 			     <span t-field="o.company_id.name" style=" color:#ffffff; font-size: 18px; font-weight: bold;"/>
@@ -100,14 +100,15 @@
   		 </div>
   		 <!-- END PROVEEDOR -->
 
-	    <table class="table" style="width:100%;" >
-	        <thead colspan="8">
+	    <table class="table text-center" style="width:100% !important;" >
+	        <thead colspan="10">
 	            <tr class="border-black">
 	                <th colspan="1">Nro Comprob</th>
 	                <th colspan="1">Nro Factura</th>
-	                <th colspan="3"> <span>Concepto</span></th>
-					<th></th>
-	                <th colspan="1">Orden de Compra</th>
+	                <th t-att-colspan="4"> <span t-att-colspan="4">Concepto</span></th>
+					<th colspan="1"></th>
+					<th colspan="1"></th>
+	                <th >Orden de Compra</th>
 					<th colspan="1">Monto Factura</th>
 					<th colspan="1">Neto a pagar</th>
 	            </tr>
@@ -116,9 +117,10 @@
 	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
 	              <td colspan="1"><span t-field="p.name"/></td>
 	              <td colspan="1"><span t-field="p.name"/></td>
-	              <td colspan="3"><span t-field="p.payment_reference"/></td>
-					<td></td>
-	              <td colspan="1"><span t-esc="p.ref"/></td>
+	              <td t-att-colspan="4"><span t-att-colspan="4" t-field="p.payment_reference"/>
+				   <td class="tb-blanked-title">&amp;nbsp;</td>
+				  <td></td></td>
+	              <td><span t-esc="p.ref"/></td>
 					<td colspan="1"><span t-field="p.amount_total"></span></td>
 					<td colspan="1"><span t-esc="o._get_invoice_payment_amount(p)"></span></td>
 

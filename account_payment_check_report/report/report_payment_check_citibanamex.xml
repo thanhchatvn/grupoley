@@ -63,8 +63,7 @@
   			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 14px; font-weight: bold; margin-left:30%;"/>
   			   <span t-esc="0"/>
 				 <div t-field="o.partner_id"/>
-				  <span style="color:#ffffff;" t-field="o.amount"/>
-  			   <div  style= "padding-top: 1% !important; padding-left:4%;"><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
+  			   <div  style= "padding-left:4%;"><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
   			 </div>
   			 <div class="col-2">
 				<span t-esc="0"/>  <span t-field="o.check_number"/><br/>
@@ -76,7 +75,7 @@
   		 <!--END MY COMPANY-->
   		 <br/>
   		 <!-- Beneficiario -->
-  		 <div class="row" style="border: 1px solid black; border-radius: 10px; margin-top:12% !important;">
+  		 <div class="row" style="border: 1px solid black; border-radius: 10px; margin-top:16% !important;">
 
   		   <div name="invoice_address" class="col-6"  style=" font-size: 12px; margin-top: 8px !important;">
                <p><strong>CONCEPTO DEL PAGO</strong></p>
