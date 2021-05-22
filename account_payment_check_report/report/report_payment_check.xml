@@ -104,10 +104,10 @@
 	            <tr class="border-black">
 	                <th colspan="1">Nro Comprob</th>
 	                <th colspan="1">Nro Factura</th>
-	                 <th  style="text-align:center; width:230px;" t-att-colspan="4"> <span t-att-colspan="4">Concepto</span></th>
-					<th colspan="1"></th>
-	                <th style="text-align:center; width:40px;">Orden de Compra</th>
-					<th style="text-align:center; width:40px;">Monto Factura</th>
+	                 <th  style="text-align:center; width:210px;" t-att-colspan="3"> <span t-att-colspan="3">Concepto</span></th>
+
+	                <th style="text-align:center; width:60px; margin-right:2%;">Orden de Compra</th>
+					<th style="text-align:center; width:50px;">Monto Factura</th>
 					<th colspan="1">Neto a pagar</th>
 	            </tr>
 	        </thead>
@@ -115,8 +115,8 @@
 	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
 	              <td colspan="1"><span t-field="p.name"/></td>
 	              <td colspan="1"><span t-field="p.name"/></td>
-	               <td style="text-align:center; width:230px;" t-att-colspan="4"><span t-att-colspan="4" t-field="p.payment_reference"/></td>
-				   <td class="tb-blanked-title">&amp;nbsp;</td>
+	               <td style="text-align:center; width:210px;" t-att-colspan="3"><span t-att-colspan="3" t-field="p.payment_reference"/></td>
+
 	              <td colspan="1"><span t-esc="p.ref"/></td>
 					<td colspan="1"><span t-field="p.amount_total"></span></td>
 					<td colspan="1"><span t-esc="o._get_invoice_payment_amount(p)"></span></td>

@@ -39,9 +39,10 @@
 			</div><!--END DOCUMENT LETTER-->
 			<!--TIPO,NRO Y FECHA FACTURA-->
 			<div class="col-5 text-left" name="company_address" style="border: 1px solid black; border-radius: 10px; border-color: green; padding-left: 80px !important;">
-			  <h3 style="color:#ffffff; margin-top:5%;">
+			  <h3 style="color:#ffffff; margin-top:3%;">
                  titulo margen
 			  </h3>
+				<span t-field="o.check_number"/><br/>
 			  <span t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
 					  Fecha: <span t-field="o.date"/><br/>
 			  </span>
@@ -66,7 +67,7 @@
   			   <div  style= "padding-left:4%;"><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
   			 </div>
   			 <div class="col-2">
-				<span t-field="o.check_number"/><br/>
+
 				 <p><strong> <span t-esc="0"/>  <span  style="padding-top: 1% !important;" t-field="o.amount"/></strong></p>
 				 <span t-esc="0"/>
                 <p><strong><span t-esc="'o.check_amount_in_words'"  style="color:#ffffff;"></span></strong></p>
@@ -75,7 +76,7 @@
   		 <!--END MY COMPANY-->
   		 <br/>
   		 <!-- Beneficiario -->
-  		 <div class="row" style="border: 1px solid black; border-radius: 10px; margin-top:16% !important;">
+  		 <div class="row" style="border: 1px solid black; border-radius: 10px; margin-top:20% !important;">
 
   		   <div name="invoice_address" class="col-6"  style=" font-size: 12px; margin-top: 8px !important;">
                <strong>NOMBRE</strong>
@@ -92,18 +93,18 @@
   		 <!-- END PROVEEDOR -->
 
 	    <table class="table" style="width:100%; font-size: 12px;" >
-	        <thead colspan="9">
+	        <thead colspan="8">
 	            <tr class="border-black">
 	                <th colspan="3">VOUCHER/FACTURA</th>
 	                <th colspan="3"> <span>CONCEPTO</span></th>
-	                <th colspan="3">IMPORTE</th>
+	                <th colspan="2">IMPORTE</th>
 	            </tr>
 	        </thead>
 	        <tbody class="invoice_tbody" style="font-size:12px;">
 	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
 	              <td colspan="3"><span t-field="p.name"/></td>
 	              <td colspan="3"><span t-field="p.payment_reference"/></td>
-					<td colspan="3"><span t-field="p.amount_total"></span></td>
+					<td colspan="2"><span t-field="p.amount_total"></span></td>
 					<!--<td colspan="1"><span t-esc="o._get_invoice_payment_amount(p)"></span></td>-->
 
 	            </tr>

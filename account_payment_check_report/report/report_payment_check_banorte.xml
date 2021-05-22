@@ -60,7 +60,7 @@
 	  <div class="page" style=" width:100% !important; padding-top: -5%; ">
 		  <!--MY COMPANY CHECK-->
   		 <div class="row">
-  			 <div class="col-10" style= "margin-top: 6px !important;">
+  			 <div class="col-9" style= "margin-top: 6px !important;">
   			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 14px; font-weight: bold; margin-left:30%;"/>
   			   <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/>
 				 <div t-field="o.partner_id"/>
@@ -105,7 +105,7 @@
 	            <tr class="border-black">
 	                <th colspan="1">Nro Comprob</th>
 	                <th colspan="1">Nro Factura</th>
-	                 <th style="text-align:center; width:230px;"  t-att-colspan="4"> <span t-att-colspan="4">Concepto</span></th>
+	                 <th style="text-align:center; width:210px;"  t-att-colspan="4"> <span t-att-colspan="4">Concepto</span></th>
 					 <th colspan="1"></th>
 	                <th style="text-align:center; width:40px;">Orden de Compra</th>
 					<th style="text-align:center; width:40px;">Monto Factura</th>
@@ -116,7 +116,7 @@
 	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
 	              <td colspan="1"><span t-field="p.name"/></td>
 	              <td colspan="1"><span t-field="p.name"/></td>
-	               <td  style="text-align:center; width:230px;"   t-att-colspan="4"><span t-att-colspan="4" t-field="p.payment_reference"/></td>
+	               <td  style="text-align:center; width:210px;"   t-att-colspan="4"><span t-att-colspan="4" t-field="p.payment_reference"/></td>
 				   <td class="tb-blanked-title">&amp;nbsp;</td>
 	              <td><span t-esc="p.ref"/></td>
 					<td colspan="1"><span t-field="p.amount_total"></span></td>
