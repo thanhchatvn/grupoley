@@ -38,11 +38,8 @@
 			  </div>
 			</div><!--END DOCUMENT LETTER-->
 			<!--TIPO,NRO Y FECHA FACTURA-->
-			<div class="col-5 text-left" name="company_address" style="border: 1px solid black; border-radius: 10px; border-color: green; padding-left: 80px !important;">
-			  <h3 style="color:#ffffff; margin-top:3%;">
-                 titulo margen
-			  </h3>
-				<span t-field="o.check_number"/><br/>
+			<div class="col-5 text-left" name="company_address" style="border: 1px solid black; border-radius: 10px; border-color: green; padding-left: 50px !important;">
+				<p><span t-field="o.check_number"/></p>
 			  <span t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
 					  Fecha: <span t-field="o.date"/><br/>
 			  </span>
