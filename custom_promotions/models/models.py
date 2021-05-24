@@ -263,14 +263,18 @@ class SaleOrder(models.Model):
             #price_unit = self.order_line.filtered(lambda line: program.reward_product_id == line.product_id)[0].price_reduce
             price_unit = 0.01
             if program_action == 1:
+                #if program is product
                 order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id))
+                total_qty = sum(self.order_line.mapped('product_uom_qty')) or 1
             #TODO:
             elif program_action == 2:
-                order_lines = self.order_line.filtered(lambda x: x.product_id.id == product_id and not x.is_reward_line) #  self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id))
+                #if program is same product
+                order_lines = self.order_line.filtered(lambda x: x.product_id.id == product_id and not x.is_reward_line)
+                total_qty = sum(self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).mapped('product_uom_qty')) or 1
                 #order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id))
-                #order_lines = order_line
+
             max_product_qty = sum(order_lines.mapped('product_uom_qty')) or 1
-            total_qty = sum(self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).mapped('product_uom_qty')) or 1
+            #total_qty = sum(self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).mapped('product_uom_qty')) or 1
             # Remove needed quantity from reward quantity if same reward and rule product
             if program._get_valid_products(program.reward_product_id):
                 # number of times the program should be appliedd
