@@ -27,4 +27,12 @@ class PosOrder(models.Model):
             res['x_order_reference_date'] = self.inputValue2
             res['x_delivery_reference'] = self.inputValue3
             res['x_delivery_reference_date'] = self.inputValue4
+        partner_id = self.env['res.partner'].browse(res['partner_id'])
+        if partner_id.property_payment_term_id:
+            res['invoice_payment_term_id'] = partner_id.property_payment_term_id.id
         return res
+
+    def buscar_addenda_parent(self, partner):
+        if self.env['res.partner'].browse(partner).l10n_mx_edi_addenda:
+            return True
+        return False

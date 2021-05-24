@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="open_autorizacion" model="ir.actions.act_window">
+        <field name="name">Autorizaciones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.autorizacion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_point_of_sale_autorizacion"
+              name="Autorizacion"
+              parent="point_of_sale.menu_point_of_sale"
+              action="open_autorizacion"
+              sequence="20"/>
+
+</odoo>

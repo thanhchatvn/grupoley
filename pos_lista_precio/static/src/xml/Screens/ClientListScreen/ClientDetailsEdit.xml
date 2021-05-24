@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates id="pos_lista_precio" xml:space="preserve">
+
+    <t t-name="ClientDetailsEdit" t-inherit="point_of_sale.ClientDetailsEdit" t-inherit-mode="extension" owl="1">
+        <xpath expr="//select[@name='property_product_pricelist']" position="replace">
+            <select class="detail needsclick" name="property_product_pricelist" t-on-change="captureChange">
+                <t t-foreach="env.pos.pricelists.filter(e => e.id == env.pos.config.pricelist_id[0])" t-as="pricelist" t-key="pricelist.id">
+                    <option t-att-value="pricelist.id" t-att-selected="props.partner.property_product_pricelist ? (pricelist.id === props.partner.property_product_pricelist[0] ? true : false) : false">
+                        <t t-esc="pricelist.display_name" />
+                    </option>
+                </t>
+            </select>
+        </xpath>
+    </t>
+
+</templates>

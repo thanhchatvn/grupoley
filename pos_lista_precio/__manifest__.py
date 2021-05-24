@@ -15,6 +15,7 @@
     ],
 
     'qweb': [
-
+        'static/src/xml/Screens/ClientListScreen/ClientLine.xml',
+        'static/src/xml/Screens/ClientListScreen/ClientDetailsEdit.xml',
     ],
 }

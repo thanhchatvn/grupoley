@@ -29,8 +29,19 @@ odoo.define('pos_addenda_custom.LeyCustomPaymentScreen', function (require) {
             let valido = await super._isOrderValid(...arguments);
             if (valido) {
                 let cliente = this.currentOrder.get_client();
+                let parent = false;
                 if (cliente) {
-                    if (cliente.l10n_mx_edi_addenda) {
+                    if (cliente.parent_id){
+                        const result = await this.rpc({
+                            model: 'pos.order',
+                            method: 'buscar_addenda_parent',
+                            args: [[], cliente.parent_id[0]],
+                        });
+                        if (result){
+                            parent = true;
+                        }
+                    }
+                    if (cliente.l10n_mx_edi_addenda || parent) {
                         if ( this.currentOrder.inputValue1 == false || this.currentOrder.inputValue1 == "" || this.currentOrder.inputValue1 == null ||
                              this.currentOrder.inputValue2 == false || this.currentOrder.inputValue2 == "" || this.currentOrder.inputValue2 == null ||
                              this.currentOrder.inputValue3 == false || this.currentOrder.inputValue3 == "" || this.currentOrder.inputValue3 == null ||
@@ -43,6 +54,8 @@ odoo.define('pos_addenda_custom.LeyCustomPaymentScreen', function (require) {
                         } else {
                             return true;
                         }
+                    } else {
+                        return true;
                     }
                 }
             } else {

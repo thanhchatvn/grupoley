@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PrintBillButtonLey" owl="1">
+        <span class="control-button">
+            <i class="fa fa-print"></i>
+            <span> </span>
+            <span>Imprimir Ticket</span>
+        </span>
+    </t>
+
+</templates>

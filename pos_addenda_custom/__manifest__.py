@@ -7,6 +7,7 @@
         'account',
         'l10n_mx_edi',
         'partner_addenda',
+        'res_partner_cfdi',
     ],
     'author': "DataWorks",
     'category': 'Custom',
@@ -15,7 +16,6 @@
 
     'data': [
         'views/templates.xml',
-        'views/account_move_views.xml',
     ],
 
     'qweb': [
