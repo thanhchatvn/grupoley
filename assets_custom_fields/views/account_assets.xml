@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <data>
+
+    <record id="assets_custom_fields_form" model="ir.ui.view">
+      <field name="name">assets.custom.fields.form</field>
+      <field name="model">account.asset</field>
+      <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='acquisition_date']" position="after">
+          <field name="x_inpc"/>
+        </xpath>
+        <xpath expr="//group[5]" position="after">
+          <group string="Departamento">
+            <field name="x_hr_department"/>
+          </group>
+        </xpath>
+      </field>
+    </record>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="assets_custom_fields.list">
+      <field name="name">assets_custom_fields list</field>
+      <field name="model">assets_custom_fields.assets_custom_fields</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="assets_custom_fields.action_window">
+      <field name="name">assets_custom_fields window</field>
+      <field name="res_model">assets_custom_fields.assets_custom_fields</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="assets_custom_fields.action_server">
+      <field name="name">assets_custom_fields server</field>
+      <field name="model_id" ref="model_assets_custom_fields_assets_custom_fields"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="assets_custom_fields" id="assets_custom_fields.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="assets_custom_fields.menu_1" parent="assets_custom_fields.menu_root"/>
+    <menuitem name="Menu 2" id="assets_custom_fields.menu_2" parent="assets_custom_fields.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="assets_custom_fields.menu_1_list" parent="assets_custom_fields.menu_1"
+              action="assets_custom_fields.action_window"/>
+    <menuitem name="Server to list" id="assets_custom_fields" parent="assets_custom_fields.menu_2"
+              action="assets_custom_fields.action_server"/>
+-->
+  </data>
+</odoo>
