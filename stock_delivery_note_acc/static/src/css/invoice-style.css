@@ -1,0 +1,777 @@
+.tb-custom-left{
+border:0px !important;
+}
+.tb-custom-left > tr{
+    padding-top:5px;
+    margin-top: 5px;
+}
+.tb-custom-right{
+    border:0px !important;
+    position:relative;
+    top:-225px;
+    margin-left:50% ;
+   
+}
+.tb-content-left{
+    width: 280px;
+    padding-left: 11px;
+    border: 1px solid #000;
+    
+}
+.tb-content-right{
+    width: 250px;
+    padding-left: 11px;
+    border: 1px solid #000;
+    
+}
+
+.tb-blanked{
+    border:0px !important  
+}
+.tb-content-quo{
+    width: 200px;
+    border-bottom:1px solid #000;
+    border-right: 0px !important;
+}
+.tb-cost-add{
+    margin-top: 25px;
+    border:0px !important;
+    margin-left: 20px;
+}
+.th-cost-add{
+    background-color: #c9c9c9;
+    
+    border: 1px solid #000;
+    border-top:1px solid #000 !important;
+    width: 150px;
+    text-align: center; 
+}
+.td-cost-add-item{
+    border: 1px solid #000 !important;
+    font-size: 11px;
+}
+.info{
+ margin-top: 30px;
+ font-size: 18px;
+ text-align: center;
+}
+#item-invoice{
+    position: relative;
+    top:-100px;
+}
+.tb-head{
+    background-color: #c9c9c9;
+    border:  2px solid black !important;
+    padding-top: 1px !important;  
+    padding-bottom: 1px !important; 
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+.td-title-table-left{
+    border: 2px solid black !important; 
+    padding-left: 1px !important; 
+    width:60px !important;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.td-title-table-left-2{
+    background-color: #c9c9c9;
+    border:  2px solid black !important;
+    width:250px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+.td-title-table-right{
+    border: 2px solid black !important; 
+    padding-left: 1px !important; 
+    width:230px !important;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.td-title-table-right-2{
+    background-color: #c9c9c9;
+    border: 2px solid black !important;
+    width: 235px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+    padding-left: 0px !important; 
+    padding-right: 0px !important;
+}
+.border-all{
+    border: 1px solid black !important; 
+    font-size: 11px;
+}
+.border-all-2{
+    border: 2px solid black !important; 
+    font-size: 11px;
+}
+.border-text-right{
+    border: 1px solid black !important;
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 1px !important;  
+    padding-top: 1px !important;  
+    padding-bottom: 1px !important; 
+    font-size: 11px;
+}
+.border-text-left{
+    border: 1px solid black !important;
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 1px !important;  
+    padding-top: 1px !important; 
+    padding-bottom: 1px !important; 
+    font-size: 11px;
+}
+.border-text-center{
+    border: 1px solid black !important;
+    vertical-align: middle;
+    text-align: center;
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+    font-size: 11px;
+}
+.td-subtotal-1{
+    border: 1px solid black !important; 
+    padding-right: 2px !important; 
+    width:105px !important;
+    text-align: right;
+    font-size: 11px;
+}
+
+.td-head-subtotal-left-1{
+    border: 1px solid black !important; 
+    text-align: left;
+    width:150px !important;
+    padding-left: 2px !important; 
+    font-size: 11px;
+}
+.td-head-subtotal-left-2{
+    background-color: #c9c9c9;
+    border: 1px solid black !important;
+    width:150px !important;
+    text-align:left; 
+    padding-left: 2px !important; 
+    font-size: 11px;
+}
+.td-foot-subtotal-left{
+    background-color: #c9c9c9;
+    border-left:2px solid black;
+    border-right:1px solid black;
+    border-top:2px solid black;
+    border-bottom:2px solid black;
+    width:150px;
+    text-align:left; 
+    padding-left: 2px; 
+    font-size: 11px;
+}
+.td-foot-subtotal-right{
+    background-color: #c9c9c9;
+    border-left:1px solid black;
+    border-right:2px solid black;
+    border-top:2px solid black;
+    border-bottom:2px solid black;
+    width:105px;
+    text-align: right;
+    padding-right: 2px; 
+    font-size: 11px;
+}
+.td-head-extra-cost{
+    background-color: #c9c9c9;
+    border: 2px solid black !important;
+    width:250px !important;
+    text-align:center;  
+    font-size: 11px;
+}
+.td-head-total-left{
+    background-color: #c9c9c9;
+    border-left:2px solid black !important;
+    border-right:1px solid black !important;
+    border-top:2px solid black !important;
+    border-bottom:2px solid black !important;
+    width:150px !important;
+    text-align:left; 
+    padding-left: 2px !important; 
+    font-size: 11px;
+}
+.td-head-total-right{
+    background-color: #c9c9c9;
+    border-left:1px solid black !important;
+    border-right:2px solid black !important;
+    border-top:2px solid black !important;
+    border-bottom:2px solid black !important;
+    width:105px !important;
+    text-align:right; 
+    padding-right: 2px !important; 
+    font-size: 11px;
+}
+/* QUOATATION */
+.tb-data-left{
+    border:0px !important;
+}
+.tb-data-right{
+    border:0px !important; 
+    position:relative;
+    top:-92px;
+    left:4px;
+    margin-left:45% ; 
+}
+.tb-blanked-title{
+    border-top:0px;
+    border-bottom:0px;
+    font-size: 11px;
+}
+.title-1{
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* PURCHASE ORDER */
+.po-title-left{
+    border: 2px solid black !important; 
+    padding-left: 1px !important; 
+    width:120px !important;
+    font-weight: bold;
+    font-size: 11px;
+}
+.po-title-right{
+    background-color: #c9c9c9;
+    border: 2px solid black !important;
+    width:200px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+.purchase-subtotal-left{
+    background-color: #c9c9c9 !important;
+    border-left:2px solid black !important;
+    border-right:1px solid black !important;
+    border-top:2px solid black !important;
+    border-bottom:2px solid black !important;
+    text-align:left !important; 
+    padding-left: 2px !important; 
+    font-size: 11px !important;
+}
+.purchase-subtotal-right{
+    background-color: #c9c9c9 !important;
+    border-left:1px solid black !important;
+    border-right:2px solid black !important;
+    border-top:2px solid black !important;
+    border-bottom:2px solid black !important;
+    text-align: right !important;
+    padding-right: 2px !important; 
+    font-size: 11px !important;
+}
+/* DELIVERY NOTE */
+.title-dnote-left{
+    background-color: #c9c9c9;
+    border: 1.5px solid black;
+    padding-left: 1px ; 
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.title-dnote-right{
+    border: 1.5px solid black;
+    padding-left: 1px ; 
+    text-align: center;
+    font-size: 11px;
+}
+
+/* INVOICE */
+.td-title-invoice-left{
+    background-color: #c9c9c9;
+    border: 1.5px solid black !important;
+    padding-left: 1px ; 
+    width: 60px !important;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.td-title-invoice-left-2{
+    border: 1.5px solid black !important; 
+    padding-left: 1px ; 
+    width: 250px;
+    text-align: left;
+    font-size: 11px;
+}
+.td-title-invoice-right{
+    background-color: #c9c9c9;
+    border: 1.5px solid black !important;
+    width: 50%;
+    text-align: left;
+    font-weight: bold;
+    font-size: 11px;
+    padding-left: 1px; 
+}
+
+.td-title-invoice-right-2{
+    border: 1.5px solid black !important; 
+    padding-left: 1px !important; 
+    width: 50% !important;
+    text-align: center;
+    font-size: 11px;
+}
+
+.td-bank-details{
+    border-top:0.5px solid black;
+    border-bottom:0.5px solid black;
+    text-align: left;
+    font-size: 11px;
+}
+.td-bank-details-first{
+    text-align: left;
+    font-size: 11px;
+}
+.td-bank-details-last{
+    text-align: left;
+    font-weight: bold;
+    font-size: 11px;
+    padding-left: 1px !important; 
+    padding-top: 1px !important; 
+    padding-bottom: 1px !important; 
+}
+.inv-table-head{
+    background-color: #c9c9c9;
+    border:  1.5px solid black !important;
+    padding-top: 1px !important;  
+    padding-bottom: 1px !important; 
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+.inv-table-cell-right{
+    border: 0.5px solid black !important;
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 1px !important;  
+    padding-top: 1px !important;  
+    padding-bottom: 1px !important; 
+    font-size: 11px;
+}
+.inv-table-cell-left{
+    border: 0.5px solid black !important;
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 1px !important;  
+    padding-top: 1px !important; 
+    padding-bottom: 1px !important; 
+    font-size: 11px;
+}
+.inv-table-cell-center{
+    border: 0.5px solid black !important;
+    vertical-align: middle;
+    text-align: center;
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+    font-size: 11px;
+}
+.td-invoice-subtotal-left{
+    border: 0.5px solid black; 
+    padding-top: 2px ; 
+    text-align: center;
+    font-size: 11px;
+}
+.td-invoice-subtotal-right{
+    border: 0.5px solid black; 
+    padding-right: 2px ; 
+    padding-top: 2px ; 
+    text-align: right;
+    font-size: 11px;
+}
+.td-invoice-total-left{
+    background-color: #F4F6A1;
+    border: 1.5px solid black; 
+    padding-left: 1px; 
+    text-align: left;
+    font-weight: bold;
+    font-size: 11px;
+}
+.td-invoice-total-right{
+    background-color: #F4F6A1;
+    border: 1.5px solid black; 
+    padding-right: 2px; 
+    text-align: right;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.td-title-invoice-number-left{
+    background-color: #F4F6A1;
+    border: 1.5px solid black !important; 
+    padding-left: 1px !important; 
+    text-align: left;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.td-title-invoice-address-right{
+    border: 1.5px solid black !important; 
+    background-color: #F4F6A1;
+    padding-left: 1px !important; 
+    width: 250px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.td-title-note-right{
+    background-color: #c9c9c9;
+    border: 1.5px solid black ;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+    padding-left: 1px; 
+}
+
+.td-title-note-right-2{
+    border: 1.5px solid black ; 
+    padding-left: 1px ; 
+    text-align: center;
+    font-size: 11px;
+}
+
+/* INVOICE RASEL */
+.title-inv-rasel-left{
+    background-color: #c9c9c9;
+    border: 1.5px solid black !important;
+    padding-left: 1px ; 
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.title-inv-rasel-left-2{
+    border: 1.5px solid black !important; 
+    padding-left: 1px ; 
+    text-align: left;
+    font-size: 11px;
+}
+.title-inv-rasel-right{
+    background-color: #c9c9c9;
+    border: 1.5px solid black !important;
+    text-align: left;
+    font-weight: bold;
+    font-size: 11px;
+    padding-left: 1px; 
+}
+
+.title-inv-rasel-right-2{
+    border: 1.5px solid black !important; 
+    padding-left: 1px !important; 
+    text-align:right;
+    font-size: 11px;
+}
+.inv-rasel-table-head{
+    border:  0px !important;
+    padding-top: 1px !important;  
+    padding-bottom: 1px !important; 
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.inv-rasel-table-cell-right{
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 1px !important;  
+    padding-top: 1px !important;  
+    padding-bottom: 1px !important; 
+    font-size: 11px;
+}
+.inv-rasel-table-cell-left{
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 1px !important;  
+    padding-top: 1px !important; 
+    padding-bottom: 1px !important; 
+    font-size: 11px;
+}
+.inv-rasel-table-cell-center{
+    vertical-align: middle;
+    text-align: center;
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+    font-size: 11px;
+}
+/* INITIAL PROFITABILITY */
+
+.ip-title-left-left{
+    border: 1px solid black ; 
+    padding-left: 1px ; 
+    text-align: center;
+    font-weight: bold;
+    font-size: 7px;
+}
+.ip-title-left-right{
+    background-color: #c9c9c9;
+    border: 1px solid black ; 
+    text-align: center;
+    font-weight: bold;
+    font-size: 7px;
+}
+.ip-title-table{
+    border: 1px solid black ; 
+    padding-top: 2px ; 
+    padding-bottom: 2px ; 
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 7px;
+}
+.ip-body-table-left{
+    background-color: #FFFFFF;
+    border: 0.5px solid black ; 
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 1px ; 
+    vertical-align: bottom;
+    font-size: 7px;
+}
+.ip-body-table-center{
+    background-color: #FFFFFF;
+    border: 0.5px solid black ; 
+    vertical-align: middle;
+    text-align: center;
+    vertical-align: bottom;
+    font-size: 7px;
+}
+.ip-body-table-right{
+    background-color: #FFFFFF;
+    border: 0.5px solid black ; 
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 1px ; 
+    vertical-align: bottom;
+    font-size: 7px;
+}
+.ip-body-table-bold-left{
+    background-color: #FFFFFF;
+    border: 0.5px solid black ; 
+    text-align: left;
+    padding-left: 1px ; 
+    vertical-align: bottom;
+    font-weight: bold;
+    font-size: 7px;
+}
+.ip-body-table-bold-center{
+    background-color: #FFFFFF;
+    border: 0.5px solid black ; 
+    text-align: center;
+    vertical-align: bottom;
+    font-weight: bold;
+    font-size: 7px;
+}
+.ip-body-table-bold-right{
+    background-color: #FFFFFF;
+    border: 0.5px solid black ; 
+    text-align: right;
+    padding-right: 1px ; 
+    vertical-align: bottom;
+    font-weight: bold;
+    font-size: 7px;
+}
+.ip-foot-table-discount-left{
+    background-color: #c9c9c9;
+    border: 0.5px solid black ; 
+    text-align: center; 
+    font-weight: bold;
+    font-size: 7px;
+}
+.ip-foot-table-discount-right{
+    border: 0.5px solid black ; 
+    text-align: right; 
+    padding-right: 1px ; 
+    font-size: 7px;
+}
+
+.ip-blanked-title{
+    border-top:0px ;
+    border-bottom:0px ;
+    font-size: 7px;
+}
+.ip-blanked-border-title{
+    background-color: #FFFFFF;
+    border: 0.5px solid black ; 
+    font-size: 7px;
+}
+
+.ip-foot-total-align-right{
+    background-color: #c9c9c9;
+    border: 1px solid black ; 
+    padding-right: 1px ; 
+    text-align: right;
+    font-weight: bold;
+    font-size: 7px;
+}
+
+.ip-foot-total-align-left{
+    background-color: #c9c9c9;
+    border: 1px solid black ; 
+    padding-left: 1px ; 
+    text-align: left;
+    font-weight: bold;
+    font-size: 7px;
+}
+.ip-foot-total-align-center{
+    background-color: #c9c9c9;
+    border: 1px solid black ; 
+    text-align: center;
+    font-weight: bold;
+    font-size: 7px;
+}
+.ip-fees-table-left{
+    border: 0.5px solid black ; 
+    text-align: left;
+    padding-left: 1px ; 
+    padding-top: 1px ;
+    padding-bottom: 1px ;
+    font-size: 6px;
+}
+.ip-fees-table-center{
+    background-color: #c9c9c9;
+    border: 1px solid black ; 
+    text-align: center;
+    font-weight: bold;
+    padding-top: 1px ;
+    padding-bottom: 1px ;
+    font-size: 6px;
+    color:red;
+
+}
+.ip-fees-table-right{
+    border: 0.5px solid black ; 
+    text-align: right;
+    padding-right: 1px ; 
+    padding-top: 1px ;
+    padding-bottom: 1px ;
+    font-size: 6px;
+}
+.ip-fees-table-zzzzzz{
+    background-color: #c9c9c9;
+    border: 1px solid black ; 
+    text-align: center;
+    font-weight: bold;
+    padding-top: 1px ;
+    padding-bottom: 1px ;
+    font-size: var(--tmno-txt);
+    color:red;
+
+}
+:root{
+    --tmno-txt:20px;
+}
+
+
+/* DELIVERY PERFORMANCE REPORT */
+
+.pdr-table-head-center{
+    background-color: #c9c9c9;
+    border: 2px solid black;
+    padding-top: 1px;  
+    padding-bottom: 1px; 
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+.pdr-table-head-left{
+    background-color: #c9c9c9;
+    border: 2px solid black;
+    padding-left: 1px;  
+    padding-top: 1px;  
+    padding-bottom: 1px; 
+    text-align: left;
+    font-weight: bold;
+    font-size: 14px;
+}
+.pdr-table-head-right{
+    border: 2px solid black;
+    font-weight: bold;
+    font-size: 14px;
+    padding-left: 1px;  
+}
+.pdr-boby-left{
+    background-color: #c9c9c9;
+    border: 2px solid black;
+    border-bottom:1px solid black;
+    border-right:1px solid black;
+    padding-left: 1px;  
+    padding-top: 1px;  
+    padding-bottom: 1px; 
+    text-align: left;
+    font-weight: bold;
+    font-size: 14px;
+}
+.pdr-boby-center{
+    background-color: #c9c9c9;
+    border: 2px solid black;
+    padding-left: 0px !important;  
+    padding-right: 0px !important;  
+    padding-top: 1px;  
+    padding-bottom: 1px; 
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+.pdr-boby-right{
+    border: 2px solid black;
+    vertical-align: middle;
+    border-bottom:1px solid black;
+    border-right:1px solid black;
+    font-weight: bold;
+    font-size: 14px;
+    padding-left: 1px;  
+}
+.pdr-boby-o{
+    border: 1px solid black;
+    text-align: center;
+    font-size: 24px;
+    padding-left: 1px;
+    vertical-align:  middle;
+}
+.pdr-boby-cell{
+    border: 1px solid black;
+    font-size: 14px;
+}
+.pdr-foot-left{
+    border-top:0px;
+    border-bottom:0px;
+    font-size: 14px;
+    border-left:2px solid black;
+    text-decoration: underline;
+    padding-top: 2px;  
+    padding-bottom: 2px; 
+}
+.pdr-foot-center{
+    border-top:0px;
+    border-bottom:0px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: underline;
+    padding-top: 2px;  
+    padding-bottom: 2px; 
+}
+.pdr-foot-center{
+    border-top:0px;
+    border-bottom:0px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: underline;
+    padding-top: 2px;  
+    padding-bottom: 2px; 
+}
+.pdr-blanked-foot{
+    border-top:0px;
+    border-bottom:0px;
+    font-size: 24px;
+}
+.pdr-blanked-title{
+    border-top:0px;
+    border-bottom:0px;
+    font-size: 14px;
+}

@@ -1,0 +1,11 @@
+<odoo>
+<template id="report_assets_common_custom_fonts" name="Custom QWeb fonts" inherit_id="web.report_assets_common">
+<xpath expr="." position="inside">
+<link rel="stylesheet"  href="/stock_delivery_note_acc/static/src/less/fonts.less" type="text/less"/>
+</xpath>
+   <!--    <xpath expr="." position="inside">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&amp;display=swap" rel="stylesheet" />
+</xpath>-->
+</template>
+</odoo>

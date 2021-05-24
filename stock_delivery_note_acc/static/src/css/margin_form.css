@@ -1,0 +1,8 @@
+
+.o_form_view .o_form_sheet_bg > .o_form_sheet
+{
+max-width: 1080px !important;
+}
+.o_form_view .o_form_sheet_bg > .o_form_sheet {
+    margin: 5px auto !important;
+}
