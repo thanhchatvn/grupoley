@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <data>
-<template id="report_payment_check_document">
+<template id="report_payment_check_document_b">
 
   <t t-if="not o and doc">
       <t t-set="o" t-value="doc"/>
@@ -18,8 +18,8 @@
 
   <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
      <!--HEADER-->
-     <div class="header">
-		<div class="row" style=" height:2cm !important;">
+     <div class="header" style=" border: 1px solid black;">
+		<div class="row" style="border: 1px solid black; border-radius: 10px; border-color: blue; height:2cm !important;">
 			<!--COMPANY LOGO-->
 			<div class="col-3 text-left">
 				<!--<img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="display: block !important; float: left !important; position: absolute !important; margin-top: 0px !important; margin-bottom: 0px !important; top: 10px !important; left: 10px !important; bottom: auto !important; max-height: 95px;"/>
@@ -38,12 +38,13 @@
 			  </div>
 			</div><!--END DOCUMENT LETTER-->
 			<!--TIPO,NRO Y FECHA FACTURA-->
-			<div class="col-5 text-left" name="company_address" style=" padding-left: 80px !important;">
+			<div class="col-5" name="company_address" style="border: 1px solid black; border-radius: 10px; border-color: green; padding-left: 30px !important;">
 			  <h3 style="color:#ffffff; margin-top:5%;">
                  titulo margen
 			  </h3>
 			  <span t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
-					  Fecha: <span t-field="o.date"/><br/>
+					 <span t-field="o.date"/>
+				   <span class="text-right" style="padding-left:20%;" t-field="o.check_number"/>
 			  </span>
 			  <span style="border: 1px solid black;" t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
 						<!--<span t-field="o.display_name"/>-->
@@ -56,19 +57,19 @@
 
 	 <!--FIN HEADER-->
 
-	  <div class="page" style="border-radius: 10px; padding-top: -5%; ">
+	  <div class="page" style=" width:100% !important; padding-top: -5%; ">
 		  <!--MY COMPANY CHECK-->
   		 <div class="row">
-  			 <div class="col-10" style= "margin-top: 8px !important;">
-  			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 18px; font-weight: bold; margin-left:30%;"/>
-  			   <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
-				 <div  style= "padding: 2% !important;" t-field="o.partner_id"/>
-  			   <div  style= "padding-top: 1% !important; padding-left:4%;"><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
+  			 <div class="col-9" style= "margin-top: 6px !important;">
+  			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 14px; font-weight: bold; margin-left:30%;"/>
+  			   <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/>
+				 <div t-field="o.partner_id"/>
+  			   <div  style= "padding-left:4%;"><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
   			 </div>
   			 <div class="col-2">
-				<span t-esc="0"/>  <span t-field="o.check_number"/><br/>
-                           <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
-  			   <p><strong> <span t-esc="0"/>  <span t-field="o.amount"/></strong></p>
+				<span t-esc="0"/> <p><strong> <span t-esc="0"/>
+                           <span  style= " padding-top:2%;" t-field="o.amount"/></strong></p><br/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
+
                 <p><strong><span t-esc="'o.check_amount_in_words'"  style="color:#ffffff;"></span></strong></p>
   			 </div>
   		 </div>
@@ -99,15 +100,15 @@
   		 </div>
   		 <!-- END PROVEEDOR -->
 
-	    <table class="table" style="width:100%;" >
+	    <table class="table text-center" style="width:100% !important;" >
 	        <thead colspan="10">
 	            <tr class="border-black">
 	                <th colspan="1">Nro Comprob</th>
 	                <th colspan="1">Nro Factura</th>
-	                 <th  style="text-align:center; width:210px;" t-att-colspan="3"> <span t-att-colspan="3">Concepto</span></th>
-
-	                <th style="text-align:center; width:60px; margin-right:2%;">Orden de Compra</th>
-					<th style="text-align:center; width:50px;">Monto Factura</th>
+	                 <th style="text-align:center; width:210px;"  t-att-colspan="4"> <span t-att-colspan="4">Concepto</span></th>
+					 <th colspan="1"></th>
+	                <th style="text-align:center; width:40px;">Orden de Compra</th>
+					<th style="text-align:center; width:40px;">Monto Factura</th>
 					<th colspan="1">Neto a pagar</th>
 	            </tr>
 	        </thead>
@@ -115,9 +116,9 @@
 	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
 	              <td colspan="1"><span t-field="p.name"/></td>
 	              <td colspan="1"><span t-field="p.name"/></td>
-	               <td style="text-align:center; width:210px;" t-att-colspan="3"><span t-att-colspan="3" t-field="p.payment_reference"/></td>
-
-	              <td colspan="1"><span t-esc="p.ref"/></td>
+	               <td  style="text-align:center; width:210px;"   t-att-colspan="4"><span t-att-colspan="4" t-field="p.payment_reference"/></td>
+				   <td class="tb-blanked-title">&amp;nbsp;</td>
+	              <td><span t-esc="p.ref"/></td>
 					<td colspan="1"><span t-field="p.amount_total"></span></td>
 					<td colspan="1"><span t-esc="o._get_invoice_payment_amount(p)"></span></td>
 
@@ -127,7 +128,7 @@
 
 
 	  </div>
-	  <footer style="margin-top:60%;">
+	  <footer style="margin-top:50%;">
 			  <table class="table">
 	          <tbody>
 	          <tr class="border-black">
@@ -135,6 +136,7 @@
 	              <span  class="text-center">
 
 					  <span t-field="o.ref"/>
+                      <span t-field="o.journal_id"/>
 				 </span>
 				  </td>
 	            <td colspan="2" class="text-right" ><strong style="color:#ffffff;">Total</strong></td>
@@ -151,15 +153,15 @@
 
 </template>
 
-<template id="report_payment_check">
+<template id="report_payment_check_banorte">
     <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
-            <t t-call="account_payment_check_report.report_payment_check_document" t-lang="o.partner_id.lang"/>
+            <t t-call="account_payment_check_report.report_payment_check_document_b" t-lang="o.partner_id.lang"/>
         </t>
     </t>
 </template>
 	<!--Para customizar el formato*/-->
-	<record id="paperformat_euro_lowmargin" model="report.paperformat">
+	<record id="paperformat_euro_lowmargin_s" model="report.paperformat">
     <field name="name">European A4 low margin</field>
     <field name="default" eval="True"/>
     <field name="format">A4</field>
@@ -178,13 +180,13 @@
 
         <!-- QWeb Reports -->
         <report
-            id="account_payment_check_report.account_payment_check_report"
+            id="account_payment_check_report.account_payment_check_report_banorte"
             model="account.payment"
-            string="Cheque Bancomer"
+            string="Cheque banorte"
             report_type="qweb-pdf"
-            name="account_payment_check_report.report_payment_check"
-            file="account_payment_check_report.report_payment_check"
-			paperformat="account_payment_check_report.paperformat_euro_lowmargin"
+            name="account_payment_check_report.report_payment_check_banorte"
+            file="account_payment_check_report.report_payment_check_banorte"
+			paperformat="account_payment_check_report.paperformat_euro_lowmargin_s"
 
         />
 <!--Asignando formato personalizado paperformat="account_payment_check_report.paperformat_euro_lowmargin"/>-->
