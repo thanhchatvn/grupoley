@@ -5,19 +5,19 @@
                 <t t-foreach="docs" t-as="o">
                      <t t-call="web.external_layout">
                           <header class="header" style="font-weight: bold;">
-                            <center>
+                           <!-- <center>
                                 <p class="h1-title-rp-2" style="top:10px;padding-bottom: 1px;margin-bottom:0% ;">
                                     <strong t-esc="o.company_id.name"/>
                                 </p>
-                            </center>
+                            </center>-->
                             <center>
-                                <div class="rp-title-2" style="font-weight: bold;">Recibo de Recepción de Mercancía
+                                <div class="rp-title-2" style=" top:10px;padding-bottom: 1px;margin-bottom:0% ; font-weight: bold;">Recibo de Recepción de Mercancía
                                 </div>
                             </center>
                             <table style="position:relative; top:-45px; text-align: right;">
                                 <tr>
                                     <td style="border:0px;font-size: 11px; text-align: right;">Date:
-                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%y')"/>
+                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%y %H:%M')"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -125,7 +125,7 @@
                                             <span t-field="move.product_uom"/>
                                         </td>
                                         <td>
-                                            <span t-field="move.product_uom_qty"
+                                            <span t-field="move.product_qty"
                                                   t-options='{"widget": "float", "precision": 2}'/>
                                         </td>
                                         <td>

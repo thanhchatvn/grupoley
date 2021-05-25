@@ -6,7 +6,7 @@ _logger = logging.getLogger(__name__)
 
 
 class InheritAccountPayment(models.Model):
-    _inherit='account.payment'
+    inherit='account.payment'
 
 
 
