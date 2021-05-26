@@ -523,10 +523,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                   <strong>Proveedor: </strong><span t-field="o.partner_id.id"/> <span t-field="o.partner_id.name"/>
+                                   <strong>Proveedor: </strong><span t-field="o.partner_id.id" t-options="{'widget': 'text'}"/> <span t-field="o.partner_id.name"/>
                                 </div>
                                 <div class="col-4">
-                                    <strong>Voucher: </strong><span t-field="o.name"/>
+                                    <strong>Factura: </strong><span t-field="o.name"/>
                                 </div>
                                 <div class="col-2">
                                     <span t-field="o.invoice_date"/>
@@ -549,7 +549,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <t t-set="stock_picking_id" t-value="o.calculate_no_entrada()"/>
-                                    <strong>No. Entrada:</strong><span/> <span t-field="stock_picking_id.name"/>
+                                    <strong>No. Entrada:</strong><span t-if="stock_picking_id.name" t-field="stock_picking_id.name"/>
                                 </div>
                                 <div class="col-3">
                                     <strong>Moneda: </strong><span t-field="o.currency_id.name"/>
@@ -557,16 +557,16 @@
                             </div>
                             <div class="row" style="border: 1px solid black;">
                                 <div class="col-3">
-                                    <strong>Factura</strong>
+                                    <strong>Ref. Factura Proveedor</strong>
                                 </div>
                                  <div class="col-3">
                                     <strong>Fecha Fact</strong>
                                 </div>
-                                 <div class="col-3">
-                                    <strong>Monto</strong>
+                                 <div class="col-3" style="text-align:right">
+                                    <strong >Monto</strong>
                                 </div>
-                                 <div class="col-3">
-                                    <strong>Tarifa Impuesto</strong>
+                                 <div class="col-3" style="text-align:right">
+                                    <strong >Tarifa Impuesto</strong>
                                 </div>
                             </div>
                             <div class="row">
@@ -574,12 +574,15 @@
                                     <span t-field="o.ref"/>
                                 </div>
                                 <div class="col-3">
+                                    <!--<t t-esc = "'{0:,. 2f}'. format (int (line.credit)). replace (',', '')" />-->
                                     <span t-field="o.invoice_date"/>
+
                                 </div>
-                                <div class="col-3">
-                                    <span t-field="o.amount_total"/>
+                                <div class="col-3" style="text-align:right">
+                                    <!--<span t-field="o.amount_total"/>-->
+                                    <span t-field = "o.amount_total"/>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-3" style="text-align:right">
                                     <span t-field="o.amount_tax"/>
                                 </div>
                             </div>
@@ -601,73 +604,76 @@
                         </div>
 
                         <t t-set="details_move_values" t-value="o.calculate_lines_details()"/>
-                        <table style="width:100%" >
+                        <table style="margin-left: auto; margin-right: auto; font-size: 13px; width: 100%; border-collapse: collapse; border-spacing: 0;" >
                             <thead style="border-bottom:1px solid black">
                                 <tr class="text-left">
                                     <th><span>No. Cuenta:</span></th>
-                                    <th><span>Remisión</span></th>
+                                    <!--<th><span>Remisión</span></th>-->
                                     <th><span>Producto</span></th>
                                     <th><span>Tarifa</span></th>
                                     <th><span>Cantidad</span></th>
-                                    <th class="text-right"><span>Cargo</span></th>
-                                    <th class="text-right"><span>Abono</span></th>
+                                    <th style="text-align:right"><span>Cargo</span></th>
+                                    <th style="text-align:right"><span>Abono</span></th>
                                 </tr>
                             </thead>
-                            <tbody class = "invoice_tbody">
+                            <tbody class = "invoice_tbody" style=" border-top: 1em solid transparent;">
                                 <t t-if="'details_product' in details_move_values.keys()">
-                                    <tr>
+                                    <tr class="sub-header">
                                         <td><strong><span style = "text-decoration:underline">Detalle del Producto:</span></strong></td>
                                     </tr>
                                     <t t-foreach="details_move_values['details_product']" t-as="line">
                                         <!-- Validación para los movimientos de iva o movimiento acreditado del producto-->
                                         <tr class="text-left">
-                                            <td><span t-field="line.account_id.name"/></td>
-                                            <td><span t-field="line.ref"/></td><!--Remision-->
+                                            <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.code"/> <span t-field="line.account_id.name"/></td>
+                                            <!--<td><span t-field="line.ref"/></td>Remision-->
                                             <td><span t-field="line.name"/></td>
-                                            <td><span t-field="line.price_unit"/></td><!--Tarifa-->
-                                            <td class="text-right"><span t-field="line.quantity"/></td>
-                                            <td class="text-right"><span t-field="line.debit"/></td>
-                                            <td class="text-right"><span t-field="line.credit"/></td>
+                                            <td><span t-field="line.tax_ids.name"/></td><!--Tarifa-->
+                                            <td><span t-field="line.quantity"/></td>
+                                            <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options="{'widget': 'text'}"/></td>
+                                            <td style="text-align:right"><span t-if="line.credit" t-field="line.credit" t-options="{'widget': 'text'}"/></td>
                                         </tr>
                                     </t>
                                     <tr class="text-left">
-                                        <td colspan="5"></td>
-                                        <td class="text-right" style="border-top:1px solid black"><span t-esc="details_move_values['subtotal_products']"/></td>
+                                        <td colspan="4"/>
+                                        <td style="border-top:1px solid black; text-align:right;"><span t-esc="details_move_values['subtotal_products']"/></td>
                                     </tr>
                                 </t>
+                            </tbody>
+                            <tbody class="section section-step" style="border-top: 1em solid transparent;">
                                 <t t-if="'details_tax' in details_move_values.keys()">
-                                    <tr>
+                                    <tr class="sub-header">
                                         <td><strong><span style = "text-decoration:underline">Detalle del Impuesto:</span></strong></td>
                                     </tr>
                                     <t t-foreach="details_move_values['details_tax']" t-as="line">
                                         <tr class="text-left">
-                                            <td><span t-field="line.account_id.name"/></td>
-                                            <td/>
+                                            <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.code"/> <span t-field="line.account_id.name"/></td>
                                             <td/>
                                             <td colspan="2"><span></span></td>
-                                            <td class="text-right"><span t-field="line.debit"/></td>
-                                            <td class="text-right"><span t-field="line.credit"/></td>
+                                            <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options="{'widget': 'text'}"/></td>
+                                            <td style="text-align:right"><span t-if="line.credit" t-field="line.credit" t-options="{'widget': 'text'}"/></td>
                                         </tr>
                                     </t>
                                     <tr class="text-left">
-                                        <td colspan="5" />
-                                        <td class="text-right" style="border-top:1px solid black"><span t-esc="details_move_values['subtotal_tax']"/></td>
+                                        <td colspan="4" />
+                                        <td style="border-top:1px solid black; text-align:right;"><span t-esc="details_move_values['subtotal_tax']"/></td>
                                     </tr>
                                 </t>
+                            </tbody>
+                            <tbody class="section" style="border-top: 5em solid transparent;">
                                 <t t-if="'details_credit' in details_move_values.keys()">
                                     <t t-foreach="details_move_values['details_credit']" t-as="line">
-                                        <tr class="text-left">
-                                            <td ><span t-field="line.account_id.name"/></td>
-                                            <td colspan="4"/>
-                                            <td class="text-right"><span t-field="line.debit"/></td>
-                                            <td class="text-right"><span t-field="line.credit"/></td>
+                                        <tr class="text-left section-header" style="border-top: 1px dashed black;margin-top:100px;">
+                                            <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.code"/> <span t-field="line.account_id.name"/></td>
+                                            <td colspan="3"/>
+                                            <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options="{'widget': 'text'}"/></td>
+                                            <td style="text-align:right"><span t-if="line.credit" t-field="line.credit" t-options="{'widget': 'text'}"/></td>
                                         </tr>
                                     </t>
                                 </t>
                                 <tr class="text-left">
-                                    <td colspan="5"/>
-                                    <td class="text-right" style="border-top:1px solid black"><strong><span t-esc="details_move_values['total_debit']"/></strong></td>
-                                    <td class="text-right" style="border-top:1px solid black"><strong><span t-esc="details_move_values['total_credit']"/></strong></td>
+                                    <td colspan="4"/>
+                                    <td style="border-top:1px solid black; text-align:right"><strong><span t-if="details_move_values['total_debit']" t-esc="details_move_values['total_debit']"/></strong></td>
+                                    <td style="border-top:1px solid black; text-align:right;"><strong><span t-if="details_move_values['total_credit']" t-esc="details_move_values['total_credit']"/></strong></td>
                                 </tr>
                             </tbody>
                         </table>
