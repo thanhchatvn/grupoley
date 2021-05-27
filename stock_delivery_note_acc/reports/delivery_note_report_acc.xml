@@ -163,7 +163,7 @@
                             <th class="col-xs-3">
                                 Cargo
                             </th>
-                            <th class=" col-xs-3 text-center">
+                            <th class=" col-xs-3 text-right">
                                 <strong>Abono</strong>
                             </th>
                         </tr>
