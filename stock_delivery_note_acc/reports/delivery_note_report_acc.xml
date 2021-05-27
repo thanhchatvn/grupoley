@@ -74,7 +74,7 @@
                     <thead style="text-align:center;">
                         <tr>
                             <!--<th class="tb-head" style="text-align:center; width:40px;">Remis</th>-->
-                            <th class="tb-head" style="text-align:left; width:180px;">Fecha</th>
+                            <th class="tb-head" style="text-align:left; width:100px;">Fecha</th>
                             <th class="tb-head" style="text-align:left; width:250px;">Producto</th>
                             <th class="tb-head" tyle=" text-align:left;  margin:10px 0 0 10px; width:105px;">UM</th>
                             <th class="tb-head" style=" text-align:right; margin:10px 0 0 10px; width:105px;">Ordenado</th>
@@ -194,7 +194,7 @@
                                          </tr>-->
                                         </td>
                                         <td class="tb-blanked-title" style="width:10px;">&amp;nbsp;</td>
-                                        <td class="col-xs-3 text-center">
+                                        <td class="col-xs-3 text-right">
                                             <span t-esc="0"/>
                                             <span t-esc="(sum_row2)" t-options='{"widget": "float", "precision": 2}'/>
                                             <tr></tr>
@@ -207,10 +207,10 @@
                             <td></td>
 
                             <td class="col-xs-4 text-right">
-                                <t t-esc="sum_row2"/>
+                                <t t-esc="sum_row2" t-options='{"widget": "float", "precision": 2}'/>
                             </td>
                             <td class="col-xs-4 text-right">
-                                <t t-esc="sum_row2"/>
+                                <t t-esc="sum_row2" t-options='{"widget": "float", "precision": 2}'/>
                             </td>
                         </tr>
                     </tbody>
