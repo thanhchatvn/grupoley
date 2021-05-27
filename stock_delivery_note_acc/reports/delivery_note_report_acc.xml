@@ -19,31 +19,28 @@
                         <td class='col-xs-12' style="">
                             <table style="width: 90%">
                                 <tr class='col-xs-12'>
-                                       <td class=" col-xs-4 td-title-invoice-left">Factura:
-                                    <span style="text-align:left">&amp;nbsp;
+                                       <td class="td-title-invoice-left">Factura:
+                                       <span style="text-align:left">&amp;nbsp;
                                         <t t-esc="o.move_lines._get_related_invoices().name"/>
                                     </span>
                                     </td>
 
-                                    <td class="col-xs-4 td-title-invoice-left ">Orden de compra #:
+                                    <td class="td-title-invoice-left ">Orden de compra #:
                                         <t t-esc="o.origin"/>
                                     </td>
-
-
-
                                     <td class="col-xs-4 td-title-invoice-right">Fecha:
                                     &amp;nbsp;
                                         <t t-esc="o.date_done" />
                                     </td>
 
                                 </tr>
-                                <tr>
+                                <tr  class="col-xs-9">
                                 <td class="col-xs-3 td-title-invoice-right">Total costo de envio:</td>
                                     <td style="text-align:center">&amp;nbsp;<t t-esc="o.carrier_price"/></td>
                                 </tr>
-                                <tr class="col-xs-12">
+                                <tr class="col-xs-9">
                                     <td  class="col-xs-6 td-title-invoice-left">Proveedor:
-                                    <span t-att-colspan="4" class="col-xs-6 text-left">&amp;nbsp;
+                                    <span t-att-colspan="4" class=" text-left">&amp;nbsp;
                                         <t t-esc="o.partner_id.name"/>
                                     </span>
                                     </td>
