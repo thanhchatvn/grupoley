@@ -19,22 +19,22 @@
                         <td class='col-xs-12' style="">
                             <table style="width: 90%">
                                 <tr class='col-xs-12'>
-                                    <td class=" col-xs-4 td-title-invoice-left">Factura:
+                                       <td class=" col-xs-4 td-title-invoice-left">Factura:
                                     <span style="text-align:left">&amp;nbsp;
                                         <t t-esc="o.move_lines._get_related_invoices().name"/>
                                     </span>
                                     </td>
 
-                                    <td class="col-xs-4 ">Orden de compra #:
+                                    <td class="col-xs-4 td-title-invoice-left ">Orden de compra #:
                                         <t t-esc="o.origin"/>
                                     </td>
+
 
 
                                     <td class="col-xs-4 td-title-invoice-right">Fecha:
                                     &amp;nbsp;
                                         <t t-esc="o.date_done" />
                                     </td>
-
 
                                 </tr>
                                 <tr>
@@ -77,8 +77,8 @@
                     <thead style="text-align:center;">
                         <tr>
                             <!--<th class="tb-head" style="text-align:center; width:40px;">Remis</th>-->
-                            <th class="tb-head" style="text-align:left; width:200px;">Fecha</th>
-                            <th class="tb-head" style="text-align:left; width:230px;">Producto</th>
+                            <th class="tb-head" style="text-align:left; width:180px;">Fecha</th>
+                            <th class="tb-head" style="text-align:left; width:250px;">Producto</th>
                             <th class="tb-head" tyle=" text-align:left;  margin:10px 0 0 10px; width:105px;">UM</th>
                             <th class="tb-head" style=" text-align:right; margin:10px 0 0 10px; width:105px;">Ordenado</th>
                             <th class="tb-head" style="text-align:right; margin-right: 10px; width:105px; ">Recibido</th>
@@ -100,7 +100,7 @@
                                 <td style="text-align:left;">
                                     <span t-field="o.date" t-options='{"widget": "date"}'/>
                                 </td>
-                                <td style="text-align:left;">
+                                <td style="text-align:left;  width:250px;">
                                     <span t-field="move.product_id"/>
                                     <p t-if="o.picking_type_code == 'outgoing'">
                                         <span t-field="move.product_id.sudo().description_pickingout"/>
