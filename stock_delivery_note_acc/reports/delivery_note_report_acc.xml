@@ -19,20 +19,19 @@
                         <td class='col-xs-12' style="">
                             <table style="width: 90%">
                                 <tr class='col-xs-12'>
-                                    <td class=" col-xs-3 td-title-invoice-left">Factura:
+                                    <td class=" col-xs-4 td-title-invoice-left">Factura:
                                     <span style="text-align:left">&amp;nbsp;
                                         <t t-esc="o.move_lines._get_related_invoices().name"/>
                                     </span>
                                     </td>
 
-                                    <td class="col-xs-3 ">Orden de compra #:</td>
-                                    <td class="text-left">&amp;nbsp;
+                                    <td class="col-xs-4 ">Orden de compra #:
                                         <t t-esc="o.origin"/>
                                     </td>
 
 
-                                    <td class="col-xs-3 td-title-invoice-right">Fecha</td>
-                                    <td style="text-align:left">&amp;nbsp;
+                                    <td class="col-xs-4 td-title-invoice-right">Fecha:
+                                    &amp;nbsp;
                                         <t t-esc="o.date_done" />
                                     </td>
 
@@ -128,7 +127,7 @@
                                     <span t-field="move.purchase_line_id.price_unit" />
                                 </td>
                                 <td style="text-align:right;">
-                                    <span t-esc="move.quantity_done*move.purchase_line_id.price_unit" />
+                                    <span t-esc="move.quantity_done*move.purchase_line_id.price_unit"  t-options='{"widget": "float", "precision": 2}' />
                                 </td>
                                <!-- <td>
 
@@ -141,7 +140,7 @@
                             <td class=" col-xs-8">
                                 <t t-foreach="o.move_lines" t-as="line">
                                     <t t-set="sum_row2"
-                                       t-value="sum(abs(line.quantity_done*line.price_unit) for line in o.move_lines)"/>
+                                       t-value="sum(abs(line.quantity_done*line.purchase_line_id.price_unit) for line in o.move_lines)"/>
                                 </t>
 
                             </td>

@@ -15,7 +15,7 @@
                                 </div>
                             </center>
                             <table style="position:relative; top:-45px; text-align: right;">
-                                <tr>
+                               <!-- <tr>
                                     <td style="border:0px;font-size: 11px; text-align: right;">Page:
                                         <span class="page"/>
                                         /
@@ -28,7 +28,7 @@
 
                                 <tr>
                                     <td style="border:0px;font-size: 11px; text-align: right;">Revision: 001</td>
-                                </tr>
+                                </tr>-->
 
                             </table>
                         </header>
