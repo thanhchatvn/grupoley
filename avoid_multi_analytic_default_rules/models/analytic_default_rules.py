@@ -5,6 +5,9 @@ from odoo.exceptions import UserError
 
 class avoid_multi_analytic_default_rules(models.Model):
     _inherit = 'account.analytic.default'
+    
+    company_id = fields.Many2one('res.company', string='Company', default= lambda self: self.env.company, ondelete='cascade', help="Select a company which will use analytic account specified in analytic default (e.g. create new customer invoice or Sales order if we select this company, it will automatically take this as an analytic account)")
+
 
     @api.constrains('product_id', 'user_id', 'company_id', 'account_id')
     def _check_analytic_rules(self):
