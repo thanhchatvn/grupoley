@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Multicompay rules-->
+    <record model="ir.rule" id="contpaqi_payroll_rule">
+        <field name="name">Reglas salariales por empresa</field>
+        <field name="model_id" search="[('model','=','hr.salary.rule')]" model="ir.model"/>
+        <field name="domain_force">[ '|',('company_id', '=', company_id), ('company_id', '=', False)]</field>
+    </record>
+
+    <record model="ir.rule" id="contpaqi_period_type_rule">
+        <field name="name">Periodos de nomina por empresa</field>
+        <field name="model_id" search="[('model','=','period.type')]" model="ir.model"/>
+        <field name="domain_force">[ '|',('company_id', '=', company_id), ('company_id', '=', False)]</field>
+    </record>
+
+    <record model="ir.rule" id="contpaqi_account_year_rule">
+        <field name="name">Años de nomina por empresa</field>
+        <field name="model_id" search="[('model','=','account.year')]" model="ir.model"/>
+        <field name="domain_force">[ '|',('company_id', '=', company_id), ('company_id', '=', False)]</field>
+    </record>
+
+    <record model="ir.rule" id="contpaqi_period_number_rule">
+        <field name="name">Numero de periodos de nomina por empresa</field>
+        <field name="model_id" search="[('model','=','period.number')]" model="ir.model"/>
+        <field name="domain_force">[ '|',('company_id', '=', company_id), ('company_id', '=', False)]</field>
+    </record>
+
+    <record model="ir.rule" id="contpaqi_temporal_concepts_rule">
+        <field name="name">Conceptos temporales de nomina por empresa</field>
+        <field name="model_id" search="[('model','=','temporal.concepts')]" model="ir.model"/>
+        <field name="domain_force">[ '|',('company_id', '=', company_id), ('company_id', '=', False)]</field>
+    </record>
+
+    <record model="ir.rule" id="contpaqi_temporal_concepts_final_rule">
+        <field name="name">Conceptos temporales finales de nomina por empresa</field>
+        <field name="model_id" search="[('model','=','temporal.concepts.final')]" model="ir.model"/>
+        <field name="domain_force">[ '|',('company_id', '=', company_id), ('company_id', '=', False)]</field>
+    </record>
+</odoo>

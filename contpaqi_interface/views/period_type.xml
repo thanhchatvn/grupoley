@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="contpaq_period_type_view_tree" model="ir.ui.view">
+            <field name="name">contpaq.period.type.view.tree</field>
+            <field name="model">period.type</field>
+            <field name="arch" type="xml">
+                <tree string="Periodos de nómina">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

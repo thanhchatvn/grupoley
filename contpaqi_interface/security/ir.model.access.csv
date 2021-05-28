@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_contpaqi_interface_contpaqi_interface,contpaqi_interface.contpaqi_interface,model_contpaqi_interface,base.group_user,1,1,1,1
+access_contpaqi_contpaq_payroll_line,contpaq_payroll_line,model_contpaq_payroll_line,base.group_user,1,1,1,1
+access_contpaqi_period_number,contpaq_period_number,model_period_number,base.group_user,1,1,1,1
+access_contpaqi_account_year,contpaq_account_year,model_account_year,base.group_user,1,1,1,1
+access_contpaqi_contpaq_policy,contpaq_policy,model_contpaq_policy,base.group_user,1,1,1,1
+access_contpaqi_period_type,contpaq_period_type,model_period_type,base.group_user,1,1,1,1
+access_contpaqi_temporal_concepts,contpaq_temporal_concepts,model_temporal_concepts,base.group_user,1,1,1,1
+access_contpaqi_temporal_concepts_final,contpaq_temporal_concepts_final,model_temporal_concepts_final,base.group_user,1,1,1,1
