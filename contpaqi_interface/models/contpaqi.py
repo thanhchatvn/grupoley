@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, tools
+from odoo import models, fields, api, tools, _
 from datetime import datetime
 import pymssql
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 
 
 class contpaqi_interface(models.Model):
@@ -297,16 +297,16 @@ class contpaqi_interface(models.Model):
                             account = rec.account_debit.id
                         else:
                             error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
-                            raise ValidationError(error)
+                            raise UserError(_(error))
                     elif float(rec.credit) > 0:
                         if rec.account_credit:
                             account = rec.account_credit.id
                         else:
                             error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
-                            raise ValidationError(error)
+                            raise UserError(_(error))
                     else:
                         error = ("El concepto: [{}] no tiene cargo o abono").format(rec.description)
-                        raise ValidationError(error)
+                        raise UserError(_(error))
 
             if self.reference:
                 account_journal_obj = self.env['account.move']
@@ -330,16 +330,16 @@ class contpaqi_interface(models.Model):
                             account = rec.account_debit.id
                         else:
                             error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
-                            raise ValidationError(error)
+                            raise UserError(_(error))
                     elif float(rec.credit) > 0:
                         if rec.account_credit:
                             account = rec.account_credit.id
                         else:
                             error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
-                            raise ValidationError(error)
+                            raise UserError(_(error))
                     else:
                         error = ("El concepto: [{}] no tiene cargo o abono").format(rec.description)
-                        raise ValidationError(error)
+                        raise UserError(_(error))
 
                     data = {
                         'move_id' : account_jorunal_id.id,
@@ -373,4 +373,4 @@ class contpaqi_interface(models.Model):
             ('date','=',self.accounting_policy_date)
         ])
         if len(duplicated_entry) > 0:
-            raise ValidationError('Ya se encuentra interfazado')
+            raise UserError(_('Ya se encuentra interfazado'))
