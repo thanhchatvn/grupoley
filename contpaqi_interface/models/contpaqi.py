@@ -284,85 +284,81 @@ class contpaqi_interface(models.Model):
             print(e)
 
     def save_policy(self):
-        try:
-            self.validate_policy()
+        self.validate_policy()
+        for rec in self.journal_line_ids:
+            if rec.analytic_account_id:
+                analytic_account = rec.analytic_account_id
+            else:
+                analytic_account = None
+            if float(rec.debit) > 0:
+                if rec.account_debit:
+                    account = rec.account_debit.id
+                else:
+                    error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
+                    raise UserError(_(error))
+            elif float(rec.credit) > 0:
+                if rec.account_credit:
+                    account = rec.account_credit.id
+                else:
+                    error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
+                    raise UserError(_(error))
+            else:
+                error = ("El concepto: [{}] no tiene cargo o abono").format(rec.description)
+                raise UserError(_(error))
+
+        if self.reference:
+            account_journal_obj = self.env['account.move']
+            account_journal_lines_obj = self.env['account.move.line']
+            data = {
+                'name' : self.lot_id,
+                'ref' : self.reference,
+                'date' : self.accounting_policy_date,
+                'payroll_policy' : True,
+            }
+            account_jorunal_id = account_journal_obj.create(data)
             for rec in self.journal_line_ids:
 
-                    if rec.analytic_account_id:
-                        analytic_account = rec.analytic_account_id
+                if rec.analytic_account_id:
+                    analytic_account = rec.analytic_account_id
+                else:
+                    analytic_account = None
+                if float(rec.debit) > 0:
+                    if rec.account_debit:
+                        account = rec.account_debit.id
                     else:
-                        analytic_account = None
-                    if float(rec.debit) > 0:
-                        if rec.account_debit:
-                            account = rec.account_debit.id
-                        else:
-                            error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
-                            raise UserError(_(error))
-                    elif float(rec.credit) > 0:
-                        if rec.account_credit:
-                            account = rec.account_credit.id
-                        else:
-                            error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
-                            raise UserError(_(error))
-                    else:
-                        error = ("El concepto: [{}] no tiene cargo o abono").format(rec.description)
+                        error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
                         raise UserError(_(error))
+                elif float(rec.credit) > 0:
+                    if rec.account_credit:
+                        account = rec.account_credit.id
+                    else:
+                        error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
+                        raise UserError(_(error))
+                else:
+                    error = ("El concepto: [{}] no tiene cargo o abono").format(rec.description)
+                    raise UserError(_(error))
 
-            if self.reference:
-                account_journal_obj = self.env['account.move']
-                account_journal_lines_obj = self.env['account.move.line']
                 data = {
-                    'name' : self.lot_id,
-                    'ref' : self.reference,
-                    'date' : self.accounting_policy_date,
-                    'payroll_policy' : True,
+                    'move_id' : account_jorunal_id.id,
+                    'name' : rec.description,
+                    'account_id' : account,
+                    'analytic_account_id' : analytic_account,
+                    'currency_id' : self.env.company.currency_id.id,
+                    'debit' : float(rec.debit),
+                    'credit' : float(rec.credit)
                 }
-                account_jorunal_id = account_journal_obj.create(data)
-
-                for rec in self.journal_line_ids:
-
-                    if rec.analytic_account_id:
-                        analytic_account = rec.analytic_account_id
-                    else:
-                        analytic_account = None
-                    if float(rec.debit) > 0:
-                        if rec.account_debit:
-                            account = rec.account_debit.id
-                        else:
-                            error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
-                            raise UserError(_(error))
-                    elif float(rec.credit) > 0:
-                        if rec.account_credit:
-                            account = rec.account_credit.id
-                        else:
-                            error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
-                            raise UserError(_(error))
-                    else:
-                        error = ("El concepto: [{}] no tiene cargo o abono").format(rec.description)
-                        raise UserError(_(error))
-
-                    data = {
-                        'move_id' : account_jorunal_id.id,
-                        'name' : rec.description,
-                        'account_id' : account,
-                        'analytic_account_id' : analytic_account,
-                        'currency_id' : self.env.company.currency_id.id,
-                        'debit' : float(rec.debit),
-                        'credit' : float(rec.credit)
-                    }
-                    data2 = {
-                        'move_id': account_jorunal_id.id,
-                        'name': rec.description,
-                        'account_id': account,
-                        'analytic_account_id': analytic_account,
-                        'currency_id': self.env.company.currency_id.id,
-                        'debit': float(rec.credit),
-                        'credit': float(rec.debit),
-                    }
-                    if float(rec.debit) > 0:
-                        account_journal_lines_obj.create((data,data2))
-        except Exception as e:
-            print(e)
+                data2 = {
+                    'move_id': account_jorunal_id.id,
+                    'name': rec.description,
+                    'account_id': account,
+                    'analytic_account_id': analytic_account,
+                    'currency_id': self.env.company.currency_id.id,
+                    'debit': float(rec.credit),
+                    'credit': float(rec.debit),
+                }
+                if float(rec.debit) > 0:
+                    account_journal_lines_obj.create((data,data2))
+    
 
     def validate_policy(self):
         duplicated_entry = self.env['account.move'].search([
