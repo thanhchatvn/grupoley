@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="temporal_concepts_final_view_tree" model="ir.ui.view">
+            <field name="name">temporal.concepts.final.view.tree</field>
+            <field name="model">temporal.concepts.final</field>
+            <field name="arch" type="xml">
+                <tree string="Conceptos Temporales" default_order="tipo_concepto_de asc">
+                    <field name="idperiodo"/>
+                    <field name="idempleado"/>
+                    <field name="idconcepto"/>
+                    <field name="importetotal"/>
+                    <field name="importe1"/>
+                    <field name="importe2"/>
+                    <field name="importe3"/>
+                    <field name="importe4"/>
+                    <field name="tipoconcepto"/>
+                    <field name="descripcion_concepto"/>
+                    <field name="naturaleza"/>
+                    <field name="iddepartamento"/>
+                    <field name="tipo_concepto_de"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
