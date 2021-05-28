@@ -243,7 +243,6 @@ class contpaqi_interface(models.Model):
         policy_obj = self.env['contpaq.policy'].search([('company_id', '=', self.env.company.id)])
         try:
             move_line = []
-
             debit_credit_list = []
             for rec in policy_obj:
                 if rec.naturaleza == 'Cargo':
@@ -287,18 +286,20 @@ class contpaqi_interface(models.Model):
         self.validate_policy()
         for rec in self.journal_line_ids:
             if rec.analytic_account_id:
-                analytic_account = rec.analytic_account_id
+                analytic_account = rec.analytic_account_id.id
             else:
                 analytic_account = None
             if float(rec.debit) > 0:
                 if rec.account_debit:
                     account = rec.account_debit.id
+                    account1 = rec.account_credit.id
                 else:
                     error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
                     raise UserError(_(error))
             elif float(rec.credit) > 0:
                 if rec.account_credit:
-                    account = rec.account_credit.id
+                    account = rec.account_debit.id
+                    account1 = rec.account_credit.id
                 else:
                     error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
                     raise UserError(_(error))
@@ -319,18 +320,20 @@ class contpaqi_interface(models.Model):
             for rec in self.journal_line_ids:
 
                 if rec.analytic_account_id:
-                    analytic_account = rec.analytic_account_id
+                    analytic_account = rec.analytic_account_id.id
                 else:
                     analytic_account = None
                 if float(rec.debit) > 0:
                     if rec.account_debit:
                         account = rec.account_debit.id
+                        account1 = rec.account_credit.id
                     else:
                         error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
                         raise UserError(_(error))
                 elif float(rec.credit) > 0:
                     if rec.account_credit:
-                        account = rec.account_credit.id
+                        account = rec.account_debit.id
+                        account1 = rec.account_credit.id
                     else:
                         error = ("El concepto: [{}] no tiene cuenta afectable").format(rec.description)
                         raise UserError(_(error))
@@ -350,7 +353,7 @@ class contpaqi_interface(models.Model):
                 data2 = {
                     'move_id': account_jorunal_id.id,
                     'name': rec.description,
-                    'account_id': account,
+                    'account_id': account1,
                     'analytic_account_id': analytic_account,
                     'currency_id': self.env.company.currency_id.id,
                     'debit': float(rec.credit),
