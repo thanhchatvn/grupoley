@@ -90,21 +90,21 @@
   		 </div>
   		 <!-- END PROVEEDOR -->
 
-	    <table class="table" style="font-size: 12px;" >
+	    <table class="table" style="font-size: 9px;" >
 	        <thead>
 	            <tr class="border-black">
-	                <th style="text-align:center; width:40px; border: 1px solid black;">CUENTA</th>
-	                <th style="text-align:center; width:40px;border: 1px solid black; ">SUB-CUENTA</th>
+	                <th style="text-align:center; width:50px !important;  border: 1px solid black;"></th>
+	                <th style="text-align:center; width:50px !important; border: 1px solid black; "></th>
 	                <th  style="text-align:center; width:200px;"> <span>NOMBRE</span></th>
 	                <th style="width:50px;">PARCIAL</th>
 					<th style="width:60px;">DEBE</th>
 					<th style="width:60px;">HABER</th>
 	            </tr>
 	        </thead>
-	        <tbody  style="font-size:12px;">
+	        <tbody  style="font-size:9px;">
 	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
-	              <td  style="width:40px; border: 1px solid black;"><span t-field="p.name"/></td>
-	              <td  style="width:40px; border: 1px solid black;"><span t-field="p.name"/></td>
+	              <td  style="width:1% !important; border: 1px solid black;"><span t-field="p.name"/></td>
+	              <td  style="width:1% !important; border: 1px solid black;"><span t-field="p.name"/></td>
 	              <td  style="text-align:center; width:200px;"><span t-field="p.payment_reference"/></td>
 	              <td  style="width:50px; border: 1px solid black;"><span t-esc="p.ref"/></td>
 					<td style="width:60px;"><span t-field="p.amount_total"></span></td>

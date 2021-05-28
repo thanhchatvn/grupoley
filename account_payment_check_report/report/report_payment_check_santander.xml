@@ -101,18 +101,18 @@
 	    <table class="table" style="width:100% !important; font-size:12px;" >
 	        <thead colspan="10">
 	            <tr class="border-black">
-	                <th style="width:50px; border: 1px solid black; ">Nro Comprob</th>
-	                <th style="text-align:center; width:50px; border: 1px solid black; ">Nro Factura</th>
+	                <th style="width:40px; border: 1px solid black; ">Nro Comprob</th>
+	                <th style="text-align:center; width:40px; border: 1px solid black; ">Nro Factura</th>
 	                 <th style="text-align:center; width:200px; border: 1px solid black; " > <span>Concepto</span></th>
 	                <th style="text-align:center; width:60px; margin-right:2%; border: 1px solid black; ">Orden de Compra</th>
 					<th  style="text-align:center; width:75px; border: 1px solid black; ">Monto Factura</th>
 					<th  style=" width:75px; text-align:center;  border: 1px solid black; ">Neto a pagar</th>
 	            </tr>
 	        </thead>
-	        <tbody class="invoice_tbody" style="font-size:11px;">
+	        <tbody class="invoice_tbody" style="font-size:10px;">
 	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
-	              <td  style="width:50px; text-align:left; "><span t-field="p.name"/></td>
-	              <td  style="width:50px; text-align:left; "><span t-field="p.name"/></td>
+	              <td  style="width:40px; text-align:left; "><span t-field="p.name"/></td>
+	              <td  style="width:40px; text-align:left; "><span t-field="p.name"/></td>
 	               <td style=" width:200px;"><span t-field="p.payment_reference"/></td>
 	              <td  style="width:60px;"><span t-esc="p.ref"/></td>
 					<td style="width:75px; text-align:right;" ><span t-field="p.amount_total"></span></td>
