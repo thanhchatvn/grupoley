@@ -41,7 +41,7 @@
                  titulo margen
 			  </h3>
 			  <span t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
-					  Fecha: <span t-field="o.payment_date"/><br/>
+					  Fecha: <span t-field="o.date"/><br/>
 			  </span>
 			  <span style="border: 1px solid black;" t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
 						<!--<span t-field="o.display_name"/>-->
@@ -77,14 +77,14 @@
 
   		   <div name="invoice_address" class="col-7"  style=" font-size: 12px; margin-top: 8px !important;">
                <p><strong>CONCEPTO DEL PAGO</strong></p>
-<!--               	  <span t-field="o.ref"/>-->
+                       <span t-field="o.ref"/>
                        <span t-field="o.journal_id"/>
 
   		   </div>
 			  <div name="check_number" class="col-4"  style="font-size: 11px; margin-left:3%; margin-top: 8px !important;">
 				<strong >FIRMA CHEQUE RECIBIDO </strong>  <span t-field="o.check_number" style="font-size: 11px; font-weight: bold;"/>
   			    <p><strong></strong><span t-esc="0"/></p>
-				  <strong style="color:#ffffff;">Fecha </strong><span t-field="o.payment_date"/>
+				  <strong style="color:#ffffff;">Fecha </strong><span t-field="o.date"/>
 
   		   </div>
   		 </div>
@@ -102,10 +102,10 @@
 	            </tr>
 	        </thead>
 	        <tbody  style="font-size:12px;">
-	            <tr t-foreach="o.reconciled_invoice_ids" t-as="p">
+	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
 	              <td  style="width:40px; border: 1px solid black;"><span t-field="p.name"/></td>
 	              <td  style="width:40px; border: 1px solid black;"><span t-field="p.name"/></td>
-	              <td  style="text-align:center; width:200px;"><span t-field="p.ref"/></td>
+	              <td  style="text-align:center; width:200px;"><span t-field="p.payment_reference"/></td>
 	              <td  style="width:50px; border: 1px solid black;"><span t-esc="p.ref"/></td>
 					<td style="width:60px;"><span t-field="p.amount_total"></span></td>
 					<td  style="width:60px;"><span t-esc="o._get_invoice_payment_amount(p)"></span></td>
@@ -122,9 +122,8 @@
 	          <tr class="border-black">
 				  <td style="color:#ffffff;" colspan="3"><strong>Concepto</strong>
 	              <span style="color:#ffffff;" class="text-center">
+					  <span t-field="o.ref"/>
 
-<!--					  <span t-field="o.ref"/>-->
-                       <span t-field="o.journal_id"/>
 				 </span>
 				  </td>
 	            <td colspan="2" class="text-right" ><strong style="color:#ffffff;">Total</strong></td>
