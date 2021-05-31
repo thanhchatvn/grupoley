@@ -15,4 +15,4 @@ class ProductPricelist(models.Model):
                 if item.name not in products:
                     products.append(item.name)
                 else:
-                    raise UserError(_("It is not possible add multiple pricelist in the same product"))
+                    raise UserError(_("No es posible añadir el mismo producto en una tarifa, el producto  \" %s \"  está duplicado" % item.name))
