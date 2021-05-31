@@ -1,17 +1,20 @@
-@font-face {
-    font-family: 'ReportLight-Regular';
-    src:local('ReportLight Regular'), url(/stock_delivery_note_acc/static/src/fonts/ReportLight Regular.ttf) format('truetype');
-}
-/* Arvo */
+/* Arvo*/
 @font-face {
   font-family: 'Arvo';
   font-style: normal;
   font-weight: 200;
-  src: local('Arvo'), url(http://fonts.gstatic.com/s/arvo/v8/MViwy4K6e56oHcyeMzjbCQ.ttf) format('truetype');
-}
+  src: local('Arvo-Regular'), local('Arvo-Regular'),  url(http://fonts.gstatic.com/s/arvo/v8/MViwy4K6e56oHcyeMzjbCQ.ttf) format('truetype');
 
+}
+@font-face {
+  font-family: 'SourceCodePro-Regular';
+  font-style: normal;
+  font-weight: 200;
+  src: url('/stock_delivery_note_acc/static/src/fonts/SourceCodePro-Regular.otf') format('opentype'),
+  local('SourceCodePro-Regular'), local('SourceCodePro-Regular'),  url(https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap) format('opentype');
+}
 .h1-title-big {
-     font-family: 'ReportLight-Regular';
+     font-family: 'SourceCodePro-Regular';
     font-size: 60px;
     color: #3399cc;
 }
@@ -26,7 +29,7 @@
     font-size: 34px;
     text-align: center;
     width: 48%;
-    font-family: 'Arvo';
+    font-family: 'SourceCodePro-Regular';
     text-decoration: underline;
     color: #090d46;
 }
@@ -34,7 +37,7 @@
     font-size: 34px;
     text-align: left;
     width: 48%;
-    font-family: 'Arvo';
+    font-family: 'SourceCodePro-Regular';
     text-decoration: underline;
     color: #787878;
 }
@@ -42,7 +45,7 @@
     font-size: 20px;
     text-align: center;
     width: 48%;
-    font-family: 'Arvo';
+    font-family: 'SourceCodePro-Regular';
     color: #787878;
 }
 .rp-title-3{
@@ -58,9 +61,20 @@
     font-family: 'Arvo';
     color: #787878;
 }
+.rp-title-43{
+    font-size: 12px;
+    width: 48%;
+    font-family: 'SourceCodePro-Regular';
+    color: #787878;
+}
 .rp-line-33{
     font-size: 12px;
     font-family: 'Arvo';
+    color: #909090;
+}
+.rp-line-43{
+    font-size: 12px;
+    font-family: 'SourceCodePro-Regular';
     color: #909090;
 }
 .rp-title-4-r{

@@ -7,6 +7,7 @@
         'account',
         'l10n_mx_edi',
         'partner_addenda',
+        'res_partner_cfdi',
     ],
     'author': "DataWorks",
     'category': 'Custom',
