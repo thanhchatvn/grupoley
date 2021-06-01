@@ -58,8 +58,7 @@
 		  <!--MY COMPANY CHECK-->
   		 <div class="row" style="border-radius: 10px;">
   			 <div class="col-10" >
-  			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 14px; font-weight: bold; margin-left:30%;"/>
-  			   <span t-esc="0"/>
+  			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 12px; font-weight: bold; margin-left:30%;"/>
 				 <div t-field="o.partner_id"/>
   			   <div  style= "padding-left:4%;"><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
   			 </div>
@@ -90,7 +89,7 @@
   		 </div>
   		 <!-- END PROVEEDOR -->
 
-	    <table class="table" style="font-size: 9px;" >
+	    <table class="table" style="font-size: 9px; margin-top:2%" >
 	        <thead>
 	            <tr class="border-black">
 	                <th style="text-align:center; width:50px !important;  border: 1px solid black;"></th>
@@ -116,7 +115,7 @@
 
 
 	  </div>
-	  <footer style="margin-top:70%;">
+	  <footer style="margin-top:71%;">
 			  <table class="table">
 	          <tbody>
 	          <tr class="border-black">
