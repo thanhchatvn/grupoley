@@ -177,6 +177,7 @@
                                     <tr>
                                         <td>
                                             <span t-field="move_line.product_id.categ_id.property_stock_valuation_account_id.code"/>
+                                            <span t-if="move_line.move_id.purchase_line_id.account_analytic_id" t-field="move_line.move_id.purchase_line_id.account_analytic_id.display_name"/>
                                             <span t-field="move_line.product_id.categ_id.property_stock_valuation_account_id.name"/>
                                         </td>
                                         <td class="col-xs-3 text-center">
@@ -189,6 +190,7 @@
                                     <tr class="col-xs-4">
                                         <td class="tb-blanked-title">
                                             <span t-field="move_line.product_id.categ_id.property_stock_account_input_categ_id.code"/>
+                                            <span t-if="move_line.move_id.purchase_line_id.account_analytic_id" t-field="move_line.move_id.purchase_line_id.account_analytic_id.display_name"/>
                                             <span t-field="move_line.product_id.categ_id.property_stock_account_input_categ_id.name"/>
                                             <!-- </td>
                                          </tr>-->
