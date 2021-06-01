@@ -68,7 +68,7 @@
   			 </div>
   			 <div class="col-2">
 				<span t-esc="0"/> <p><strong> <span t-esc="0"/>
-                           <span  style= " padding-top:2%;" t-field="o.amount"/></strong></p><br/>
+                           <span  style= " padding-top:3%; margin-left:-3%;"  t-field="o.amount"/></strong></p><br/>
 
                 <p><strong><span t-esc="'o.check_amount_in_words'"  style="color:#ffffff;"></span></strong></p>
 				  <span style="color:#ffffff;" t-field="o.amount"/><br/>
@@ -102,22 +102,22 @@
   		 <!-- END PROVEEDOR -->
 
 	    <table class="table text-center" style="width:100% !important;" >
-	        <thead colspan="10">
+	        <thead colspan="10" style="font-size:12px;">
 	            <tr class="border-black">
-	                <th style="text-align:center; width:50px; border: 1px solid black; ">Nro Comprob</th>
-	                <th style="text-align:center; width:50px; border: 1px solid black; ">Nro Factura</th>
-	                 <th style="text-align:center; width:180px; border: 1px solid black; " t-att-colspan="3"> <span t-att-colspan="3">Concepto</span></th>
-	                <th  style="text-align:center; width:70px; margin-right:2%; border: 1px solid black; ">Orden de Compra</th>
+	                <th style="text-align:center; width:40px; border: 1px solid black; ">Nro Comprob</th>
+	                <th style="text-align:left; width:40px; border: 1px solid black; ">Nro Factura</th>
+	                 <th style="text-align:center; width:140px; border: 1px solid black; " t-att-colspan="3"> <span t-att-colspan="3">Concepto</span></th>
+	                <th  style="text-align:center; width:130px; margin-right:2%; border: 1px solid black; ">Orden de Compra</th>
 					<th style="text-align:center; width:50px; border: 1px solid black; ">Monto Factura</th>
 					<th colspan="1" style="text-align:center;  border: 1px solid black; ">Neto a pagar</th>
 	            </tr>
 	        </thead>
 	        <tbody class="invoice_tbody" style="font-size:12px;">
 	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
-	              <td style="width:50px;"><span t-field="p.name"/></td>
-	              <td style="width:50px;"><span t-field="p.name"/></td>
-	               <td  style="text-align:center; width:180px;"   t-att-colspan="3"><span t-att-colspan="3" t-field="p.payment_reference"/></td>
-	              <td style="width:70px;"><span t-esc="p.ref"/></td>
+	              <td style="width:40px; text-align:left; "><span t-field="p.name"/></td>
+	              <td style="width:40px; text-align:left; "><span t-field="p.name"/></td>
+	               <td  style="text-align:center; width:140px;"  t-att-colspan="3"><span t-att-colspan="3" t-field="p.payment_reference"/></td>
+	              <td style="width:130px;"><span t-esc="p.ref"/></td>
 					<td colspan="1"><span t-field="p.amount_total"></span></td>
 					<td colspan="1"><span t-esc="o._get_invoice_payment_amount(p)"></span></td>
 
