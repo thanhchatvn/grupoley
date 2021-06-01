@@ -4,9 +4,9 @@
 <xpath expr="//div[hasclass('pos-receipt-contact')]" position="replace">
     <div class="pos-receipt" >
             <t >
-                <h2 class="pos-receipt-center-align">
+                <h5 class="pos-receipt-center-align">
                     <t t-esc="receipt.company.name" />
-                </h2>
+                </h5>
                 <br/>
             </t>
 
@@ -80,8 +80,8 @@
             <t t-if="receipt.cashier">
                     <div class="cashier">
                         <div>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</div>
-                        <div>Vendedor: Ruta:<t t-if="env.pos.config.cod_shop">
-                                            <t t-esc="env.pos.config.cod_shop"/>
+                        <div>Vendedor: Ruta:<t t-if="env.pos.config.name">
+                                            <t t-esc="env.pos.config.name"/>
                             - <t t-esc="receipt.cashier" /></t>
 
                         </div>
