@@ -34,7 +34,7 @@ class TransferRemision(models.Model):
             cfdi_values[sale_line.id]['discount_amount'] = picking.sale_id.currency_id.round(
                 cfdi_values[sale_line.id]['total_wo_discount'] - sale_line.price_subtotal)
             cfdi_values[sale_line.id]['price_subtotal_unit'] = picking.sale_id.currency_id.round(cfdi_values[sale_line.id]['total_wo_discount'] / line.quantity_done)
-            cfdi_values[sale_line.id]['discount_amount_price_list'] = (sale_line.product_id.list_price - sale_line.price_unit) * line.quantity_done
+            cfdi_values[sale_line.id]['discount_amount_price_list'] = (sale_line.product_id.list_price if sale_line.product_id.list_price > 1 else sale_line.price_unit - sale_line.price_unit) * line.quantity_done
 
             if sale_line.price_unit == 0.010000:
                 cfdi_values[sale_line.id]['discount_amount_price_list'] = 0.0

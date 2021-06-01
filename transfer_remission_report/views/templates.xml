@@ -22,9 +22,11 @@
 -->
         <template id="report_picking_remission" >
              <t t-call="web.html_container">
-                 <t t-call="web.external_layout">
+<!--                 <t t-call="web.internal_layout">-->
                      <t t-foreach="docs" t-as="o">
+                         <t t-call="web.external_layout">
                         <t t-set="lang" t-value="o.user_id.sudo().lang if o.user_id else o.partner_id.lang"/>
+                             <t  t-if="o.sale_id">
                         <div class="page">
                              <section class="addresses">
                                 <div class="row">
@@ -75,10 +77,10 @@
                                             <t t-else="">Tax ID</t>: <span t-field="o.company_id.partner_id.vat"/></div>-->
 
                                         <div style="font-size:30px;">
-                                            <strong>REMISION <span>123456</span></strong>
+                                            <strong>REMISION <span t-field="o.name"></span></strong>
                                         </div>
                                         <div>
-                                            <strong>Fecha Remision <span>16/04/2021</span></strong>
+                                            <strong>Fecha Remision <span t-field="o.date_done"></span></strong>
                                         </div>
                                         <div>
                                             <strong>Pedido <span t-field="o.sale_id.name" t-if="o.sale_id"></span></strong>
@@ -86,13 +88,13 @@
                                         <div>
                                             <span>Fecha hora de impresion</span>
                                             <div>
-                                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"></span>
+                                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M:%S')"></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </section>
-                        </div>
+
                              <section class="order_data">
                         <table style="width: 100%">
                             <tbody>
@@ -142,23 +144,24 @@
                                 </tr>
                                 <tr>
                                      <td style="padding: 5px; width:50%;">
-                                        <div style="border: 1px solid; display: grid; grid-gap: 5px;height: 100px; width: 100%; padding: 10px;">
+                                       <!-- <div style="border: 1px solid; display: grid; grid-gap: 5px;height: 100px; width: 100%; padding: 10px;">
                                             <div>REMISIÓN(ES):</div><br/>
                                             <span>#ORDEN: <span t-field="o.sale_id"/></span>
+                                        </div>-->
+                                          <div  style="border: 1px solid; display: grid; grid-gap: 5px;height: 100px; width: 100%; padding: 10px;">
+                                            <div>DÍAS DE CRÉDITO:</div>
+                                            <span t-if="o.sale_id.payment_term_id">crédito <span t-field="o.sale_id.payment_term_id"/></span>
                                         </div>
                                     </td>
                                     <td style="padding: 5px; width:50%;">
-                                        <div style="border: 1px solid; display: grid; grid-gap: 5px;height: 100px; width: 100%; padding: 10px;">
-                                            <div>DÍAS DE CRÉDITO:</div><br/>
-                                            <span>crédito <span t-field="o.sale_id.payment_term_id"/></span>
-                                        </div>
+
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 5px; width:50%;">
-                                        <div style="border: 1px solid; display: grid; grid-gap: 5px;height: 50px; width: 100%; padding: 10px;">
+                                       <!-- <div style="border: 1px solid; display: grid; grid-gap: 5px;height: 50px; width: 100%; padding: 10px;">
                                             <div>OC: <span>XXX</span></div>
-                                        </div>
+                                        </div>-->
                                     </td>
                                 </tr>
                             </tbody>
@@ -275,6 +278,11 @@
                         </t>
                     </tbody>
                 </table>
+                         </div>
+                             </t>
+                             <t t-else="">
+                                 <h2>Ese reporte solo puede ser impreso desde transferencias relacionadas a ventas</h2>
+                             </t>
                     </t>
                  </t>
 

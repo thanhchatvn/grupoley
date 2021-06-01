@@ -10,6 +10,55 @@
                         <!--<attribute name="invisible">1</attribute>-->
                     </field>
                 </xpath>
+
+                <!-- <xpath expr="//group[@string='Rewards']/group[2]/"> -->
+               <xpath expr="//field[@name='discount_line_product_id']" position="attributes">
+                    <attribute readonly="True" name="attrs">{'invisible': ['|', ('discount_line_product_id', '=', False), ('reward_type', '=', 'same_product')]}</attribute>
+                </xpath>
+                <!--Producto id-->
+                <xpath expr="//field[@name='reward_product_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('reward_type', 'in', ('discount', 'free_shipping','same_product'))], 'required': [('reward_type', '=', 'product')]}</attribute>
+                </xpath>
+                <!--Seccion de descuento y porcentages-->
+                <xpath expr="//label[@for='reward_product_quantity']" position="attributes" >
+                    <attribute for="reward_product_quantity"  name = "attrs">{'invisible': [('reward_type', 'in', ('discount', 'free_shipping'))]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='reward_product_uom_id']" position="attributes" >
+                    <attribute name = "attrs">{'invisible': [('reward_type', '=', 'same_product')]}</attribute>
+                </xpath>
+                <xpath expr="//group[@name='reward']/../group[2]/div[1]" position="attributes">
+                    <attribute name="attrs">{'invisible': [('reward_type', 'in', ('discount', 'free_shipping'))]}</attribute>
+                </xpath>
+                <!--Apply Discount-->
+                <xpath expr="//label[@for='discount_type']" position="attributes">
+                    <attribute for = "discount_type" name = "attrs">{'invisible': [('reward_type', 'in', ('product', 'free_shipping', 'same_product'))]}</attribute>
+                </xpath>
+                <xpath expr="//group[@name='reward']/../group[2]/div[2]" position="attributes">
+                    <attribute name="attrs">{'invisible': [('reward_type', 'in', ('product', 'free_shipping', 'same_product'))]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='discount_apply_on']" position="attributes">
+                    <attribute name="attrs" widget="radio">{'invisible': ['|', ('reward_type', 'in', ('product', 'free_shipping','same_product')), ('discount_type', '!=', 'percentage')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='discount_specific_product_ids']" position="attributes">
+                    <attribute  widget='many2many_tags' placeholder="Select products" name = "attrs">{'invisible': ['|', '|', ('discount_apply_on', '!=', 'specific_products'),('discount_type', '!=', 'percentage'), ('reward_type', 'in', ('product', 'free_shipping','same_product'))], 'required': [('reward_type', '=', 'discount'),('discount_apply_on', '=', 'specific_products'),('discount_type', '=', 'percentage')]}</attribute>
+                </xpath>
+                <xpath expr="//label[@for='discount_max_amount']" position="attributes">
+                    <attribute string="Max Discount Amount" name = "attrs">{'invisible': ['|', ('reward_type', 'in', ('product', 'free_shipping','same_product')), ('discount_type', '!=', 'percentage')]}</attribute>
+                </xpath>
+                <xpath expr="//group[@name='reward']/../group[2]/div[4]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('reward_type', 'in', ('product', 'free_shipping', 'same_product')), ('discount_type', '!=', 'percentage')]}</attribute>
+                </xpath>
+                <!--<xpath expr="//group[@name='reward']/../group[2]/label[1]" position="attributes">
+                    <attribute name="attrs">{'invisible': [('reward_type', 'in', ('discount', 'free_shipping','same_product'))], 'required': [('reward_type', '=', 'product')]}</attribute>
+                </xpath>-->
+                <!--<xpath expr="//label[@for='discount_type']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('reward_type', 'in', ('product', 'free_shipping', 'same_product'))]}</attribute>
+                </xpath>-->
+                <!--radiogroup xpath -->
+                <!--AGREGAR NUEVO radio button-->
+
             </field>
         </record>
 

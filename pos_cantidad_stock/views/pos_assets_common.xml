@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/pos_cantidad_stock/static/src/css/pos.css" id="pos-stylesheet"/>
+            <script type="text/javascript" src="/pos_cantidad_stock/static/src/js/Screens/ProductScreen/ProductItem.js"></script>
+            <script type="text/javascript" src="/pos_cantidad_stock/static/src/js/Screens/ProductScreen/ProductsWidgetControlPanel.js"></script>
+            <script type="text/javascript" src="/pos_cantidad_stock/static/src/js/Screens/ProductScreen/ProductsWidget.js"></script>
+            <script type="text/javascript" src="/pos_cantidad_stock/static/src/js/Chrome.js"></script>
+            <script type="text/javascript" src="/pos_cantidad_stock/static/src/js/db.js"></script>
+            <script type="text/javascript" src="/pos_cantidad_stock/static/src/js/models.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_delivery_note_report_view">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                     <t t-call="web.external_layout">
+                          <header class="header" style="font-weight: bold;">
+                           <!-- <center>
+                                <p class="h1-title-rp-2" style="top:10px;padding-bottom: 1px;margin-bottom:0% ;">
+                                    <strong t-esc="o.company_id.name"/>
+                                </p>
+                            </center>-->
+                            <center>
+                                <div class="rp-title-2" style=" top:10px;padding-bottom: 1px;margin-bottom:0% ; font-weight: bold;">Recibo de Recepción de Mercancía
+                                </div>
+                            </center>
+                            <table style="position:relative; top:-45px; text-align: right;">
+                               <!-- <tr>
+                                    <td style="border:0px;font-size: 11px; text-align: right;">Page:
+                                        <span class="page"/>
+                                        /
+                                        <span class="topage"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:0px; font-size: 11px; text-align: right;">rptVoucher.rpt</td>
+                                </tr>
+
+                                <tr>
+                                    <td style="border:0px;font-size: 11px; text-align: right;">Revision: 001</td>
+                                </tr>-->
+
+                            </table>
+                        </header>
+                     <xpath expr="//div[@class='page']" position="replace">
+                     <div class="page" style="font-family:'SourceCodePro-Regular';">
+
+
+                        <table class="rp-title-11" style="width: 100%; margin-top:5%;">
+                            <tr>
+                                <td class='col-xs-12'>
+                                    <table style="width: 90%">
+                                        <tr class="col-xs-12">
+                                            <td class="col-xs-4 rp-title-44-r">Proveedor &amp;nbsp;&amp;nbsp;
+                                                :
+                                                <span t-att-colspan="6" class="col-xs-6"
+                                                      style="text-align:left">
+                                                    <t t-esc="o.partner_id.name"/>
+                                                </span>
+                                            </td>
+                                             <td class=" col-xs-3  rp-title-44-r">Vale de entrega #
+                                             <span class=" col-xs-3">&amp;nbsp;
+                                               <t t-esc="o.name"/>
+                                              </span>
+                                      </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="rp-title-44-r ">Orden de compra:
+                                                <span class="td-title-invoice-right-2" style="text-align:center">
+                                                    <t t-esc="o.origin"/>
+                                                </span>
+                                            </td>
+                                            <!--<td t-att-colspan="8"  class="td-title-invoice-left">Condición de pago:
+                                            <span>&amp;nbsp;<t t-esc="o.partner_id.property_supplier_payment_term_id.name"/></span>
+                                            </td>-->
+                                            <td class=" col-xs-3 rp-title-44-r">Factura:
+                                                <span>
+                                                    <t t-esc="o.move_lines._get_related_invoices().name"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        </table>
+                        <t t-set="i" t-value="1"/>
+                        <table class="rp-line-43 table table-condensed mt48"
+                               style="position:relative; top:30px; width: 96%;">
+                            <thead style="text-align:center;">
+                                <tr>
+                                    <th class=" rp-line-33 tb-head" style="margin-right: 10px; width:105px;">Nro</th>
+                                    <th class="rp-line-33 tb-head" style="text-align:center; width:230px;">Fecha
+                                        Remision
+                                    </th>
+                                    <th class="rp-line-33 tb-head" style="text-align:center; width:230px;">Producto</th>
+                                    <th class="rp-line-33 tb-blanked-title" style="width:10px;">&amp;nbsp;</th>
+                                    <th class="rp-line-33 tb-head" style=" margin:10px 0 0 10px; width:105px;">UM</th>
+                                    <th class="rp-line-33 tb-head" style=" margin:10px 0 0 10px; width:105px;">
+                                        Ordenado
+                                    </th>
+                                    <th class="rp-line-33 tb-head" style="margin-right: 10px; width:105px; ">Bultos
+                                        Recibidos
+                                    </th>
+                                    <th class="rp-line-33 tb-head" style="margin-right: 10px; width:105px; ">Recibido
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="rp-line-43 " style="text-align:center;">
+                                <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+                                <t t-set="counter" t-value="0"/>
+                                <tr t-foreach="lines" t-as="move">
+                                    <t t-set="counter" t-value="counter + 1"/>
+                                    <t t-if="move.quantity_done > 0">
+                                        <td>
+                                            <span t-esc="counter"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.date" t-options='{"widget": "date"}'/>
+                                        </td>
+                                        <td t-att-colspan="2">
+                                            <span t-field="move.product_id"/>
+                                            <p t-if="o.picking_type_code == 'outgoing'">
+                                                <span t-field="move.product_id.sudo().description_pickingout"/>
+                                            </p>
+                                            <p t-if="o.picking_type_code == 'incoming'">
+                                                <span t-field="move.product_id.sudo().description_pickingin"/>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <span t-field="move.product_uom"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="move.purchase_line_id.product_qty"
+                                                  t-options='{"widget": "float", "precision": 2}'/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="0"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="move.quantity_done"
+                                                  t-options='{"widget": "float", "precision": 2}'/>
+                                        </td>
+
+                                    </t>
+                                </tr>
+
+                                <tr></tr>
+                                <tr></tr>
+                                <tr>
+                                    <td class="tb-blanked-title">&amp;nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <table style="position:relative; top:30px; border:0px;width: 50%;">
+                            <tr>
+                                <th class="tb-blanked-title" style="width:40px;border-top:0px;">&amp;nbsp;</th>
+                                <th style="width:230px; font-weight: bold;font-size: 10px;text-align:left; border-top:1.5px solid black">
+                                    &amp;nbsp; Recibio / Stamp
+                                </th>
+                                <th class="tb-blanked-title" style="width:10px;">&amp;nbsp;</th>
+                                <th class="tb-blanked-title" style="width:105px;border-top:0px;">&amp;nbsp;</th>
+                                <th class="tb-blanked-title" style="width:105px;border-top:0px;">&amp;nbsp;</th>
+                                <th class="tb-blanked-title" style="width:40px;border-top:0px;">&amp;nbsp;</th>
+                                <th style="width:230px; font-weight: bold;font-size: 10px;text-align:left; border-top:1.5px solid black">
+                                    &amp;nbsp; Entrego / Stamp
+                                </th>
+                                <th class="tb-blanked-title" style="width:10px;">&amp;nbsp;</th>
+                            </tr>
+                        </table>
+                        <div class="oe_structure"/>
+                    </div>
+                     </xpath>
+
+                </t>
+                </t>
+            </t>
+       <template id="picking_footer_base"  inherit_id="report.external_layout_footer">
+          <!--<field name="inherit_id" ref="report.external_layout_footer"/>-->
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class ='footer']" position="replace">
+                 <div class="footer"> <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%y %H:%M')"/></div>
+                </xpath>
+            </field>
+         </template>
+    </template>
+
+
+    <record id="report_one_delivery_slip" model="ir.actions.report">
+        <field name="name">Recepcion de material sin contabilizacion</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock_delivery_note_acc.report_delivery_note_report_view</field>
+        <field name="report_file">stock_delivery_note_acc.report_delivery_note_report_view</field>
+        <field name="binding_model_id" ref="model_stock_picking"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
