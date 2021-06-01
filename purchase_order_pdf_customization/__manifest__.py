@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sale_order_pdf_customization",
+    'name': "purchase_order_pdf_customization",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
