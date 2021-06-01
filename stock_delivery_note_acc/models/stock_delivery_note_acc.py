@@ -10,7 +10,9 @@ class stock_delivery_note_acc(models.Model):
     #pedido ha sido recibido
     x_remis = fields.Char('Remision',
                                 help='Document type from provider to validate a delivery slip')
-
+    """def prueba(self):
+        a = self
+        return a"""
     
 
 
