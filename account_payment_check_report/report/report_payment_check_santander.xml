@@ -39,11 +39,11 @@
 			</div><!--END DOCUMENT LETTER-->
 			<!--TIPO,NRO Y FECHA FACTURA-->
 			<div class="col-5 text-left" name="company_address" style="border: 1px solid black; border-radius: 10px; border-color: green; padding-left: 20px !important;">
-			  <h3 style="color:#ffffff; margin-top:-4%;">
+			  <h3 style="color:#ffffff; margin-top:-7%;">
                  titulo margen
 			  </h3>
 			  <span t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
-				<span t-field="o.date"/><br/>
+				<span style=" margin-left:5%; margin-top:-4% !important;" t-field="o.date"/><br/>
 			  </span>
 			  <span style="border: 1px solid black;" t-if="o.state == 'confirmed' or o.state == 'posted' or o.state == 'draft'">
 						<!--<span t-field="o.display_name"/>-->
@@ -59,14 +59,14 @@
 	  <div class="page" style=" border: 1px solid black; border-radius: 10px; padding-top: -5%; ">
 		  <!--MY COMPANY CHECK-->
   		 <div class="row" style="  border: 1px solid black; border-color:red; border-radius: 10px;">
-  			 <div class="col-9" style= "margin-top: 8px !important;">
+  			 <div class="col-9" style= "margin-top: 5px !important;">
   			   <span class="text-center" t-esc="'PARA ABONO EN CUENTA DEL BENEFICIARIO'" style="font-size: 14px; font-weight: bold; margin-left:10%;"/>
   			   <span t-esc="0"/>
 				 <div  t-field="o.partner_id"/>
   			   <div  style= "padding-left:4%;"><strong><span t-esc="o.check_amount_in_words"></span></strong></div>
   			 </div>
-  			 <div class="col-3" style="  border: 1px solid black;" >
-				 <strong> <span  style= "padding-left:-3% !important;" t-field="o.amount"/></strong>
+  			 <div class="col-3 text-right" style="  border: 1px solid black;" >
+				 <strong> <span class="text-right" t-field="o.amount"/></strong>
 				 <span  style="color:#ffffff;" t-field="o.check_number"/><br/>
                            <span t-esc="0"/>  <span style="color:#ffffff;" t-field="o.amount"/><br/>
   			 </div>
@@ -101,21 +101,21 @@
 	    <table class="table" style="width:100% !important; font-size:12px;" >
 	        <thead colspan="10">
 	            <tr class="border-black">
-	                <th style="width:40px; border: 1px solid black; ">Nro Comprob</th>
-	                <th style="text-align:center; width:40px; border: 1px solid black; ">Nro Factura</th>
-	                 <th style="text-align:center; width:200px; border: 1px solid black; " > <span>Concepto</span></th>
-	                <th style="text-align:center; width:60px; margin-right:2%; border: 1px solid black; ">Orden de Compra</th>
-					<th  style="text-align:center; width:75px; border: 1px solid black; ">Monto Factura</th>
+	                <th style="width:30px; border: 1px solid black; ">Nro Comprob</th>
+	                <th style="text-align:left; width:30px; border: 1px solid black; ">Nro Factura</th>
+	                 <th style="text-align:center; width:160px; border: 1px solid black; " > <span>Concepto</span></th>
+	                <th style="text-align:center; width:120px; margin-right:2%; border: 1px solid black; ">Orden de Compra</th>
+					<th  style="text-align:center; width:85px; border: 1px solid black; ">Monto Factura</th>
 					<th  style=" width:75px; text-align:center;  border: 1px solid black; ">Neto a pagar</th>
 	            </tr>
 	        </thead>
 	        <tbody class="invoice_tbody" style="font-size:10px;">
 	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
-	              <td  style="width:40px; text-align:left; "><span t-field="p.name"/></td>
-	              <td  style="width:40px; text-align:left; "><span t-field="p.name"/></td>
-	               <td style=" width:200px;"><span t-field="p.payment_reference"/></td>
-	              <td  style="width:60px;"><span t-esc="p.ref"/></td>
-					<td style="width:75px; text-align:right;" ><span t-field="p.amount_total"></span></td>
+	              <td  style="width:30px; text-align:left; "><span t-field="p.name"/></td>
+	              <td  style="width:30px; text-align:left; "><span t-field="p.name"/></td>
+	               <td style=" width:160px;"><span t-field="p.payment_reference"/></td>
+	              <td  style="width:120px;"><span t-esc="p.ref"/></td>
+					<td style="width:85px; text-align:right;" ><span t-field="p.amount_total"></span></td>
 					<td style=" width:75px;  text-align:right;" ><span t-esc="o._get_invoice_payment_amount(p)"></span></td>
 
 	            </tr>
@@ -124,7 +124,7 @@
 
 
 	  </div>
-	  <footer style="margin-top:45%;">
+	  <footer style="margin-top:48%;">
 			  <table class="table">
 	          <tbody>
 	          <tr class="border-black">
