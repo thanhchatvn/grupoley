@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="contpaq_payroll_line_tree" model="ir.ui.view">
+            <field name="name">contpaq.payroll.line.tree</field>
+            <field name="model">contpaq.payroll.line</field>
+            <field name="arch" type="xml">
+                <tree string="Poliza" create="false" edit="true" delete="true">
+                    <field name="description"/>
+                    <field name="account"/>
+                    <field name="account_debit"/>
+                    <field name="account_credit"/>
+                    <field name="analytic_account_id"/>
+                    <field name="debit"/>
+                    <field name="credit"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

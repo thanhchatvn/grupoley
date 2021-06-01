@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="contpaqi_accounting_policy_tree" model="ir.ui.view">
+            <field name="name">contpaqi.accounting.policy.tree</field>
+            <field name="model">contpaq.policy</field>
+            <field name="arch" type="xml">
+                <tree string="Poliza de nomina (CONTPAQi)">
+                    <field name="naturaleza"/>
+                    <field name="cuenta"/>
+                    <field name="importe"/>
+                    <field name="tipo"/>
+                    <field name="id_empleado"/>
+                    <field name="descripcion"/>
+                    <field name="descripcion_concepto"/>
+                    <field name="banco"/>
+                    <field name="account_debit"/>
+                    <field name="account_credit"/>
+                    <field name="analytic_account_id"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

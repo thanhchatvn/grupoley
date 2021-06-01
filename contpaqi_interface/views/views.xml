@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="wizard_contpaqi_interface" model="ir.ui.view">
+            <field name="name">Interfaz de Contpaqi</field>
+            <field name="model">contpaqi.interface</field>
+            <field name="arch" type="xml">
+                <form string="Interfaz CONTPAQi Nominas">
+                    <sheet>
+                        <group col="3">
+                            <group>
+                                <field name="period_type" options="{'no_create': True,'no_edit': True}"/>
+                                <field name="initialization" invisible="1"/>
+                                <separator/>
+                                <field name="initial_date"/>
+                                <separator/>
+                                <field name="lot_id"/>
+                                <separator/>
+                                <field name="accounting_policy_date"/>
+                            </group>
+                            <group style="align: left;">
+                                <field name="number_period" options="{'no_create': True,'no_edit': True}"/>
+                                <separator/>
+                                <field name="end_date"/>
+                                <separator/>
+                                <field name="reference"/>
+                                <separator/>
+                                <separator/>
+                                <div class="row">                                    
+                                    <button string="Generar Póliza" name="generate_policy"
+							            type="object" class="btn-primary"                                        
+                                    />
+                                </div>
+                            </group>
+                            <group>
+                                <field name="accounting_year" options="{'no_create': True,'no_edit': True}"/>
+                                <separator/>
+                                <field name="status"/>
+                                <separator/>
+                                <field name="period"/>
+                                <separator/>
+                                <separator/>
+                            </group>
+                            <separator/>
+
+                            <field name="journal_line_ids"/>
+
+                            <group col="2">
+                                <group>
+                                    <field name="debit_sum"/>
+                                    <field name="credit_sum"/>
+                                </group>
+                                <group>
+                                    <div class="row">
+                                        <button string="Generar Asiento" name="save_policy"
+							            type="object" class="btn-primary"/>
+                                    </div>
+                                </group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="contpaq_interface_action" model="ir.actions.act_window">
+            <field name="name">Interfaz de polizas</field>
+            <field name="res_model">contpaqi.interface</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_contpaqi_interface"/>
+            <field name="target">inline</field>
+        </record>
+
+        <menuitem
+                id="menu_contpaq_interface"
+                action="contpaq_interface_action"
+                name="Contpaqi Nomina"
+                parent="hr_payroll.menu_hr_payroll_payslips"
+                sequence="4"/>
+    </data>
+</odoo>
+
