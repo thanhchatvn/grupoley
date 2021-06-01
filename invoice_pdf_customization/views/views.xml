@@ -624,7 +624,7 @@
                                     <t t-foreach="details_move_values['details_product']" t-as="line">
                                         <!-- Validación para los movimientos de iva o movimiento acreditado del producto-->
                                         <tr class="text-left">
-                                            <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.code"/> <span t-field="line.account_id.name"/></td>
+                                            <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/> <span t-field="line.account_id.name"/></td>
                                             <!--<td><span t-field="line.ref"/></td>Remision-->
                                             <td><span t-field="line.name"/></td>
                                             <td><span t-field="line.tax_ids.name"/></td><!--Tarifa-->
@@ -646,7 +646,7 @@
                                     </tr>
                                     <t t-foreach="details_move_values['details_tax']" t-as="line">
                                         <tr class="text-left">
-                                            <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.code"/> <span t-field="line.account_id.name"/></td>
+                                            <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/> <span t-field="line.account_id.name"/></td>
                                             <td/>
                                             <td colspan="2"><span></span></td>
                                             <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options="{'widget': 'text'}"/></td>
@@ -663,7 +663,7 @@
                                 <t t-if="'details_credit' in details_move_values.keys()">
                                     <t t-foreach="details_move_values['details_credit']" t-as="line">
                                         <tr class="text-left section-header" style="border-top: 1px dashed black;margin-top:100px;">
-                                            <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.code"/> <span t-field="line.account_id.name"/></td>
+                                            <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/> <span t-field="line.account_id.name"/></td>
                                             <td colspan="3"/>
                                             <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options="{'widget': 'text'}"/></td>
                                             <td style="text-align:right"><span t-if="line.credit" t-field="line.credit" t-options="{'widget': 'text'}"/></td>
