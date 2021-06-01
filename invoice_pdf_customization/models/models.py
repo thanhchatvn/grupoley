@@ -16,6 +16,7 @@ from odoo import models, fields, api
 #     def _value_pc(self):
 #         for record in self:
 #             record.value2 = float(record.value) / 100
+
 class AccountInvoice(models.Model):
     _inherit = 'account.move'
 
@@ -28,14 +29,17 @@ class AccountInvoice(models.Model):
                 continue
             cfdi_values[line.id] = {}
             cfdi_values[line.id]['wo_discount'] = line.price_unit * (1 - (line.discount / 100.0))
-            cfdi_values[line.id]['total_wo_discount'] = invoice.currency_id.round(line.price_unit * line.quantity)
-            cfdi_values[line.id]['discount_amount'] = invoice.currency_id.round(
-                cfdi_values[line.id]['total_wo_discount'] - line.price_subtotal)
-            cfdi_values[line.id]['price_subtotal_unit'] = invoice.currency_id.round(cfdi_values[line.id]['total_wo_discount'] / line.quantity)
-            cfdi_values[line.id]['discount_amount_price_list'] = (line.product_id.list_price - line.price_unit) * line.quantity
 
-            if line.price_unit == 0.010000:
-                cfdi_values[line.id]['discount_amount_price_list'] = 0.0
+            cfdi_values[line.id]['discount_rate'] = (line.sale_line_ids.discount_original) if line.sale_line_ids.discount_rate  else  line.sale_line_ids.discount
+            cfdi_values[line.id]['discount_promotion'] = (line.sale_line_ids.discount_promotions) if line.sale_line_ids.discount_promotions else 0
+
+            cfdi_values[line.id]['discount_amount_price_list'] = (line.quantity * line.price_unit) * (cfdi_values[line.id]['discount_rate']/100.0)
+            cfdi_values[line.id]['discount_amount']  = (line.quantity * line.price_unit) * (cfdi_values[line.id]['discount_promotion']/100.0)
+
+
+            cfdi_values[line.id]['total_wo_discount'] = invoice.currency_id.round((line.price_unit * line.quantity) - (cfdi_values[line.id]['discount_amount_price_list'] + cfdi_values[line.id]['discount_amount']))
+            cfdi_values[line.id]['price_subtotal_unit'] = invoice.currency_id.round(
+                cfdi_values[line.id]['total_wo_discount'] / line.quantity)
         return cfdi_values
 
     def get_footer_values(self):
@@ -61,6 +65,7 @@ class AccountInvoice(models.Model):
             return False
         if 'out_invoice' in invoice.move_type:
             return True
+
     def calculate_lines_details(self):
         self.ensure_one()
         invoice = self.sudo()
@@ -73,29 +78,23 @@ class AccountInvoice(models.Model):
 
         total_debit = 0
         total_credit = 0
+
+        details_move_lines["details_product"] = []
+        details_move_lines["details_credit"] = []
+        details_move_lines["details_credit"] = []
         for line in invoice.line_ids:
             #extraccion de detalles del producto
-            if code_iva not in line.account_id.code and line.debit > 0:
-               """" details_move_lines["details_product"]["account_name"] = invoice.description
-                details_move_lines["details_product"]["product_name"] = line.name
-                details_move_lines["details_product"]["credit"] = line.credit
-                details_move_lines["details_product"]["debit"] = line.debit
-                details_move_lines["details_product"]["price_unit"] = line.price_unit"""
-               subtotal_products = subtotal_products + line.price_subtotal
-               subtotal_products = subtotal_products + line.price_total
-               details_move_lines["details_product"] = line
-
-            elif code_iva in line.account_id.code and line.debit > 0:
-                """details_move_lines["details_tax"]["account_name"] = line.account_id.name
-                details_move_lines["details_tax"]["debit"] = line.debit
-                details_move_lines["details_tax"]["credit"] = line.credit"""
-                subtotal_iva = subtotal_iva + line.price_subtotal
-                subtotal_iva = subtotal_iva + line.price_total
-                details_move_lines["details_tax"] = line
-            elif code_iva not in line.account_id.code and line.credit > 0:
-                subtotal_credit = subtotal_credit + line.price_subtotal
-                subtotal_credit = subtotal_credit + line.price_total
-                details_move_lines["details_credit"] = line
+            if line.product_id:
+               subtotal_products = subtotal_products + line.debit
+               details_move_lines["details_product"].append(line)
+            #Extracción para los detalles de iva
+            elif not line.product_id and line.tax_line_id:
+                subtotal_iva = subtotal_iva + line.debit
+                details_move_lines["details_tax"].append(line)
+            #Exctracción de otros conceptos
+            elif not line.product_id and not line.tax_line_id:
+                subtotal_credit = subtotal_credit + line.credit
+                details_move_lines["details_credit"].append(line)
 
         total_debit = subtotal_products + subtotal_iva
         total_credit = subtotal_credit
@@ -105,3 +104,10 @@ class AccountInvoice(models.Model):
         details_move_lines.update({"total_credit": total_credit})
 
         return details_move_lines
+
+    def calculate_no_entrada(self):
+        #se obtiene el ultimo insertado según las fechas
+        response = self.env["stock.picking"].search([('origin','=',self.invoice_origin),('partner_id','=',self.partner_id.id),('date_done', '<=',self.invoice_date)], order= 'date_done desc', limit=1)
+        if response:
+            return response
+        return {}
