@@ -100,15 +100,15 @@
   		 </div>
   		 <!-- END PROVEEDOR -->
 
-	    <table class="table" style="width:100%;" >
-	        <thead colspan="10">
-	            <tr class="border-black">
-	                <th style="text-align:center; width:50px;">Nro Comprob</th>
-	                <th style="text-align:center; width:50px;">Nro Factura</th>
-	                 <th  style="text-align:center; width:180px;" t-att-colspan="3"> <span t-att-colspan="3">Concepto</span></th>
+	    <table class="table" style="width:100%; margin-top:-3%;" >
+	        <thead colspan="10" style="font-size:12px;">
+	            <tr>
+	                <th style="text-align:left; width:50px;">Nro Comprob</th>
+	                <th style="text-align:left; width:50px;">Nro Factura</th>
+	                 <th  style="text-align:center; width:160px;" t-att-colspan="3"> <span t-att-colspan="3">Concepto</span></th>
 
-	                <th style="text-align:center; width:70px; margin-right:2%;">Orden de Compra</th>
-					<th style="text-align:center; width:50px;">Monto Factura</th>
+	                <th style="text-align:center; width:130px; margin-right:2%;">Orden de Compra</th>
+					<th style="text-align:center; width:60px;">Monto Factura</th>
 					<th colspan="1" style="text-align:center; ">Neto a pagar</th>
 	            </tr>
 	        </thead>
@@ -116,9 +116,9 @@
 	            <tr t-foreach="o.reconciled_bill_ids" t-as="p">
 	              <td  style="width:50px;"><span t-field="p.name"/></td>
 	              <td style="width:50px;"><span t-field="p.name"/></td>
-	               <td style=" width:180px;" t-att-colspan="3"><span t-att-colspan="3" t-field="p.payment_reference"/></td>
+	               <td style=" width:160px;" t-att-colspan="3"><span t-att-colspan="3" t-field="p.payment_reference"/></td>
 
-	              <td style="width:70px;"><span t-esc="p.ref"/></td>
+	              <td style="width:130px;"><span t-esc="p.name"/></td>
 					<td colspan="1" ><span t-field="p.amount_total"></span></td>
 					<td colspan="1" ><span t-esc="o._get_invoice_payment_amount(p)"></span></td>
 
