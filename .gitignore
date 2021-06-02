@@ -11,3 +11,4 @@ runbot/static/nginx
 
 __pycache__/
  *.pyc
+/custom_promotions/models/__pycache__/__init__.cpython-38.pyc

@@ -549,7 +549,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <t t-set="stock_picking_id" t-value="o.calculate_no_entrada()"/>
-                                    <strong>No. Entrada:</strong><span t-if="stock_picking_id.name" t-field="stock_picking_id.name"/>
+                                    <strong>No. Entrada:</strong><span t-if="stock_picking_id" t-field="stock_picking_id.name"/>
                                 </div>
                                 <div class="col-3">
                                     <strong>Moneda: </strong><span t-field="o.currency_id.name"/>
@@ -626,7 +626,7 @@
                                         <tr class="text-left">
                                             <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/> <span t-field="line.account_id.name"/></td>
                                             <!--<td><span t-field="line.ref"/></td>Remision-->
-                                            <td><span t-field="line.name"/></td>
+                                            <td><span t-field="line.product_id.display_name"/></td>
                                             <td><span t-field="line.tax_ids.name"/></td><!--Tarifa-->
                                             <td><span t-field="line.quantity"/></td>
                                             <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options="{'widget': 'text'}"/></td>
@@ -640,7 +640,7 @@
                                 </t>
                             </tbody>
                             <tbody class="section section-step" style="border-top: 1em solid transparent;">
-                                <t t-if="'details_tax' in details_move_values.keys()">
+                                <t t-if="details_move_values['details_tax']">
                                     <tr class="sub-header">
                                         <td><strong><span style = "text-decoration:underline">Detalle del Impuesto:</span></strong></td>
                                     </tr>
@@ -662,7 +662,7 @@
                             <tbody class="section" style="border-top: 5em solid transparent;">
                                 <t t-if="'details_credit' in details_move_values.keys()">
                                     <t t-foreach="details_move_values['details_credit']" t-as="line">
-                                        <tr class="text-left section-header" style="border-top: 1px dashed black;margin-top:100px;">
+                                        <tr class="text-left section-header" style="margin-top:100px;">
                                             <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/> <span t-field="line.account_id.name"/></td>
                                             <td colspan="3"/>
                                             <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options="{'widget': 'text'}"/></td>
