@@ -625,8 +625,11 @@
                                         <!-- Validación para los movimientos de iva o movimiento acreditado del producto-->
                                         <tr class="text-left">
                                             <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/> <span t-field="line.account_id.name"/></td>
-                                            <!--<td><span t-field="line.ref"/></td>Remision-->
+
+                                        </tr>
+                                         <tr class="text-left">
                                             <td><span t-field="line.name"/></td>
+                                             <td></td>
                                             <td><span t-field="line.tax_ids.name"/></td><!--Tarifa-->
                                             <td><span t-field="line.quantity"/></td>
                                             <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options="{'widget': 'text'}"/></td>
