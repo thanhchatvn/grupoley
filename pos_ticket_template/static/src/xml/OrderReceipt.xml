@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="point_of_sale.template" xml:space="preserve">
+<t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+<xpath expr="//div[hasclass('pos-receipt-contact')]" position="replace">
+    <div class="pos-receipt" >
+            <t >
+                <h5 class="pos-receipt-center-align">
+                    <t t-esc="receipt.company.name" />
+                </h5>
+                <br/>
+            </t>
+
+        <t t-if="env.pos.config.cod_shop">
+           Casa Matriz:
+              <span t-esc="receipt.company.complete_address || ''"/>
+            <br/>
+           </t>
+
+
+        <div  class="pos-receipt-contact">
+             <strong>
+             RFC.:
+              <t t-esc="receipt.company.vat"/>
+                 <br/>
+                 Teléfono:
+                 <t t-esc="receipt.company.phone"/>
+                 <br/>
+             </strong>
+            <t t-if="!env.pos.config.cod_shop">
+              Dirección:
+              <span t-esc="receipt.company.complete_address || ''"/>
+                <br/>
+             </t>
+            <t>
+              Calle:
+              <span t-esc="receipt.company.stree || ''"/>
+                <br/>
+             </t>
+            <t>
+              Nro exterior:
+              <span t-esc="receipt.company.zip|| ''"/>
+                <br/>
+             </t>
+            <t>
+                 Colonia:
+                 <span t-esc="receipt.company.street2"></span>
+                <br/>
+             </t>
+            <t>
+                 Localidad:
+                 <span t-esc="receipt.company.city"></span>
+                <br/>
+             </t>
+            <t>
+                 Municipio:
+                 <span t-esc="receipt.company.city"></span>
+                <br/>
+             </t>
+            <t>
+                 Region:
+                 <span t-esc="receipt.company.state"></span>
+                <br/>
+             </t>
+            <t>
+                 Referencia:
+                 <span t-esc="receipt.company.state"></span>
+                <br/>
+             </t>
+            <t>
+                 Codigo postal:
+                 <span t-esc="receipt.company.zip"></span>
+                <br/>
+             </t>
+            <t>
+                 Pais:
+                 <span t-esc="receipt.company.country"></span>
+                <br/>
+             </t>
+
+            <t t-if="receipt.cashier">
+                    <div class="cashier">
+                        <div>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</div>
+                        <div>Vendedor: Ruta:<t t-if="env.pos.config.name">
+                                            <t t-esc="env.pos.config.name"/>
+                            - <t t-esc="receipt.cashier" /></t>
+
+                        </div>
+                    </div>
+              </t>
+
+            <t t-if='receipt.client'>
+                  <div>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</div>
+                <div style="font-weight:bold;">Cliente:
+                   <t t-if="receipt.client.parent_id">
+                     <t t-esc="receipt.client.parent_id[1]"/>,
+                    </t>   <t t-esc='receipt.client.name'/>
+                    <br/></div>
+                <div style="font-weight:bold;">Clave:<t t-esc='receipt.client.name'/></div>
+                <br/>
+                RFC:
+                <t t-esc="receipt.client.vat"/>
+                <br/>
+                Teléfono:
+                <t t-esc="receipt.client.phone"/>
+                <br/>
+                Dirección:
+                <t t-esc="receipt.client.address"/>
+                <br/>
+                Codigo postal:
+                <span t-esc="receipt.client.zip"></span>
+                <br/>
+           </t>
+
+         </div>
+    </div>
+</xpath>
+    <xpath expr="//div[hasclass('pos-receipt-contact')]" position="after">
+     <div class="pos-receipt-left-align" style="font-size:12px;">
+          <strong>
+           <t t-if="!receipt.inv_folio and receipt.folio">
+            Folio N°<t t-esc="receipt.folio"/>
+               <br/>
+          </t>
+              <t t-if="!receipt.folio and receipt.inv_folio">
+          Folio
+          <br/> N°
+                  <t t-esc="receipt.inv_folio"/>
+                  <br/>
+         </t>
+              <t>
+              Fecha Facturacion:
+              <t t-esc="receipt.date.localestring"/>
+                  <br/>
+         </t>
+      </strong>
+     </div>
+    </xpath>
+    <xpath expr="//div[hasclass('orderlines')]" position="replace">
+          <div class="orderlines">
+          <table class="receipt-orderlines">
+            <colgroup>
+               <col width="25%"/>
+                <col width="25%"/>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+            </colgroup>
+              <tr name="line_header" style="font-size:10px; border-top: 1px solid black;border-bottom: 1px solid black;">
+
+                <th style="text-align:left">Producto</th>
+                  <th style="text-align:left">Nombre Corto</th>
+                  <br/>
+             </tr>
+              <tr name="line_header" style="font-size:10px;">
+                <th style="text-align:left">Cantidad</th>
+                  <th style="text-align:left">Unidad</th>
+                  <th style="text-align:right">Precio</th>
+                  <th style="text-align:right">Sub Total</th>
+                  <th style="text-align:right">Descuento</th>
+              </tr>
+              <tr t-foreach="orderlines" t-as="orderline" t-key="orderline.id" style="font-size:10px;" t-if="orderline.price > 0">
+
+<td>
+    <t t-esc="orderline.get_product().default_code"/>
+    <t t-esc="orderline.get_product().display_name"/>
+    <t t-if="orderline.get_discount() > 0">
+<div class="pos-disc-font">
+Con
+<t t-esc="orderline.get_discount()"/>
+    % descuento
+</div>
+</t>
+    <t t-if="env.pos.config.show_notes_on_receipt and orderline.get_note_string()">
+<br/>
+        **
+        <t t-esc="orderline.get_note_string()"/>
+</t>
+</td>
+                  <td>
+                      <t t-esc="orderline.quantity"/>
+
+                   </td>
+
+                  <!--  Precio  -->
+                  <t t-if="env.pos.config.show_price_without_discount" t-set="line_price" t-value="env.pos.format_currency(orderline.get_unit_price())"/>
+                  <t t-elif="!env.pos.config.show_price_without_discount" t-set="line_price" t-value="env.pos.format_currency(orderline.get_unit_display_price())"/>
+                  <td style="text-align:right">
+<t t-esc="line_price"/>
+</td>
+                  <td style="text-align:right">
+      <t t-esc="env.pos.format_currency(orderline.get_price_without_tax())"/>
+</td>
+
+</tr>
+         <!--   <xpath expr="//div[hasclass('orderlines')]" position="after">
+              <div class="text-align:right">&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</div>
+                  <br/>
+                  <div class="text-align:right">
+                  Desc. Cliente
+                  <span t-esc="0" class="pos-receipt-right-align"/>
+                   </div>
+                  <div class="text-align:right">
+                  Desc. Vendedor
+                     <span t-esc="0" class="pos-receipt-right-align"/>
+                 </div>
+            </xpath>-->
+</table>
+</div>
+</xpath>
+    </t>
+
+</templates>
