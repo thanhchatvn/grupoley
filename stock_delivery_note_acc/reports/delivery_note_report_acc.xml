@@ -76,7 +76,7 @@
                             <!--<th class="tb-head" style="text-align:center; width:40px;">Remis</th>-->
                             <th class="tb-head" style="text-align:left; width:100px;">Fecha</th>
                             <th class="tb-head" style="text-align:left; width:250px;">Producto</th>
-                            <th class="tb-head" tyle=" text-align:left;  margin:10px 0 0 10px; width:40px;">UM</th>
+                            <th class="tb-head" tyle=" text-align:left; margin-right: 10px; width:45px;">UM</th>
                             <th class="tb-head" style=" text-align:right; margin:10px 0 0 10px; width:125px;">Ordenado&amp;nbsp;</th>
                             <th class="tb-head" style="text-align:right; margin-right: 10px; width:125px; ">Recibido&amp;nbsp;</th>
                             <th class="tb-head" style="text-align:right; margin-right: 10px; width:105px;">Precio&amp;nbsp;</th>
