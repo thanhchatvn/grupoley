@@ -80,6 +80,7 @@ class AccountInvoice(models.Model):
         total_credit = 0
 
         details_move_lines["details_product"] = []
+        details_move_lines["details_tax"] = []
         details_move_lines["details_credit"] = []
         details_move_lines["details_credit"] = []
         for line in invoice.line_ids:
