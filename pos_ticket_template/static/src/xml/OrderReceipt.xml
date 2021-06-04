@@ -33,27 +33,27 @@
              </t>
             <t>
               Calle:
-              <span t-esc="receipt.company.stree || ''"/>
+              <span t-esc="env.pos.config.company_id.street || ''"/>
                 <br/>
              </t>
             <t>
               Nro exterior:
-              <span t-esc="receipt.company.zip|| ''"/>
+              <span t-esc="env.pos.config.company_id.zip|| ''"/>
                 <br/>
              </t>
             <t>
                  Colonia:
-                 <span t-esc="receipt.company.street2"></span>
+                 <span t-esc="env.pos.config.company_id.street2"></span>
                 <br/>
              </t>
             <t>
                  Localidad:
-                 <span t-esc="receipt.company.city"></span>
+                 <span t-esc="env.pos.config.company_id.city"></span>
                 <br/>
              </t>
             <t>
                  Municipio:
-                 <span t-esc="receipt.company.city"></span>
+                 <span t-esc="env.pos.config.company_id.city"></span>
                 <br/>
              </t>
             <t>
@@ -80,7 +80,7 @@
             <t t-if="receipt.cashier">
                     <div class="cashier">
                         <div>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</div>
-                        <div>Vendedor: Ruta:<t t-if="env.pos.config.name">
+                        <div>Vendedor: <t t-if="env.pos.config.name">
                                             <t t-esc="env.pos.config.name"/>
                             - <t t-esc="receipt.cashier" /></t>
 
@@ -184,14 +184,18 @@ Con
                    </td>
 
                   <!--  Precio  -->
-                  <t t-if="env.pos.config.show_price_without_discount" t-set="line_price" t-value="env.pos.format_currency(orderline.get_unit_price())"/>
-                  <t t-elif="!env.pos.config.show_price_without_discount" t-set="line_price" t-value="env.pos.format_currency(orderline.get_unit_display_price())"/>
+                  <t t-set="line_price" t-value="env.pos.format_currency(orderline.get_unit_price())"/>
+                 <!-- <t t-elif="!env.pos.config.show_price_without_discount" t-set="line_price" t-value="env.pos.format_currency(orderline.get_unit_display_price())"/>-->
                   <td style="text-align:right">
-<t t-esc="line_price"/>
-</td>
-                  <td style="text-align:right">
-      <t t-esc="env.pos.format_currency(orderline.get_price_without_tax())"/>
-</td>
+                       <t t-esc="line_price"/>
+                   </td>
+                   <td style="text-align:right">
+                      <t t-esc="env.pos.format_currency(orderline.get_price_without_tax())"/>
+                   </td>
+                     <td style="text-align:right">
+                      <t t-esc="env.pos.format_currency((orderline.quantity*orderline.get_unit_price())*(orderline.discount/100))"/>
+                    </td>
+
 
 </tr>
          <!--   <xpath expr="//div[hasclass('orderlines')]" position="after">
