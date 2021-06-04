@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_order_casa_ley_line" model="ir.ui.view">
+            <field name="name">sale.order.casa.ley.line</field>
+            <field name="model">sale.orders.casa.ley.line</field>
+            <field name="arch" type="xml">
+                <tree string="Linea de pedido Casa Ley">
+                    <field name="product_id"/>
+                    <field name="qty_uom"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sale_order_casa_ley_line_form" model="ir.ui.view">
+            <field name="name">sale.order.casa.ley.line</field>
+            <field name="model">sale.orders.casa.ley.line</field>
+            <field name="arch" type="xml">
+                <form string="Pedido">
+                    <sheet>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="qty_uom"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

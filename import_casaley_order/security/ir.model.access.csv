@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_import_ley_order_import_ley_order,import_ley_order.import_ley_order,model_import_ley_order,sales_team.group_sale_salesman,1,1,1,1
+access_zone_pam,zone_pam,model_zone_pam,sales_team.group_sale_salesman,1,1,1,1
+access_sale_orders_casa_ley,sale_orders_casa_ley,model_sale_orders_casa_ley,sales_team.group_sale_salesman,1,1,1,1
+access_sale_orders_casa_ley_line,sale_orders_casa_ley_line,model_sale_orders_casa_ley_line,sales_team.group_sale_salesman,1,1,1,1

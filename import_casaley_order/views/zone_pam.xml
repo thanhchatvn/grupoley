@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="zone_pam_tree" model="ir.ui.view">
+            <field name="name">Territorios</field>
+            <field name="model">zone.pam</field>
+            <field name="arch" type="xml">
+                <tree string="Territorios">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_orders_casa_ley_tree" model="ir.ui.view">
+            <field name="name">Pedido</field>
+            <field name="model">sale.orders.casa.ley</field>
+            <field name="arch" type="xml">
+                <tree string="Pedidos">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="date_order"/>
+                    <field name="user_id" optional="hide"/>
+                    <field name='zone' optional='hide'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sale_orders_casa_ley_form" model="ir.ui.view">
+            <field name="name">Pedido</field>
+            <field name="model">sale.orders.casa.ley</field>
+            <field name="arch" type="xml">
+                <form string="Pedido">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                            </group>
+                            <group>
+                                <field name="date_order"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="order_lines"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

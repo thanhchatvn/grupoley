@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="wizard_import_ley_order" model="ir.ui.view">
+            <field name="name">wizard.wizard.import.ley.order.form</field>
+            <field name="model">import.ley.order</field>
+            <field name="arch" type="xml">
+                <form string="CASA LEY">
+                    <sheet style="bg-color:blue;">
+                        <div align="center">
+                            <img src='/import_casaley_order/static/img/ley.png' alt='CASA LEY' width="150" height="75"/>
+                        </div>
+                        <br/>
+                        <group col="3">
+                            <group>
+                                <field name="file_data" filename="file_name"/>
+                                <field name='product_category' options="{'no_create_edit': True, 'no_create':True}"/>
+                            </group>
+                            <group>
+                                <field name="zone" options="{'no_create_edit': True, 'no_create':True}"/>
+                                <field name="initial_date"/>
+                            </group>
+                            <group>
+                                <field name="route" options="{'no_create_edit': True, 'no_create':True}"/>
+                                <field name="end_date"/>
+                            </group>
+                        </group>
+                        <div>
+                            <field name="sale_order_ids"/>
+                        </div>
+
+                        <footer>
+                            <button string="VALIDAR" name="validate" type="object" class="btn btn-primary"
+                                width="80" height="40"
+                            />
+                            <button string="CARGAR" name="create_orders" type="object" class="btn btn-success"
+                                width="80" height="40"
+                            />
+                        </footer>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+        <record id="wizard_import_ley_order_tree" model="ir.ui.view">
+            <field name="name">pedido</field>
+            <field name="model">import.ley.order</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="file_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="bi_act_ley_order" model="ir.actions.act_window">
+            <field name="name">Import Sale Orders</field>
+            <field name="res_model">import.ley.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="wizard_import_ley_order"/>
+            <field name="target">inline</field>
+        </record>
+
+        <menuitem
+                id="menu_ley_order"
+                action="bi_act_ley_order"
+                name="CASA LEY"
+                parent="sale.sale_order_menu"
+                sequence="6"/>
+    </data>
+</odoo>
