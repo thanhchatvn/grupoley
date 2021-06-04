@@ -10,6 +10,7 @@
                     <field name="partner_id"/>
                     <field name="date_order"/>
                     <field name="user_id" optional="hide"/>
+                    <field name='zone' optional='hide'/>
                 </tree>
             </field>
         </record>
