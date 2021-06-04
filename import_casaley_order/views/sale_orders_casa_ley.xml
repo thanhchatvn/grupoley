@@ -9,6 +9,7 @@
                     <field name="name"/>
                     <field name="partner_id"/>
                     <field name="date_order"/>
+                    <field name="user_id" optional="hide"/>
                 </tree>
             </field>
         </record>

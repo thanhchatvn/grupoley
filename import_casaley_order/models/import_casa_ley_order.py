@@ -304,8 +304,7 @@ class CasaLeyImport(models.Model):
             self.sale_order_ids = lines
 
     #CREAMOS LOS PRESUPUESTOS DE VENTA
-    @api.model
-    def create_orders(self):
+    def create_orders(self):        
         sale_order_obj = self.env['sale.order']
         sale_order_line_obj = self.env['sale.order.line']
         validity_date = datetime.now() + timedelta(days=1)
