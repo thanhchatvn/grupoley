@@ -24,11 +24,11 @@
     'data': [
         'security/ir.model.access.csv',
         'views/res_partner.xml',
+        'views/res_users.xml',
         'views/import_sale_order.xml',
         'views/sale_orders_casa_ley.xml',
         'views/sale_order_line.xml',
         'views/zone_pam.xml',
-        'views/route_pam.xml',
     ],
 
     'demo': [
