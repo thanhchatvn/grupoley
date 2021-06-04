@@ -9,7 +9,7 @@
                 <form string="CASA LEY">
                     <sheet style="bg-color:blue;">
                         <div align="center">
-                            <img src='/import_casaley_order/static/img/ley.png' width="150" height="75"/>
+                            <img src='/import_casaley_order/static/img/ley.png' alt='CASA LEY' width="150" height="75"/>
                         </div>
                         <br/>
                         <group col="3">
@@ -17,11 +17,11 @@
                                 <field name="file_data" filename="file_name"/>
                             </group>
                             <group>
-                                <field name="zone"/>
+                                <field name="zone" options="{'no_create_edit': True, 'no_create':True}"/>
                                 <field name="initial_date"/>
                             </group>
                             <group>
-                                <field name="route"/>
+                                <field name="route" options="{'no_create_edit': True, 'no_create':True}"/>
                                 <field name="end_date"/>
                             </group>
                         </group>
@@ -38,8 +38,6 @@
                             />
                         </footer>
                     </sheet>
-
-
 
                 </form>
             </field>

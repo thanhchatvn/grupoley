@@ -18,6 +18,8 @@ class SaleOrdersCasaLey(models.Model):
     import_id = fields.Many2one('import.ley.order', string='Interfaz de pedido',
                                 store=True)
     order_lines = fields.One2many('sale.orders.casa.ley.line','sale_order_id')
+    
+    zone = fields.Many2one(related='partner_id.x_zone', string='Territorio', store=True)
 
 class SaleOrderCasaLeyLine(models.Model):
     _name = 'sale.orders.casa.ley.line'

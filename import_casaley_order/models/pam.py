@@ -7,10 +7,3 @@ class ZonePam(models.Model):
 
     name = fields.Char(string='Territorio', store=True)
     code = fields.Char(string='Código', store=True)
-
-class RoutePam(models.Model):
-    _name = 'route.pam'
-    _description = 'Rutas en el PAM'
-
-    name = fields.Char(string='Ruta', store=True)
-    code = fields.Char(string='Código', store=True)

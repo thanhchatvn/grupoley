@@ -16,7 +16,7 @@ class CasaLeyImport(models.Model):
     _rec_name = 'id'
 
     zone = fields.Many2one('zone.pam', string='Territorio', store=True)
-    route = fields.Many2one('route.pam',string='Ruta', store=True)
+    route = fields.Many2one('res.users',string='Comercial', store=True, domain=[('x_comercial', '=', True)])
     file_data = fields.Binary(string='Archivo', required=True)
     file_name = fields.Char(string='Nombre')
     sale_order_ids = fields.One2many('sale.orders.casa.ley', 'import_id', string='Pedidos',
@@ -222,7 +222,7 @@ class CasaLeyImport(models.Model):
                 '&', '&','&','&',
                 ('name', '=', sale_order),
                 ('id', '=', sale_orders_casa_ley_obj.id),
-                ('partner_id.x_route', '=', self.route.id),
+                ('partner_id.user_id', '=', self.route.id),
                 ('date_order','>=',self.initial_date),
                 ('date_order', '<=', self.end_date)
             ])
@@ -266,7 +266,7 @@ class CasaLeyImport(models.Model):
                 ('name', '=', sale_order),
                 ('id', '=', sale_orders_casa_ley_obj.id),
                 ('partner_id.x_zone', '=', self.zone.id),
-                ('partner_id.x_route', '=', self.route.id),
+                ('partner_id.user_id', '=', self.route.id),
                 ('date_order', '>=', self.initial_date),
                 ('date_order', '<=', self.end_date)
             ])
@@ -304,8 +304,7 @@ class CasaLeyImport(models.Model):
             self.sale_order_ids = lines
 
     #CREAMOS LOS PRESUPUESTOS DE VENTA
-    @api.model
-    def create_orders(self):
+    def create_orders(self):        
         sale_order_obj = self.env['sale.order']
         sale_order_line_obj = self.env['sale.order.line']
         validity_date = datetime.now() + timedelta(days=1)
