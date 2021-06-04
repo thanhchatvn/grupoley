@@ -7,7 +7,6 @@
            <field name="inherit_id" ref="base.view_partner_form"/>
            <field name="arch" type="xml">
                <xpath expr="//field[@name='industry_id']" position="after">
-                    <field name="x_route"/>
                    <field name="x_zone"/>
                </xpath>
            </field>
