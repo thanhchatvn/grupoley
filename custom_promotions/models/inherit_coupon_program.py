@@ -15,3 +15,7 @@ class CouponProgram(models.Model):
             discount_line_product_id = program.reward_product_id
             program.write({'discount_line_product_id': discount_line_product_id.id})
         return program
+
+    @api.onchange('reward_product_id')
+    def _update_discount_line_product_id(self):
+        self.discount_line_product_id = self.reward_product_id and self.reward_product_id.id or False

@@ -12,8 +12,11 @@
                 </xpath>
 
                 <!-- <xpath expr="//group[@string='Rewards']/group[2]/"> -->
-               <xpath expr="//field[@name='discount_line_product_id']" position="attributes">
+                <!-- <xpath expr="//field[@name='discount_line_product_id']" position="attributes">
                     <attribute readonly="True" name="attrs">{'invisible': ['|', ('discount_line_product_id', '=', False), ('reward_type', '=', 'same_product')]}</attribute>
+                </xpath>  -->
+                <xpath expr="//field[@name='discount_line_product_id']" position="attributes">
+                    <attribute readonly="True" name="attrs">{'invisible': [True]}</attribute>
                 </xpath>
                 <!--Producto id-->
                 <xpath expr="//field[@name='reward_product_id']" position="attributes">

@@ -293,7 +293,7 @@ class SaleOrder(models.Model):
             # Take the default taxes on the reward product, mapped with the fiscal position
             taxes = self.fiscal_position_id.map_tax(program.reward_product_id.taxes_id)
             return {
-                'product_id': program.discount_line_product_id.id,
+                'product_id': program.reward_product_id.id,
                 'price_unit': price_unit,
                 'product_uom_qty': reward_qty,
                 'is_reward_line': True,
