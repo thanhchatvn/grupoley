@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="inherit_coupon_program_multi_discount">
+            <field name="name">Inherit Coupon Program With Multi Discount</field>
+            <field name="model">coupon.program</field>
+            <field name="inherit_id" ref="custom_promotions.inherit_coupon_program" />
+            <field name="arch" type="xml">
+                <!--Producto id-->
+                <xpath expr="//field[@name='reward_product_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('reward_type', 'in', ('discount','multi_discount','free_shipping','same_product'))], 'required': [('reward_type', '=', 'product')]}</attribute>
+                </xpath>
+                <!--Seccion de descuento y porcentages-->
+                <xpath expr="//label[@for='reward_product_quantity']" position="attributes" >
+                    <attribute for="reward_product_quantity"  name = "attrs">{'invisible': [('reward_type', 'in', ('discount','multi_discount','free_shipping'))]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='discount_type']" position="attributes">
+                    <attribute name="attrs">{'required': ['|',('reward_type','=','multi_discount'),('reward_type','=','discount')]}</attribute>
+                </xpath>
+                <xpath expr="//group[@name='reward']/../group[2]/div[1]" position="attributes">
+                    <attribute name="attrs">{'invisible': [('reward_type', 'in', ('discount','multi_discount','free_shipping'))]}</attribute>
+                </xpath>
+                <!--Apply Discount-->
+                <xpath expr="//field[@name='discount_specific_product_ids']" position="attributes">
+                    <attribute  widget='many2many_tags' placeholder="Select products" name = "attrs">{'invisible': ['|', '|', ('discount_apply_on', '!=', 'specific_products'),('discount_type', '!=', 'percentage'), ('reward_type', 'in', ('product', 'free_shipping','same_product'))], 'required': [('reward_type', '=', 'multi_discount'),('reward_type', '=', 'discount'),('discount_apply_on', '=', 'specific_products'),('discount_type', '=', 'percentage')]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
