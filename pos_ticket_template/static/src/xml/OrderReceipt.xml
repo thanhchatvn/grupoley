@@ -58,22 +58,22 @@
              </t>
             <t>
                  Region:
-                 <span t-esc="receipt.company_id.state"></span>
+                 <span t-esc="receipt.company.state"></span>
                 <br/>
              </t>
             <t>
                  Referencia:
-                 <span t-esc="receipt.company_id.state"></span>
+                 <span t-esc="receipt.company.state"></span>
                 <br/>
              </t>
             <t>
                  Codigo postal:
-                 <span t-esc="receipt.company_id.zip"></span>
+                 <span t-esc="receipt.company.zip"></span>
                 <br/>
              </t>
             <t>
                  Pais:
-                 <span t-esc="receipt.company_id.country"></span>
+                 <span t-esc="receipt.company.country"></span>
                 <br/>
              </t>
 
