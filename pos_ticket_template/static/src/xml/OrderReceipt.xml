@@ -33,17 +33,17 @@
              </t>
             <t>
               Calle:
-              <span t-esc="env.pos.config.company_id.street || ''"/>
+              <span t-esc="env.pos.config.company.street || ''"/>
                 <br/>
              </t>
             <t>
               Nro exterior:
-              <span t-esc="env.pos.config.company_id.zip|| ''"/>
+              <span t-esc="env.pos.config.company.zip|| ''"/>
                 <br/>
              </t>
             <t>
                  Colonia:
-                 <span t-esc="env.pos.config.company_id.street2"></span>
+                 <span t-esc="env.pos.config.company.l10n_mx_edi_colony"></span>
                 <br/>
              </t>
             <t>
@@ -53,7 +53,7 @@
              </t>
             <t>
                  Municipio:
-                 <span t-esc="env.pos.config.company_id.city"></span>
+                 <span t-esc="env.pos.config.company.city"></span>
                 <br/>
              </t>
             <t>
@@ -95,7 +95,7 @@
                      <t t-esc="receipt.client.parent_id[1]"/>,
                     </t>   <t t-esc='receipt.client.name'/>
                     <br/></div>
-                <div style="font-weight:bold;">Clave:<t t-esc='receipt.client.name'/></div>
+                <div style="font-weight:bold;">Clave:<t t-esc='receipt.client.ref'/></div>
                 <br/>
                 RFC:
                 <t t-esc="receipt.client.vat"/>
@@ -133,6 +133,7 @@
                   <br/>
          </t>
       </strong>
+         <t>Forma de pago: <!--<span class="pull-right" t-esc="receipt.l10n_mx_edi_payment_method_id.code"></span>-<span t-esc="receipt.l10n_mx_edi_payment_method_id.name"></span>--></t>
      </div>
     </xpath>
     <xpath expr="//div[hasclass('orderlines')]" position="replace">
@@ -198,21 +199,82 @@ Con
 
 
 </tr>
-         <!--   <xpath expr="//div[hasclass('orderlines')]" position="after">
-              <div class="text-align:right">&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</div>
-                  <br/>
-                  <div class="text-align:right">
-                  Desc. Cliente
-                  <span t-esc="0" class="pos-receipt-right-align"/>
-                   </div>
-                  <div class="text-align:right">
-                  Desc. Vendedor
-                     <span t-esc="0" class="pos-receipt-right-align"/>
-                 </div>
-            </xpath>-->
 </table>
 </div>
 </xpath>
+    <!--  DESCUENTOS  -->
+
+<xpath expr="//t[@t-if='receipt.total_discount']" position="replace"> </xpath>
+<!--  VUELTO  -->
+<xpath expr="//div[hasclass('pos-receipt-amount') and hasclass('receipt-change')]" position="replace"> </xpath>
+<!--  TOTAL <p style="text-align:center; font-size:8px;"> <xpath expr="//div[hasclass('pos-receipt-amount')]" position="replace"></xpath>-->
+<xpath expr="//div[hasclass('pos-receipt-right-align')]" position="replace"></xpath>
+    <xpath expr="//div[hasclass('pos-receipt-amount')]" position="replace">
+<div >
+Descuento de cliente:
+<span t-esc="env.pos.format_currency(receipt.total_discount)" class="pos-receipt-right-align"/>
+</div>
+<div t-if="receipt.global_discount != 0">
+Descuento de vendedor:
+<span t-esc="env.pos.format_currency(receipt.total_discount)" class="pos-receipt-right-align"/>
+</div>
+    <div>
+        <span>% Desc. Precio</span><span t-esc="env.pos.format_currency(receipt.total_discount)" class="pos-receipt-right-align"/>
+    </div>
+     <div>
+         <span>% Desc. Promo</span><span t-esc="env.pos.format_currency(receipt.total_discount)" class="pos-receipt-right-align"/>
+     </div>
+
+      <div>Subtotal<span t-esc="env.pos.format_currency(receipt.subtotal)" class="pos-receipt-right-align"/></div>
+                <t t-foreach="receipt.tax_details" t-as="tax" t-key="tax.name">
+                    <div>
+                        <t t-esc="tax.name" />
+                        <span t-esc='env.pos.format_currency_no_symbol(tax.amount)' class="pos-receipt-right-align"/>
+                    </div>
+                </t>
+
+<div style="font-size:18px;">
+<strong>
+TOTAL:
+<span t-esc="env.pos.format_currency(receipt.total_with_tax)" class="pos-receipt-right-align"/>
+</strong></div>
+<!--<div t-if="receipt.folio" style="font-size:14px;text-align:center;">
+<i>
+El IVA de esta boleta es
+<span t-esc="env.pos.format_currency(receipt.total_tax)" class="pos-receipt-center-align"/>
+</i>
+</div>-->
+<!--FOOTER-->
+        <!--<div class="after-footer">
+           <t t-foreach="receipt.paymentlines" t-as="line">
+                    <t t-if="line.ticket">
+                        <br />
+                        <div class="pos-payment-terminal-receipt">
+                            <t t-raw="line.ticket" />
+                        </div>
+                    </t>
+                </t>
+        <div>-->
+</xpath>
+<!--  Footer  -->
+<xpath expr="//t[@t-foreach='receipt.paymentlines']" position="before">
+<i>POR ESTE PAGARE ME(NOS) OBLIGO(AMOS) A PAGAR INCONDICIONALMENTE, A LA ORDEN DE INDUSTRIAS
+                                    GUACAMAYA SA DE CV, EL DÍA</i>
+<span t-esc="receipt.date.localestring"/> <i>  EN ESTA CIUDAD, O EN CUALQUIER OTRA QUE SEA(MOS)
+                                    REQUERIDO(OS) A ELECCION DEL TENEDOR DE ESTE PAGARE EL DIA DEL VENCIMIENTO INDICADO, LA CANTIDAD DE,
+                                   <t t-esc="env.pos.format_currency(receipt.total_with_tax)"></t> VALOR RECIBIDO
+                                  EN MERCANCIA.</i>
+</xpath>
+<!--  VUELTO  -->
+<xpath expr="//t[@t-foreach='receipt.paymentlines']" position="after">
+<div>
+<i>VUELTO</i>
+<span t-esc="env.pos.format_currency(receipt.change)" class="pos-receipt-right-align"/>
+</div>
+
+</xpath>
+
+
     </t>
 
 </templates>
