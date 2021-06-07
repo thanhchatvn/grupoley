@@ -53,27 +53,27 @@
              </t>
             <t>
                  Municipio:
-                 <span t-esc="env.pos.config.company.city"></span>
+                 <span t-esc="env.pos.config.company_id.city"></span>
                 <br/>
              </t>
             <t>
                  Region:
-                 <span t-esc="receipt.company.state"></span>
+                 <span t-esc="receipt.company_id.state"></span>
                 <br/>
              </t>
             <t>
                  Referencia:
-                 <span t-esc="receipt.company.state"></span>
+                 <span t-esc="receipt.company_id.state"></span>
                 <br/>
              </t>
             <t>
                  Codigo postal:
-                 <span t-esc="receipt.company.zip"></span>
+                 <span t-esc="receipt.company_id.zip"></span>
                 <br/>
              </t>
             <t>
                  Pais:
-                 <span t-esc="receipt.company.country"></span>
+                 <span t-esc="receipt.company_id.country"></span>
                 <br/>
              </t>
 
