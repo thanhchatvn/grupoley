@@ -632,13 +632,13 @@
                                             <td></td>
                                             <td><span t-field="line.tax_ids.name"/></td><!--Tarifa-->
                                             <td><span t-field="line.quantity"/></td>
-                                            <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options="{'widget': 'text'}"/></td>
-                                            <td style="text-align:right"><span t-if="line.credit" t-field="line.credit" t-options="{'widget': 'text'}"/></td>
+                                            <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                            <td style="text-align:right"><span t-if="line.credit" t-field="line.credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                         </tr>
                                     </t>
                                     <tr class="text-left">
                                         <td colspan="4"/>
-                                        <td style="border-top:1px solid black; text-align:right;"><span t-esc="details_move_values['subtotal_products']"/></td>
+                                        <td style="border-top:1px solid black; text-align:right;"><span t-esc="details_move_values['subtotal_products']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                     </tr>
                                 </t>
                             </tbody>
@@ -652,13 +652,13 @@
                                             <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/> <span t-field="line.account_id.name"/></td>
                                             <td/>
                                             <td colspan="2"><span></span></td>
-                                            <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options="{'widget': 'text'}"/></td>
-                                            <td style="text-align:right"><span t-if="line.credit" t-field="line.credit" t-options="{'widget': 'text'}"/></td>
+                                            <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                            <td style="text-align:right"><span t-if="line.credit" t-field="line.credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                         </tr>
                                     </t>
                                     <tr class="text-left">
                                         <td colspan="4" />
-                                        <td style="border-top:1px solid black; text-align:right;"><span t-esc="details_move_values['subtotal_tax']"/></td>
+                                        <td style="border-top:1px solid black; text-align:right;"><span t-esc="details_move_values['subtotal_tax']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                     </tr>
                                 </t>
                             </tbody>
@@ -668,15 +668,15 @@
                                         <tr class="text-left section-header" style="margin-top:100px;">
                                             <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/> <span t-field="line.account_id.name"/></td>
                                             <td colspan="3"/>
-                                            <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options="{'widget': 'text'}"/></td>
-                                            <td style="text-align:right"><span t-if="line.credit" t-field="line.credit" t-options="{'widget': 'text'}"/></td>
+                                            <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                            <td style="text-align:right"><span t-if="line.credit" t-field="line.credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                         </tr>
                                     </t>
                                 </t>
                                 <tr class="text-left">
                                     <td colspan="4"/>
-                                    <td style="border-top:1px solid black; text-align:right"><strong><span t-if="details_move_values['total_debit']" t-esc="details_move_values['total_debit']"/></strong></td>
-                                    <td style="border-top:1px solid black; text-align:right;"><strong><span t-if="details_move_values['total_credit']" t-esc="details_move_values['total_credit']"/></strong></td>
+                                    <td style="border-top:1px solid black; text-align:right"><strong><span t-if="details_move_values['total_debit']" t-esc="details_move_values['total_debit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                                    <td style="border-top:1px solid black; text-align:right;"><strong><span t-if="details_move_values['total_credit']" t-esc="details_move_values['total_credit']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
                                 </tr>
                             </tbody>
                         </table>
