@@ -15,6 +15,7 @@
                         <group col="3">
                             <group>
                                 <field name="file_data" filename="file_name"/>
+                                <field name='product_category' options="{'no_create_edit': True, 'no_create':True}"/>
                             </group>
                             <group>
                                 <field name="zone" options="{'no_create_edit': True, 'no_create':True}"/>

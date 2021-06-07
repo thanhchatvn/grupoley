@@ -23,6 +23,7 @@ class CasaLeyImport(models.Model):
                                      store=True)
     initial_date = fields.Date(string='Fecha inicial', store=True, required=True)
     end_date = fields.Date(string='Fecha final', store=True, required=True)
+    product_category = fields.Many2one('product.category', string='Categoría', store=True)
 
     def validate(self):
         global fecha_pedido
@@ -199,14 +200,29 @@ class CasaLeyImport(models.Model):
         product_obj = self.env['product.product']
         product_id = product_obj.search([('x_product_supplierinfo.product_code', 'like', code)], limit=1)
 
-        if product_id:
-            return product_id
-        # Si no se encuentran productos que coincidan con el código
+        if self.product_category:
+            if product_id.categ_id == self.product_category:
+
+                if product_id:
+                    return product_id
+                # Si no se encuentran productos que coincidan con el código
+                else:
+                    error = ("Linea de pedido: {}\n\n"
+                             "No existe ningun producto con el código [{}] en el sistema.\n\n"
+                             "Nombre del producto [{} {}]").format(counter, code, product_name, product_content)
+                    raise UserError(error)
+            else:
+                pass
         else:
-            error = ("Linea de pedido: {}\n\n"
-                     "No existe ningun producto con el código [{}] en el sistema.\n\n"
-                     "Nombre del producto [{} {}]").format(counter, code, product_name, product_content)
-            raise UserError(error)
+            if product_id:
+                return product_id
+            # Si no se encuentran productos que coincidan con el código
+            else:
+                error = ("Linea de pedido: {}\n\n"
+                         "No existe ningun producto con el código [{}] en el sistema.\n\n"
+                         "Nombre del producto [{} {}]").format(counter, code, product_name, product_content)
+                raise UserError(error)
+            
 
     #VALIDCACIÓN DE EXTENSIÓN DEL ARCHIVO
     @api.model
