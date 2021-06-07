@@ -175,7 +175,7 @@
                     <span t-field="line.product_id.default_code"></span>
                 </td>
                 <td id="custom_cod_prov">
-                    
+                     <span t-field="o.partner_id.ref"/>
                 </td>
             </xpath>
             <xpath expr="//h2[contains(@t-if,'o.state')]" position="attributes">
