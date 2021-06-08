@@ -138,35 +138,33 @@
     </xpath>
     <xpath expr="//div[hasclass('orderlines')]" position="replace">
           <div class="orderlines">
-          <table class="receipt-orderlines">
-             <!-- <tr>
-              <colgroup>
-                   <col width="20%"/>
-                  <col width="15%"/>
-                  <col width="15%"/>
-              </colgroup>
-              </tr>
-              <tr>
-               <colgroup >
-                 <col width="20%"/>
-                 <col width="20%"/>
-                 <col width="20%"/>
-                 <col width="20%"/>
+              <table>
+                 <colgroup >
+                 <col width="25%"/>
+                 <col width="50%"/>
+                 <col width="25%"/>
                 </colgroup>
-              </tr>-->
               <tr name="line_header" style="font-size:10px; border-top: 1px solid black;border-bottom: 1px solid black;">
 
                 <th style="text-align:left;">Producto</th>
                    <th> Nombre Corto</th>
                   <th style="text-align:left;">Cantidad</th>
-                  <br/>
              </tr>
+              </table>
+          <table class="receipt-orderlines">
+         <!--     <colgroup>
+                   <col width="20%"/>
+                   <col width="25%"/>
+                   <col width="25%"/>
+                    <col width="25%"/>
+              </colgroup>-->
               <tr name="line_header" style="font-size:10px;">
-                  <th colspan="2" style="text-align:left;">Unidad</th>
-                  <th colspan="2" style="text-align:right;">Precio</th>
-                  <th colspan="2" style="text-align:right;">Sub Total</th>
-                  <th colspan="2" style="text-align:left;">Desc</th>
+                  <th style="text-align:left;">Unidad</th>
+                  <th style="text-align:right;">Precio</th>
+                  <th style="text-align:right;">Sub Total</th>
+                  <th style="text-align:left;">Desc</th>
               </tr>
+              <tbody>
               <tr t-foreach="orderlines" t-as="orderline" t-key="orderline.id" style="font-size:10px;" t-if="orderline.price > 0">
               <div class="row">
               <tr>
@@ -174,7 +172,7 @@
                     <div class="col-sm-2" t-esc="orderline.get_product().default_code"/>
                   </td>
                   <td style="text-align:left;">
-                    <div class="col-sm-8" t-esc="orderline.get_product().display_name"/>
+                    <div class="col-sm-10" t-esc="orderline.get_product().display_name"/>
                       <!--
                     vt t-if="orderline.get_discount() > 0">
                     <div class="pos-disc-font">
@@ -192,38 +190,28 @@
 
                   </tr>
                   </div>
-                  <div class="row">
                   <tr>
-                      <td>
-                       <div class="col-sm-4"><t t-esc="orderline.quantity"/> <t t-esc="orderline.product.uom_id[1]"/></div>
+                      <td  style="text-align:left; width:100px;">
+                               <span t-esc="orderline.quantity"/>-<span t-esc="orderline.product.uom_id[1]"/>
                       </td>
-
-                      <td style=" width:100%;">
-                       </td>
-
                   <!--  Precio  -->
-                  <t t-set="line_price" t-value="env.pos.format_currency(orderline.get_unit_price())"/>
-                 <!-- <t t-elif="!env.pos.config.show_price_without_discount" t-set="line_price" t-value="env.pos.format_currency(orderline.get_unit_display_price())"/>-->
-                  <td style="text-align:right; ">
-                      <div class="col-sm-2">
-                       <t t-esc="line_price"/>
-                      </div>
-                   </td>
-                   <td style="text-align:right; width:100%; ">
-                       <div class="col-sm-3">
-                        <t t-esc="env.pos.format_currency(orderline.get_price_without_tax())"/>
-                       </div>
-                   </td>
-                     <td colspan="1" style="text-align:right; width:100%;">
-                        <div class="col-sm-3">
-                         <t t-esc="env.pos.format_currency((orderline.quantity*orderline.get_unit_price())*(orderline.discount/100))"/>
-                        </div>
-                     </td>
+                      <t t-set="line_price" t-value="env.pos.format_currency(orderline.get_unit_price())"/>
+                       <!-- <t t-elif="!env.pos.config.show_price_without_discount" t-set="line_price" t-value="env.pos.format_currency(orderline.get_unit_display_price())"/>-->
+                        <td style="text-align:left; width:200px; font-size:9px;">
+                          <span t-esc="line_price"/>
+                        </td>
+                       <td style="text-align:left; width:200px; font-size:9px;">
+                          <span t-esc="env.pos.format_currency(orderline.get_price_without_tax())"/>
+                        </td>
+                        <td style="text-align:left; width:200px; font-size:9px;">
+                         <span t-esc="env.pos.format_currency((orderline.quantity*orderline.get_unit_price())*(orderline.discount/100))"/>
+                        </td>
                   </tr>
-                  </div>
 
 
-</tr>
+
+</tr></tbody>
+
 </table>
 </div>
 </xpath>
@@ -282,7 +270,7 @@ El IVA de esta boleta es
         <div>-->
 </xpath>
 <!--  Footer  -->
-<xpath expr="//t[@t-foreach='receipt.paymentlines']" position="before" style="font-size:12x;">
+<xpath expr="//t[@t-foreach='receipt.paymentlines']" position="before" style="font-size:12px;">
 <i>POR ESTE PAGARE ME(NOS) OBLIGO(AMOS) A PAGAR INCONDICIONALMENTE, A LA ORDEN DE <t t-esc="receipt.company.name" />, EL DÍA</i>
 <span t-esc="receipt.date.localestring"/> <i>  EN ESTA CIUDAD, O EN CUALQUIER OTRA QUE SEA(MOS)
                                     REQUERIDO(OS) A ELECCION DEL TENEDOR DE ESTE PAGARE EL DIA DEL VENCIMIENTO INDICADO, LA CANTIDAD DE,
