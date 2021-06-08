@@ -16,7 +16,7 @@
                                         <span t-field="o.company_id.partner_id.name"/>,
                                     </div>
                                     <div>
-                                        Col. <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,
+                                      <!--  Col. <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,-->
                                     </div>
                                     <div>
                                         <span t-field="o.company_id.partner_id.street"/>,
@@ -56,7 +56,7 @@
                                         DOMICILIO: <span t-field="o.partner_id.street"/>,
                                     </div>
                                     <div>
-                                        Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,
+                                      <!--  Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,-->
                                     </div>
                                     <div>
                                         LUGAR: <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.partner_id.zip"/>
@@ -90,7 +90,7 @@
                                         CONDICIONES: <span t-field="o.payment_term_id.name"/>,
                                     </div>
                                     <div>
-                                        ALMACÉN <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,
+                                     <!--   ALMACÉN <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,-->
                                     </div>
                                     <div>
                                         MEDIO DE ENVÍO: <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.company_id.partner_id.zip"/>
@@ -197,9 +197,10 @@
                         <div><span t-field="o.user_id.partner_id.name"></span> </div>
                         <div style="border-top:1px solid black;margin-right:5px">FORMULO</div>
                     </div>
-                    <div class="col-3 text-center">
-                        <t  t-if="o.state=='purchase'" t-set="approval" t-value="o.get_approval()">
-                        <div><span t-esc="approval" t-if="o.state=='purchase'"></span> </div>
+                    <div class="col-3 text-center"><!--"-->
+                        <t t-if="o.state == 'purchase'" >
+                            <t t-set="approval" t-value="o.get_approval()" ></t>
+                        <div><span t-esc="approval"  ></span> </div>
                         <div style="border-top:1px solid black;margin-right:5px">AUTORIZO</div>
                          </t>
                         <t t-else=""><div class="col-3"></div></t>
