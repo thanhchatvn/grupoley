@@ -160,7 +160,7 @@ class SaleOrder(models.Model):
     def _get_custom_reward_values_multi_discount(self, program):
         order = self
         for line in order.order_line:
-            if order._is_valid_product(program, line) and not line.is_reward_line and line.price_unit > 0:
+            if order._is_valid_product(program, line) and not line.is_discount_calculated and line.price_unit > 0:
                 tmp_discount_sum = program.discount_percentage + line.discount_original
                 if line.is_discount_calculated:
                     line.write({'discount_original': line.discount_original, 'discount_rate': line.discount_original})
