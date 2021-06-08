@@ -198,9 +198,11 @@
                         <div style="border-top:1px solid black;margin-right:5px">FORMULO</div>
                     </div>
                     <div class="col-3 text-center">
-                        <t t-set="approval" t-value="o.get_approval()"/>
-                        <div><span t-esc="approval"></span> </div>
+                        <t  t-if="o.state=='purchase'" t-set="approval" t-value="o.get_approval()">
+                        <div><span t-esc="approval" t-if="o.state=='purchase'"></span> </div>
                         <div style="border-top:1px solid black;margin-right:5px">AUTORIZO</div>
+                         </t>
+                        <t t-else=""><div class="col-3"></div></t>
                     </div>
                     <div class="col-3"></div>
                 </div>
