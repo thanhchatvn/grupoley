@@ -16,7 +16,7 @@
                                         <span t-field="o.company_id.partner_id.name"/>,
                                     </div>
                                     <div>
-                                      <!--  Col. <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,-->
+                                     Col. <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,
                                     </div>
                                     <div>
                                         <span t-field="o.company_id.partner_id.street"/>,
@@ -56,7 +56,7 @@
                                         DOMICILIO: <span t-field="o.partner_id.street"/>,
                                     </div>
                                     <div>
-                                      <!--  Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,-->
+                                      Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,
                                     </div>
                                     <div>
                                         LUGAR: <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.partner_id.zip"/>
@@ -90,7 +90,7 @@
                                         CONDICIONES: <span t-field="o.payment_term_id.name"/>,
                                     </div>
                                     <div>
-                                     <!--   ALMACÉN <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,-->
+                                      ALMACÉN <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,
                                     </div>
                                     <div>
                                         MEDIO DE ENVÍO: <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.company_id.partner_id.zip"/>
