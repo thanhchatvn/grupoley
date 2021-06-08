@@ -225,7 +225,7 @@ class SaleOrder(models.Model):
                 #agrupar por producto y sumar la cantidad
                 order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id))
                 for key in groupby(sorted(order_lines, key=lambda l: l.product_id.id), key=lambda l: l.product_id.id):
-                    program.write({'reward_product_id': key[0],'discount_line_product_id': key[0]})
+                    #program.write({'reward_product_id': key[0],'discount_line_product_id': key[0]})
                     self.write({'order_line': [(0, False, value) for value in self._get_custom_reward_line_values(program, key[0])]})
 
                 #order_lines = self.order_line
@@ -292,13 +292,15 @@ class SaleOrder(models.Model):
             #reward_qty = min(int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity), reward_product_qty)
             # Take the default taxes on the reward product, mapped with the fiscal position
             taxes = self.fiscal_position_id.map_tax(program.reward_product_id.taxes_id)
+            name = program_action != 2 and program.reward_product_id.name or self.env['product.product'].search([('id', '=', product_id)]).name
+            product_uom = program_action != 2 and program.reward_product_id.uom_id.id or self.env['product.product'].search([('id', '=', product_id)]).uom_id.id
             return {
-                'product_id': program.reward_product_id.id,
+                'product_id': (program_action == 2) and product_id or program.reward_product_id.id,
                 'price_unit': price_unit,
                 'product_uom_qty': reward_qty,
                 'is_reward_line': True,
-                'name': "(" + program.display_name +  ") " + "Free Product" + " - " + program.reward_product_id.name,
-                'product_uom': program.reward_product_id.uom_id.id,
+                'name': "(" + program.display_name +  ") " + "Free Product" + " - " + name,
+                'product_uom': product_uom,
                 'tax_id': [(4, tax.id, False) for tax in taxes]
             }
 

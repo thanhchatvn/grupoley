@@ -3,30 +3,27 @@
     'name': "additional_discount_promotion",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Módulo que nos permite agregar un descuento en casacada en las promociones.
+     """,
 
     'description': """
-        Long description of module's purpose
+        Módulo que modifica el desarrollo de custom_promotions añadiendo un descuento extra llamado descuento en cascada.
     """,
 
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
+    'author': "Soporte Grupo Ley",
+    
+    'website': "todoo.grupoley.com",
+   
+    'category': 'Sale',
+    
+    'version': '14.0.1',
 
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
-
-    # any module necessary for this one to work correctly
     'depends': ['base', 'sale','coupon', 'sale_coupon','custom_promotions'],
 
-    # always loaded
     'data': [
         'views/inherit_coupon_program.xml',
     ],
-    # only loaded in demonstration mode
+    
     'demo': [
     ],
 }
