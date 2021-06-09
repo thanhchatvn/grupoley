@@ -40,7 +40,7 @@
                         <div class="row" style="border-top: solid 1px; border-bottom: solid 1px;">
                             <div class="col-8" style="font-size:12px;">
                                      <div>
-                                        PROVEEDOR: [<span t-field="o.partner_ref"/>]<span t-field="o.partner_id.name"/>
+                                        PROVEEDOR: [<span t-field="o.partner_id.ref"/>]<span t-field="o.partner_id.name"/>
                                      </div>
                                      <div class="col-6">
                                         DOMICILIO:  <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/><span t-field="o.partner_id.zip"/>
