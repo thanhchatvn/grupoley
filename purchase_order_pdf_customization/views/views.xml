@@ -7,7 +7,7 @@
             </xpath>
 
             <xpath expr="//div[hasclass('page')]" position="before">
-                <section class="addresses">
+               <!-- <section class="addresses">
                     <div class="container text-center">
                         <div class="row">
                             <div class="col-6" style="font-size:12px;">
@@ -30,7 +30,37 @@
                                     ORDEN DE COMPRA
                                 </div>
                             </div>
-                            <div class="col-6">
+
+                        </div>
+                    </div>
+                </section>-->
+
+                <section class="customer">
+                    <div class="container">
+                        <div class="row" style="border-top: solid 1px; border-bottom: solid 1px;">
+                            <div class="col-8" style="font-size:12px;">
+                                     <div>
+                                        PROVEEDOR: [<span t-field="o.partner_ref"/>]<span t-field="o.partner_id.name"/>
+                                     </div>
+                                     <div class="col-6">
+                                        DOMICILIO:  <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/><span t-field="o.partner_id.zip"/>
+                                     </div>
+                                     <div  class="col-6">
+                                      Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,
+                                     </div>
+                                   <!--  <div>
+                                        <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/>
+                                     </div>-->
+                                        <div>
+                                        <div>TELEFONO: <span t-field="o.partner_id.phone"></span></div>
+                                      </div>
+                                    <div>CONTACTO: <span t-field="o.partner_id.child_ids.name"></span></div>
+
+                                    <div>
+                                        R.F.C: <span t-field="o.partner_id.vat"></span>
+                                    </div>
+                            </div>
+                                 <div class="col-4">
                                 <div>ORDEN No. <span t-field="o.name"></span> </div>
                                 <br/>
                                 <div>
@@ -40,40 +70,7 @@
                                 <br/>
                                 <div>FECHA: <span t-field="o.date_order">   </span> </div>
                             </div>
-                        </div>
-                    </div>
-                </section>
 
-                <section class="customer">
-                    <div class="container">
-                        <div class="row" style="border-top: solid 1px; border-bottom: solid 1px;">
-                            <div class="col-12" style="font-size:12px;">
-                                <div>
-                                    <div>
-                                        PROVEEDOR: <span t-field="o.partner_id.name"/>
-                                    </div>
-                                    <div>
-                                        DOMICILIO:  <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.company_id.partner_id.zip"/>
-                                    </div>
-                                    <div>
-                                      Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,
-                                    </div>
-                                    <div>
-                                        LUGAR: <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.partner_id.zip"/>
-                                    </div>
-                                    <div>
-                                        No. PROVEEDOR: <span t-field="o.partner_id.ref"/>
-                                    </div>
-                                    <div>
-                                        R.F.C: <span t-field="o.partner_id.vat"></span>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">TELEFONO: <span t-field="o.partner_id.phone"></span></div>
-                                        <div class="col-3">NO EXT: </div>
-                                        <div class="col-3">CONTACTO: <!--<span t-field="o.partner_id.name"></span>--></div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -199,7 +196,7 @@
                     </div>
                     <div class="col-3 text-center"><!--"-->
                         <t t-if="o.state == 'purchase'" >
-                            <t t-set="approval" t-value="o.get_approval()" ></t>
+                        <t t-set="approval" t-value="o.get_approval()" ></t>
                         <div><span t-esc="approval"  ></span> </div>
                         <div style="border-top:1px solid black;margin-right:5px">AUTORIZO</div>
                          </t>
