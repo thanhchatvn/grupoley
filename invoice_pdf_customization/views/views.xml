@@ -597,7 +597,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">DISTRIBUICION CONTABLE:</div>
+                                <div style="text-align:left" class="col-6">DISTRIBUICION CONTABLE:</div>
                             </div>
                         </div>
 
@@ -609,10 +609,9 @@
 
                                 </tr>
                                 <tr class="text-left border-black" style="border-bottom:1px solid black;">
-
                                     <th><span>Producto</span></th>
                                     <th><span>Tarifa</span></th>
-                                    <th><span>Cantidad</span></th>
+                                    <th style="text-align:right"><span>Cantidad</span></th>
                                     <th style="text-align:right"><span>Cargo</span></th>
                                     <th style="text-align:right"><span>Abono</span></th>
                                 </tr>
@@ -626,8 +625,8 @@
                                         <!-- Validación para los movimientos de iva o movimiento acreditado del producto-->
                                         <tr class="row text-left" style="font-size:10px;">
                                             <td><span t-field="line.account_id.code"/> <span t-field="line.account_id.name"/>/
-                                            <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/>/
-                                            <t t-if="line.analytic_tag_ids"  t-foreach="line.analytic_tag_ids" t-as="tags"><span t-field="tags.display_name"/></t></td>
+                                            <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/>/</td>
+                                           <td><t t-if="line.analytic_tag_ids"  t-foreach="line.analytic_tag_ids" t-as="tags"><span t-field="tags.display_name"/></t></td>
                                             <!--<td><span t-field="line.ref"/></td>Remision-->
                                         </tr>
                                         <tr>
