@@ -597,7 +597,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div style="text-align:left" class="col-6">DISTRIBUICION CONTABLE:</div>
+                                <div style="margin-left:-2%;" class="col-6">DISTRIBUICION CONTABLE:</div>
                             </div>
                         </div>
 
@@ -623,7 +623,7 @@
                                     </tr>
                                     <t t-foreach="details_move_values['details_product']" t-as="line">
                                         <!-- Validación para los movimientos de iva o movimiento acreditado del producto-->
-                                        <tr class="row text-left" style="font-size:10px;">
+                                        <tr class="row text-left" style="font-size:10px; width:100%;">
                                             <td><span t-field="line.account_id.code"/> <span t-field="line.account_id.name"/>/
                                             <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/>/</td>
                                            <td><t t-if="line.analytic_tag_ids"  t-foreach="line.analytic_tag_ids" t-as="tags"><span t-field="tags.display_name"/></t></td>
