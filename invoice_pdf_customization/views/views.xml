@@ -623,12 +623,16 @@
                                     </tr>
                                     <t t-foreach="details_move_values['details_product']" t-as="line">
                                         <!-- Validación para los movimientos de iva o movimiento acreditado del producto-->
-                                        <tr class="row text-left" style="margin-left:2%; font-size:9.5px; width:100%;">
-                                            <span t-field="line.account_id.code"/> <span t-field="line.account_id.name"/>/
-                                            <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/>/
-                                            <t t-if="line.analytic_tag_ids"  t-foreach="line.analytic_tag_ids" t-as="tags"><span t-field="tags.display_name"/></t>
+                                        <div  class="row">
+                                            <tr class="text-left" style="margin-left:2%; font-size:9.5px; width:100%;">
+
+                                            <td class="col-md-8"><span t-field="line.account_id.code"/> <span t-field="line.account_id.name"/>/
+                                            <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/>/</td>
+                                            <td class="col-md-4"><t t-if="line.analytic_tag_ids"  t-foreach="line.analytic_tag_ids" t-as="tags"><span t-field="tags.display_name"/></t>
+                                            </td>
                                             <!--<td><span t-field="line.ref"/></td>Remision-->
-                                        </tr>
+                                          </tr>
+                                        </div>
                                         <tr>
                                             <td>&amp;nbsp;&amp;nbsp;<span t-field="line.product_id.display_name"/></td>
                                             <td style="font-size:10px;"><span t-field="line.tax_ids.name"/></td><!--Tarifa-->
