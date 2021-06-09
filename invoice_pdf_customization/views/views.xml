@@ -3,13 +3,13 @@
         <template id="report_without_payment_lang_inherit" inherit_id="account.report_invoice">
              <xpath expr="//t[@t-set='lang']" position="after">
 <!--                <t t-set="lang" t-value="'en_US'"/>-->
-                 <t t-set="lang" t-value="'en_US' if o.l10n_mx_edi_external_trade else lang"/>
+              <t t-set="lang" t-value="'en_US' if o.l10n_mx_edi_external_trade else lang"/>
             </xpath>
         </template>
         <template id="report_with_payment_lang_inherit" inherit_id="account.report_invoice_with_payments">
              <xpath expr="//t[@t-set='lang']" position="after">
 <!--                <t t-set="lang" t-value="'en_US'"/>-->
-                 <t t-set="lang" t-value="'en_US' if o.l10n_mx_edi_external_trade else lang"/>
+                <t t-set="lang" t-value="'en_US' if o.l10n_mx_edi_external_trade else lang"/>
             </xpath>
         </template>
         <template id="report_invoice_inherit" inherit_id="account.report_invoice_document">
@@ -24,7 +24,7 @@
                     </xpath>
 
                     <xpath expr="//div[hasclass('page')]" position="before">
-                        <t t-set="is_cfdi_signed" t-value="bool(o._get_l10n_mx_edi_signed_edi_document())"/>
+                       <t t-set="is_cfdi_signed" t-value="bool(o._get_l10n_mx_edi_signed_edi_document())"/>
                         <t t-set="cfdi_data" t-value="o._l10n_mx_edi_decode_cfdi()"/>
 
                         <section class="header-tables" t-if="invoice_client">
@@ -74,7 +74,7 @@
                                                     </div>
                                                     <div class="row" style="border-top: solid 1px;">
                                                         <div class="col-auto">
-                                                            <span t-field="o.l10n_mx_edi_usage"></span>
+                                                         <span t-field="o.l10n_mx_edi_usage"></span>
                                                         </div>
                                                     </div>
                                                     <div class="row" style="border-top: solid 1px;">
@@ -95,7 +95,7 @@
                                                     </div>
                                                     <div class="row" style="border-top: solid 1px;">
                                                         <div class="col-auto">
-                                                            <span class="pull-left">Forma de pago:</span> <span class="pull-right" t-esc="o.l10n_mx_edi_payment_method_id.code"></span>
+                                                            <span class="pull-left">Forma de pago:</span><span class="pull-right" t-esc="o.l10n_mx_edi_payment_method_id.code"></span>
                                                         </div>
                                                     </div>
                                                     <div class="row" style="border-top: solid 1px;">
@@ -133,7 +133,7 @@
                                             <span t-field="o.company_id.partner_id.street"/>,
                                         </div>
                                         <div>
-                                            Col. <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/> <span t-field="o.company_id.partner_id.zip"/>,
+                                           Col. <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/> <span t-field="o.company_id.partner_id.zip"/>,
                                         </div>
                                         <div>
                                             <span t-field="o.company_id.partner_id.city"/>, <span t-field="o.company_id.partner_id.state_id.name"/>, <span t-field="o.company_id.partner_id.country_id.name"/>,
@@ -157,7 +157,7 @@
                                                 <span t-field="warehouse_data[0].partner_id.street"/>,
                                             </div>
                                             <div>
-                                                Col. <span t-field="warehouse_data[0].partner_id.l10n_mx_edi_colony"/> <span t-field="warehouse_data[0].partner_id.zip"/>,
+                                               Col. <span t-field="warehouse_data[0].partner_id.l10n_mx_edi_colony"/> <span t-field="warehouse_data[0].partner_id.zip"/>,
                                             </div>
                                             <div>
                                                 <span t-field="warehouse_data[0].partner_id.city"/>, <span t-field="warehouse_data[0].partner_id.state_id.name"/>, <span t-field="warehouse_data[0].partner_id.country_id.name"/>,
@@ -209,7 +209,7 @@
                                                         <span t-field="o.partner_id.street"/>,
                                                     </div>
                                                     <div>
-                                                        Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/> <span t-field="o.partner_id.zip"/>,
+                                                      Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/> <span t-field="o.partner_id.zip"/>,
                                                     </div>
                                                     <div>
                                                         <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/>, <span t-field="o.partner_id.country_id.name"/>,
@@ -232,7 +232,7 @@
                                                         <span t-field="o.partner_shipping_id.street"/>,
                                                     </div>
                                                     <div>
-                                                        Col. <span t-field="o.partner_shipping_id.l10n_mx_edi_colony"/> <span t-field="o.partner_shipping_id.zip"/>,
+                                                      Col. <span t-field="o.partner_shipping_id.l10n_mx_edi_colony"/> <span t-field="o.partner_shipping_id.zip"/>,
                                                     </div>
                                                     <div>
                                                         <span t-field="o.partner_shipping_id.city"/>, <span t-field="o.partner_shipping_id.state_id.name"/>, <span t-field="o.partner_shipping_id.country_id.name"/>,
@@ -246,7 +246,7 @@
 
                                             </div>
                                         </td>-->
-                                        <t t-if="o.l10n_mx_edi_external_trade">
+                                           <t t-if="o.l10n_mx_edi_external_trade">
                                             <td rowspan="2">
                                                 <div style="border: 1px solid; display: grid; grid-gap: 5px;height: 310px; width: 300px; padding: 10px; display: grid;">
                                                     <div>INFORMACIÓN ADUANA:</div>
@@ -330,7 +330,7 @@
                                         <span groups="account.group_show_line_subtotals_tax_excluded">IMPORTE</span>
                                     </th>
                                     <!--Exportacion-->
-                                    <th t-if="o.l10n_mx_edi_external_trade" name="th_custom_unit" class="text-right">
+                                <th t-if="o.l10n_mx_edi_external_trade" name="th_custom_unit" class="text-right">
                                         <span>UNIDAD ADUANA</span>
                                     </th>
                                     <th t-if="o.l10n_mx_edi_external_trade" name="th_custom_qty" class="text-right">
@@ -606,9 +606,12 @@
                         <t t-set="details_move_values" t-value="o.calculate_lines_details()"/>
                         <table style="margin-left: auto; margin-right: auto; font-size: 13px; width: 100%; border-collapse: collapse; border-spacing: 0;" >
                             <thead style="border-bottom:1px solid black">
-                                <tr class="text-left">
-                                    <th><span>No. Cuenta:</span></th>
-                                    <!--<th><span>Remisión</span></th>-->
+                                 <tr class="text-left border-black ">
+                                    <th><span>Cuenta Contable/ Cuenta Analítica/ Etiquetas Analíticas:</span></th>
+
+                                </tr>
+                                <tr class="text-left border-black ">
+
                                     <th><span>Producto</span></th>
                                     <th><span>Tarifa</span></th>
                                     <th><span>Cantidad</span></th>
@@ -624,12 +627,11 @@
                                     <t t-foreach="details_move_values['details_product']" t-as="line">
                                         <!-- Validación para los movimientos de iva o movimiento acreditado del producto-->
                                         <tr class="text-left">
-                                            <td><span t-field="line.account_id.code"/> <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/> <span t-field="line.account_id.name"/></td>
+                                            <td><span t-field="line.account_id.code"/> <span t-field="line.account_id.name"/>/ <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/>/<span t-if="line.analytic_account_id" t-field="line.analytic_tag_id.display_name"/></td>
                                             <!--<td><span t-field="line.ref"/></td>Remision-->
                                         </tr>
                                         <tr>
                                             <td><span t-field="line.product_id.display_name"/></td>
-                                            <td></td>
                                             <td><span t-field="line.tax_ids.name"/></td><!--Tarifa-->
                                             <td><span t-field="line.quantity"/></td>
                                             <td style="text-align:right"><span t-if="line.debit" t-field="line.debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
@@ -686,7 +688,7 @@
 <!--            </xpath>-->
         </template>
 
-        <template id="report_footer_invoice_inherit" inherit_id="l10n_mx_edi.report_invoice_document_mx">
+   <template id="report_footer_invoice_inherit" inherit_id="l10n_mx_edi.report_invoice_document_mx">
             <xpath expr="//p[@t-if='o.narration']" position="after">
                 <t t-if="not o.l10n_mx_edi_external_trade">
                     <div class="footer_custom container text-center" style="border: 1px solid; padding: 20px; border-radius: 25px;page-break-inside: avoid !important;" t-if="invoice_client">
