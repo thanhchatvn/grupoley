@@ -90,7 +90,7 @@
                                         CONDICIONES: <span t-field="o.payment_term_id.name"/>,
                                     </div>
                                     <div>
-                                      ALMACÉN:  <span t-field="o.picking_type_id.name"/>,
+                                      ALMACÉN:  <span t-field="o.picking_type_id.warehouse_id"/>,
                                     </div>
                                     <div>
                                         MEDIO DE ENVÍO:
