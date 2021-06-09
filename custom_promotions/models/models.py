@@ -312,7 +312,7 @@ class SaleOrder(models.Model):
             name = program_action != 2 and program.reward_product_id.name or self.env['product.product'].search([('id', '=', product_id)]).name
             product_uom = program_action != 2 and program.reward_product_id.uom_id.id or self.env['product.product'].search([('id', '=', product_id)]).uom_id.id
             if program_action == 2:
-                reward_qty = int(self._get_uom_quantity_lines(order_lines))
+                reward_qty = int(self._get_uom_quantity_lines(order_lines))*program.reward_product_quantity
             return {
                 'product_id': (program_action == 2) and product_id or program.reward_product_id.id,
                 'price_unit': price_unit,
