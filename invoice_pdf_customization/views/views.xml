@@ -607,10 +607,12 @@
                         <table style="margin-left: auto; margin-right: auto; font-size: 13px; width: 100%; border-collapse: collapse; border-spacing: 0;" >
                             <thead style="border-bottom:1px solid black">
                                  <tr class="text-left border-black ">
-                                    <th><span>Cuenta Contable/ Cuenta Analítica/ Etiquetas Analíticas:</span></th>
+                                     <th><span>Cuenta Contable</span></th>/
+                                     <th>Cuenta Analítica</th>/
+                                     <th><span> Etiquetas Analíticas:</span></th>
 
                                 </tr>
-                                <tr class="text-left border-black ">
+                                <tr class="text-left border-black" style="border-bottom:1px solid black;">
 
                                     <th><span>Producto</span></th>
                                     <th><span>Tarifa</span></th>
@@ -627,7 +629,9 @@
                                     <t t-foreach="details_move_values['details_product']" t-as="line">
                                         <!-- Validación para los movimientos de iva o movimiento acreditado del producto-->
                                         <tr class="text-left" style="font-size:10px;">
-                                            <td><span t-field="line.account_id.code"/> <span t-field="line.account_id.name"/>/ <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/>/ <t t-if="line.analytic_tag_ids"  t-foreach="line.analytic_tag_ids" t-as="tags"><span t-field="tags.display_name"/></t></td>
+                                            <td><span t-field="line.account_id.code"/> <span t-field="line.account_id.name"/></td>/
+                                            <td><span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/></td>/
+                                            <td><t t-if="line.analytic_tag_ids"  t-foreach="line.analytic_tag_ids" t-as="tags"><span t-field="tags.display_name"/></t></td>
                                             <!--<td><span t-field="line.ref"/></td>Remision-->
                                         </tr>
                                         <tr>
