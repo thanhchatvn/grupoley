@@ -46,7 +46,7 @@
                                         DOMICILIO:  <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/><span t-field="o.partner_id.zip"/>
                                      </div>
                                      <div  class="col-6">
-                                      Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,
+                                      <!--Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,-->
                                      </div>
                                    <!--  <div>
                                         <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/>
@@ -78,23 +78,23 @@
                 <section class="buyer">
                     <div class="container">
                         <div class="row" style="border-bottom: solid 1px;">
-                            <div class="col-4" style="font-size:12px;">
+                            <div class="col-8" style="font-size:12px;">
                                 <div>
-                                    <div>
+                                    <div class="col-6">
                                         COMPRADOR: <span t-field="o.user_id.partner_id.name"/>
                                     </div>
-                                    <div>
+                                    <div class="col-6">
                                         CONDICIONES: <span t-field="o.payment_term_id.name"/>,
                                     </div>
-                                    <div>
+                                    <div class="col-6">
                                       ALMACÉN:  <span t-field="o.picking_type_id.warehouse_id"/>,
                                     </div>
-                                    <div>
+                                    <div class="col-6">
                                         MEDIO DE ENVÍO:
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 offset-4 text-right" style="font-size:12px;">
+                            <div class="col-4 text-right" style="font-size:12px;">
                                 <div>
                                     <div>
                                         <div>HORARIO DE RECIBO DE MERCANCIA</div>
@@ -196,8 +196,8 @@
                     </div>
                     <div class="col-3 text-center"><!--"-->
                         <t t-if="o.state == 'purchase'" >
-                        <t t-set="approval" t-value="o.get_approval()" ></t>
-                        <div><span t-esc="approval"  ></span> </div>
+                       <!-- <t t-set="approval" t-value="o.get_approval()" ></t>
+                        <div><span t-esc="approval"  ></span> </div>-->
                         <div style="border-top:1px solid black;margin-right:5px">AUTORIZO</div>
                          </t>
                         <t t-else=""><div class="col-3"></div></t>
