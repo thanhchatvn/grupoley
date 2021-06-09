@@ -53,7 +53,7 @@
                                         PROVEEDOR: <span t-field="o.partner_id.name"/>
                                     </div>
                                     <div>
-                                        DOMICILIO: <span t-field="o.partner_id.street"/>,
+                                        DOMICILIO:  <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.company_id.partner_id.zip"/>
                                     </div>
                                     <div>
                                       Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,
@@ -90,10 +90,10 @@
                                         CONDICIONES: <span t-field="o.payment_term_id.name"/>,
                                     </div>
                                     <div>
-                                      ALMACÉN <span t-field="o.company_id.partner_id.l10n_mx_edi_colony"/>,
+                                      ALMACÉN:  <span t-field="o.picking_type_id.name"/>,
                                     </div>
                                     <div>
-                                        MEDIO DE ENVÍO: <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.company_id.partner_id.zip"/>
+                                        MEDIO DE ENVÍO:
                                     </div>
                                 </div>
                             </div>
