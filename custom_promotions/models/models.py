@@ -226,7 +226,8 @@ class SaleOrder(models.Model):
                 order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id))
                 for key in groupby(sorted(order_lines, key=lambda l: l.product_id.id), key=lambda l: l.product_id.id):
                     #program.write({'reward_product_id': key[0],'discount_line_product_id': key[0]})
-                    self.write({'order_line': [(0, False, value) for value in self._get_custom_reward_line_values(program, key[0])]})
+                    if self._is_quantity_valid(key[0]):
+                        self.write({'order_line': [(0, False, value) for value in self._get_custom_reward_line_values(program, key[0])]})
 
                 #order_lines = self.order_line
                 """for order_line in order_lines:
@@ -234,6 +235,22 @@ class SaleOrder(models.Model):
                     self.write({'order_line': [(0, False, value) for value in self._get_custom_reward_line_values(program, order_line.product_id.id)]})"""
 
             order.no_code_promo_program_ids |= program
+
+    def _get_uom_quantity_lines(self, order_lines):
+        qty = 0
+        for line in order_lines:
+            product_qty = line.product_uom_qty
+            if line.product_uom and line.product_id.uom_id and line.product_uom != line.product_id.uom_id:
+                product_qty = line.product_uom._compute_quantity(product_qty, line.product_id.uom_id)
+            qty += product_qty
+        return qty
+
+    def _is_quantity_valid(self, product_id):
+        order_lines = self.order_line.filtered(lambda x: x.product_id.id == product_id and not x.is_reward_line)
+        if self._get_uom_quantity_lines(order_lines) >= 1:
+            return True
+        else:
+            return False 
 
     def _get_applicable_no_code_promo_program(self):
         self.ensure_one()
@@ -294,6 +311,8 @@ class SaleOrder(models.Model):
             taxes = self.fiscal_position_id.map_tax(program.reward_product_id.taxes_id)
             name = program_action != 2 and program.reward_product_id.name or self.env['product.product'].search([('id', '=', product_id)]).name
             product_uom = program_action != 2 and program.reward_product_id.uom_id.id or self.env['product.product'].search([('id', '=', product_id)]).uom_id.id
+            if program_action == 2:
+                reward_qty = int(self._get_uom_quantity_lines(order_lines))
             return {
                 'product_id': (program_action == 2) and product_id or program.reward_product_id.id,
                 'price_unit': price_unit,
