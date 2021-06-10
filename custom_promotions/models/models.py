@@ -220,7 +220,9 @@ class SaleOrder(models.Model):
             elif program.reward_type == 'discount':
                 self._get_custom_reward_values_discount(program)
             elif program.reward_type == 'product':
-                self.write({'order_line': [(0, False, value) for value in self._get_custom_reward_line_values(program, 0)]})
+                order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id) and self._is_quantity_valid(x.product_id.id))
+                if order_lines:
+                    self.write({'order_line': [(0, False, value) for value in self._get_custom_reward_line_values(program, 0)]})
             elif program.reward_type == 'same_product':
                 #agrupar por producto y sumar la cantidad
                 order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id))
@@ -280,7 +282,7 @@ class SaleOrder(models.Model):
             #price_unit = self.order_line.filtered(lambda line: program.reward_product_id == line.product_id)[0].price_reduce
             price_unit = 0.01
             if program_action == 1:
-                order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id))
+                order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id) and self._is_quantity_valid(x.product_id.id))
             #TODO:
             elif program_action == 2:
                 order_lines = self.order_line.filtered(lambda x: x.product_id.id == product_id and not x.is_reward_line) #  self._get_reward_lines()).filtered(lambda x: program._get_valid_products(x.product_id))
@@ -302,7 +304,8 @@ class SaleOrder(models.Model):
                     reward_product_qty = min(reward_product_qty, order_total // program.rule_minimum_amount)
                 reward_qty = reward_product_qty
             else:
-                reward_qty = int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity)
+                #reward_qty = int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity)
+                reward_qty = int(self._get_uom_quantity_lines(order_lines))*program.reward_product_quantity
                 #reward_product_qty = min(max_product_qty, total_qty)
 
 
