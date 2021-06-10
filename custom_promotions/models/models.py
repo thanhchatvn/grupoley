@@ -312,7 +312,7 @@ class SaleOrder(models.Model):
             #reward_qty = min(int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity), reward_product_qty)
             # Take the default taxes on the reward product, mapped with the fiscal position
             taxes = self.fiscal_position_id.map_tax(program.reward_product_id.taxes_id)
-            name = program_action != 2 and program.reward_product_id.name or self.env['product.product'].search([('id', '=', product_id)]).name
+            name = program_action != 2 and program.reward_product_id.name or self.env['product.product'].search([('id', '=', product_id)]) and self.env['product.product'].search([('id', '=', product_id)]).name or ""
             product_uom = program_action != 2 and program.reward_product_id.uom_id.id or self.env['product.product'].search([('id', '=', product_id)]).uom_id.id
             if program_action == 2:
                 reward_qty = int(self._get_uom_quantity_lines(order_lines))*program.reward_product_quantity

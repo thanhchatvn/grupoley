@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <template id="report_sale_order_inherit" inherit_id="web.external_layout_standard">
+
+            <xpath expr="//div[1]/div[1]/div" position="replace">
+                <div class="col-3 mb4">
+                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
+                         style="max-height: 60px;"
+                         alt="Logo"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@name='company_address']" position="replace">
+                <div class="col-6">
+                    <span t-field="o.company_id.name"/>
+                </div>
+            </xpath>
+            <xpath expr="//div[1]/div[3]" position="after">
+                <div class="row">
+                    <div class="col-6" style="font-size:16px;">
+                        <span t-esc="str(o.company_id.street_name) + ' #' + str(o.company_id.street_number) + '. Col. ' + str(o.company_id.l10n_mx_edi_colony)"/>
+                        <br/>
+                        <span t-esc="str(o.company_id.zip) + ' ' + str(o.company_id.city) + ', ' + str(o.company_id.state_id.code)"/>
+                        <br/>
+                        <span t-esc="str(o.company_id.country_id.name)"/>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>
