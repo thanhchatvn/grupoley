@@ -43,7 +43,7 @@
                                         PROVEEDOR: [<span t-field="o.partner_id.ref"/>]<span t-field="o.partner_id.name"/>
                                      </div>
                                      <div  style="margin-left:-2.5%;" class="col-12">
-                                        DOMICILIO:<span t-field="o.partner_id.street"/>&amp;nbsp;<span t-field="o.partner_id.street_number"/>,&amp;nbsp;Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,
+                                        DOMICILIO:<span t-field="o.partner_id.street"/>&amp;nbsp;<span t-field="o.partner_id.street2"/>,&amp;nbsp;Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,
                                      </div>
                                      <div  style="margin-left:-2.5%;" class="col-12">
                                       <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/>&amp;nbsp;&amp;nbsp;<span t-field="o.partner_id.zip"/>&amp;nbsp;&amp;nbsp;<span t-field="o.partner_id.country_id"/>
