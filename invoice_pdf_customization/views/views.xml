@@ -624,12 +624,12 @@
                                     <t t-foreach="details_move_values['details_product']" t-as="line">
                                         <!-- Validación para los movimientos de iva o movimiento acreditado del producto-->
                                         <div  class="row">
-                                            <tr class="col-xs-12 text-left" style="font-size:9px; width:100%;">
+                                            <tr class="col-xs-12 text-left" style="font-size:10px; width:100%;">
                                               <td colspan="4">
                                                   <span t-field="line.account_id.code"/> <span t-field="line.account_id.name"/>/
                                                   <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/>/
                                                  <t t-if="line.analytic_tag_ids"  t-foreach="line.analytic_tag_ids" t-as="tags">
-                                                     <span t-if="line.analytic_tag_ids"  t-field="line.analytic_tag_ids.display_name"/></t>
+                                                     <span t-field="tags.display_name"/></t>
                                               </td>
                                           </tr>
                                         </div>
