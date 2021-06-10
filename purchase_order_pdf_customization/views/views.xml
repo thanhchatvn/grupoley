@@ -42,10 +42,10 @@
                                      <div>
                                         PROVEEDOR: [<span t-field="o.partner_id.ref"/>]<span t-field="o.partner_id.name"/>
                                      </div>
-                                     <div class="col-6">
-                                        DOMICILIO:  <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/><span t-field="o.partner_id.zip"/>
+                                     <div  style="margin-left:-2.5%;" class="col-8">
+                                        DOMICILIO: <span t-field="o.partner_id.street"/>,&amp;nbsp;<span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/>&amp;nbsp;&amp;nbsp;<span t-field="o.partner_id.zip"/>
                                      </div>
-                                     <div  class="col-6">
+                                     <div  style="margin-left:-2.5%;" class="col-6">
                                       Col. <span t-field="o.partner_id.l10n_mx_edi_colony"/>,
                                      </div>
                                    <!--  <div>
@@ -160,9 +160,9 @@
                 <th name="th_codigo">
                     <strong>Codigo</strong>
                 </th>
-                <th name="th_codigo_proveedor">
+               <!-- <th name="th_codigo_proveedor">
                     <strong>Codigo Prov.</strong>
-                </th>
+                </th>-->
             </xpath>
             <xpath expr="//td[@id='product']" position="before">
                 <td id="custom_uom">
@@ -171,9 +171,9 @@
                 <td id="custom_codigo">
                     <span t-field="line.product_id.default_code"></span>
                 </td>
-                <td id="custom_cod_prov">
+                <!--<td id="custom_cod_prov">
                      <span t-field="o.partner_id.ref"/>
-                </td>
+                </td>-->
             </xpath>
             <xpath expr="//h2[contains(@t-if,'o.state')]" position="attributes">
                 <attribute name="style">display:none;</attribute>
@@ -196,9 +196,9 @@
                     </div>
                     <div class="col-3 text-center"><!--"-->
                         <t t-if="o.state == 'purchase'" >
-                       <t t-set="approval" t-value="o.get_approval()" ></t>
-                        <div><span t-esc="approval"  ></span> </div>
-                        <div style="border-top:1px solid black;margin-right:5px">AUTORIZO</div>
+                         <t t-set="approval" t-value="o.get_approval()" ></t>
+                          <div><span t-esc="approval"  ></span> </div>
+                         <div style="border-top:1px solid black;margin-right:5px">AUTORIZO</div>
                          </t>
                         <t t-else=""><div class="col-3"></div></t>
                     </div>
