@@ -117,5 +117,6 @@ class AccountInvoice(models.Model):
 
     def action_post(self):
         super(AccountInvoice, self).action_post()
-        self.action_process_edi_web_services()
+        if 'out_invoice' in self.move_type:
+         self.action_process_edi_web_services()
 

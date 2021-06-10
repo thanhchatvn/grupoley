@@ -8,7 +8,7 @@
         </template>
         <template id="report_with_payment_lang_inherit" inherit_id="account.report_invoice_with_payments">
              <xpath expr="//t[@t-set='lang']" position="after">
-<!--                <t t-set="lang" t-value="'en_US'"/>-->
+                <!--                <t t-set="lang" t-value="'en_US'"/>-->
                 <t t-set="lang" t-value="'en_US' if o.l10n_mx_edi_external_trade else lang"/>
             </xpath>
         </template>
