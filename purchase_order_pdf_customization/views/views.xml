@@ -42,7 +42,7 @@
                                      <div>
                                         PROVEEDOR: [<span t-field="o.partner_id.ref"/>]<span t-field="o.partner_id.name"/>
                                      </div>
-                                     <div  style="margin-left:-2.5%;" class="col-8">
+                                     <div  style="margin-left:-2.5%;" class="col-12">
                                         DOMICILIO: <span t-field="o.partner_id.street"/>,&amp;nbsp;<span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/>&amp;nbsp;&amp;nbsp;<span t-field="o.partner_id.zip"/>
                                      </div>
                                      <div  style="margin-left:-2.5%;" class="col-6">
