@@ -165,7 +165,7 @@
                   <th style="text-align:left;">Desc</th>
               </tr>
               <tbody>
-              <tr t-foreach="orderlines" t-as="orderline" t-key="orderline.id" style="font-size:10px;" t-if="orderline.price > 0">
+              <tr t-foreach="orderlines" t-as="orderline" t-key="orderline.id" style="font-size:9px;" t-if="orderline.price > 0">
               <div class="row">
               <tr>
                   <td style="text-align:left;">
@@ -191,7 +191,7 @@
                   </tr>
                   </div>
                   <tr>
-                      <td  style="text-align:left; width:100px;">
+                      <td  style="text-align:left; width:250px;">
                                <span t-esc="orderline.quantity"/>-<span t-esc="orderline.product.uom_id[1]"/>
                       </td>
                   <!--  Precio  -->

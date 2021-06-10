@@ -625,13 +625,12 @@
                                         <!-- Validación para los movimientos de iva o movimiento acreditado del producto-->
                                         <div  class="row">
                                             <tr class="col-xs-12 text-left" style="font-size:9px; width:100%;">
-                                              <td>
+                                              <td colspan="4">
                                                   <span t-field="line.account_id.code"/> <span t-field="line.account_id.name"/>/
                                                   <span t-if="line.analytic_account_id" t-field="line.analytic_account_id.display_name"/>/
-                                                  <!--<t t-if="line.analytic_tag_ids"  t-foreach="line.analytic_tag_ids" t-as="tags">-->
-                                                  <span t-if="line.analytic_tag_ids"  t-field="line.analytic_tag_ids.display_name"/>
+                                                 <t t-if="line.analytic_tag_ids"  t-foreach="line.analytic_tag_ids" t-as="tags">
+                                                     <span t-if="line.analytic_tag_ids"  t-field="line.analytic_tag_ids.display_name"/></t>
                                               </td>
-                                            <td></td>
                                           </tr>
                                         </div>
                                         <tr>

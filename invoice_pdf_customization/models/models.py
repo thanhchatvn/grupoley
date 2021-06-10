@@ -61,6 +61,7 @@ class AccountInvoice(models.Model):
 
     def is_invoice_client(self):
         invoice = self
+
         if 'in_invoice' in invoice.move_type:
             return False
         if 'out_invoice' in invoice.move_type:

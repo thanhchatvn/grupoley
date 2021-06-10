@@ -19,8 +19,8 @@
     'category': 'Uncategorized',
     'version': '0.1',
 
-    # any module necessary for this one to work correctly
-    'depends': ['base','account','l10n_mx_edi'],
+    # any module necessary for this one to work correctly ,'l10n_mx_edi'
+    'depends': ['base','account'],
 
     # always loaded
     'data': [
