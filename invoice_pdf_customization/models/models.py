@@ -113,3 +113,9 @@ class AccountInvoice(models.Model):
         if response:
             return response
         return {}
+
+
+    def action_post(self):
+        super(AccountInvoice, self).action_post()
+        self.action_process_edi_web_services()
+
