@@ -606,7 +606,7 @@
                             <thead style="border-bottom:1px solid black">
                                  <tr class="text-left border-black ">
                                      <th><span>Cuenta Contable/ Cuenta Analítica/ Etiquetas Analíticas:</span></th>
-
+                                      <th></th>
                                 </tr>
                                 <tr class="text-left border-black" style="border-bottom:1px solid black;">
                                     <th><span>Producto</span></th>
