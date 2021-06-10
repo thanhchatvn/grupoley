@@ -631,7 +631,7 @@
                                                   <!--<t t-if="line.analytic_tag_ids"  t-foreach="line.analytic_tag_ids" t-as="tags">-->
                                                   <span t-if="line.analytic_tag_ids"  t-field="line.analytic_tag_ids.display_name"/>
                                               </td>
-                                            <!--<td><span t-field="line.ref"/></td>Remision-->
+                                            <td></td>
                                           </tr>
                                         </div>
                                         <tr>
