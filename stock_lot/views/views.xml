@@ -10,6 +10,9 @@
                     <attribute name="domain">
                         [('x_stock_quant.location_id','=', location_id),('product_id', '=',parent.product_id), ('company_id', '=', company_id)]
                     </attribute>
+                    <attribute name="options">
+                        {"no_create": true}
+                    </attribute>
                 </xpath>
             </field>
         </record>
