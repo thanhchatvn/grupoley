@@ -20,7 +20,7 @@
                     <div class="col-6" style="font-size:16px;">
                         <span t-esc="str(o.company_id.street_name) + ' #' + str(o.company_id.street_number) + '. Col. ' + str(o.company_id.l10n_mx_edi_colony)"/>
                         <br/>
-                        <span t-esc="str(o.company_id.zip) + ' ' + str(o.company_id.city_id.name) + ', ' + str(o.company_id.state_id.code)"/>
+                        <span t-esc="str(o.company_id.zip) + ' ' + str(o.company_id.city) + ', ' + str(o.company_id.state_id.code)"/>
                         <br/>
                         <span t-esc="str(o.company_id.country_id.name)"/>
                     </div>
