@@ -13,6 +13,7 @@
 
     'data': [
         'views/template.xml',
+        'views/pos_config_check_all_picking_type_view_form.xml',
     ],
 
     'qweb': [
