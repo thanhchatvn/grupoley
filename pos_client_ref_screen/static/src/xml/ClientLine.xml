@@ -2,7 +2,7 @@
 <templates id="point_of_sale.template" xml:space="preserve">
     <t t-name="ClientLine" t-inherit="point_of_sale.ClientLine" t-inherit-mode="extension" owl="1">
          <xpath expr="//tr/td[1]" position="before">
-              <t t-esc="props.partner.parent_id[1]" />
+              <t t-esc="props.partner.parent_id[0]" />
          </xpath>
        <!-- <tr t-attf-class="client-line {{highlight}}" t-att-data-id="props.partner.id"
             t-on-click="trigger('click-client', {client: props.partner})">
