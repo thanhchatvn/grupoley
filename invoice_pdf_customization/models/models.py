@@ -31,11 +31,12 @@ class AccountInvoice(models.Model):
             cfdi_values[line.id]['wo_discount'] = line.price_unit * (1 - (line.discount / 100.0))
 
             cfdi_values[line.id]['discount_rate'] = (line.sale_line_ids.discount_original) if line.sale_line_ids.discount_rate  else  line.sale_line_ids.discount
-            cfdi_values[line.id]['discount_promotion'] = (line.sale_line_ids.discount_promotions) if line.sale_line_ids.discount_promotions else 0
-
+            #cfdi_values[line.id]['discount_promotion'] = (line.sale_line_ids.discount_promotions) if line.sale_line_ids.discount_promotions else 0
+            cfdi_values[line.id]['discount_promotion'] = (
+               0.01) if line.sale_line_ids.is_reward_line else 0
             cfdi_values[line.id]['discount_amount_price_list'] = (line.quantity * line.price_unit) * (cfdi_values[line.id]['discount_rate']/100.0)
-            cfdi_values[line.id]['discount_amount']  = (line.quantity * line.price_unit) * (cfdi_values[line.id]['discount_promotion']/100.0)
-
+            #cfdi_values[line.id]['discount_amount']  = (line.quantity * line.price_unit) * (cfdi_values[line.id]['discount_promotion']/100.0)
+            cfdi_values[line.id]['discount_amount'] = (line.quantity * cfdi_values[line.id]['discount_promotion'] ) if line.sale_line_ids.is_reward_line else 0
 
             cfdi_values[line.id]['total_wo_discount'] = invoice.currency_id.round((line.price_unit * line.quantity) - (cfdi_values[line.id]['discount_amount_price_list'] + cfdi_values[line.id]['discount_amount']))
             cfdi_values[line.id]['price_subtotal_unit'] = invoice.currency_id.round(
