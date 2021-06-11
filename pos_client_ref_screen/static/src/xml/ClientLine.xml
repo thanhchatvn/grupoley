@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="point_of_sale.template" xml:space="preserve">
+    <t t-name="ClientLine" t-inherit="point_of_sale.ClientLine" t-inherit-mode="extension" owl="1">
+         <xpath expr="//tr/td[1]" position="before">
+              [<t t-esc="props.partner.ref" />] <t t-esc="props.partner.name" />
+         </xpath>
+       <!-- <tr t-attf-class="client-line {{highlight}}" t-att-data-id="props.partner.id"
+            t-on-click="trigger('click-client', {client: props.partner})">
+             <td>
+               [<t t-esc="props.partner.ref" />] <t t-esc="props.partner.name" />
+                <span t-if="highlight">
+                    <br/><button class="edit-client-button" t-on-click.stop="trigger('click-edit')">EDIT</button>
+                </span>
+            </td>
+           </tr>-->
+    </t>
+
+</templates>
