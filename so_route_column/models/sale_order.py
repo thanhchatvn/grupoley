@@ -13,3 +13,9 @@ class SaleOrderLineRouteColumn(models.Model):
     @api.onchange('product_route_id','product_id')
     def _domain_product_route_id_onchange(self):
         return {'domain': {'product_route_id': [('id', 'in', self.product_id.route_ids.ids)]}}
+        
+    @api.depends('route_domain_ids','product_id')
+    def _compute_route_ids(self):
+        self.route_domain_ids = self.product_id.route_ids
+
+    route_domain_ids = fields.One2many('stock.location.route', compute="_compute_route_ids", string='Routes')

@@ -6,7 +6,8 @@
             <field name="inherit_id" ref="sale.view_order_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
-                    <field name="product_route_id"/>
+                    <field name="route_domain_ids" attrs="{'column_invisible': [True]}"/>
+                    <field name="product_route_id" domain="[('id','in',route_domain_ids)]"/>
                 </xpath>
             </field>
         </record>
