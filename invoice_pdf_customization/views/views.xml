@@ -383,10 +383,10 @@
                                             </td>
                                             <!-- PROMOCIONES-->
                                             <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                                <t t-if=" cfdi_values[line.id]['discount_rate']!=0" t-esc="cfdi_values[line.id]['discount_rate']" ></t>
+                                                <t t-if="cfdi_values[line.id]['discount_rate']!=0" t-esc="cfdi_values[line.id]['discount_rate']" ></t>
                                             </td>
                                             <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                                <t t-if=" cfdi_values[line.id]['discount_promotion']!=0" t-esc="cfdi_values[line.id]['discount_promotion']" ></t>
+                                                <t t-if="cfdi_values[line.id]['discount_promotion']!=0" t-esc="cfdi_values[line.id]['discount_promotion']" ></t>
                                             </td>
                                             <!-- PROMOCIONES-->
 
