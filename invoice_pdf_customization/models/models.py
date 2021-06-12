@@ -30,8 +30,9 @@ class AccountInvoice(models.Model):
             cfdi_values[line.id] = {}
             cfdi_values[line.id]['wo_discount'] = line.price_unit * (1 - (line.discount / 100.0))
 
-            cfdi_values[line.id]['discount_rate'] = (line.sale_line_ids.discount_original) if line.sale_line_ids.discount_rate  else  line.sale_line_ids.discount
-            print(cfdi_values[line.id]['discount_rate'])
+            # cfdi_values[line.id]['discount_rate'] = (line.sale_line_ids.discount_original) if line.sale_line_ids.discount_rate  else  line.sale_line_ids.discount
+            # print(cfdi_values[line.id]['discount_rate'])
+            cfdi_values[line.id]['discount_rate'] = line.sale_line_ids.discount_rate and line.sale_line_ids.discount_original or  line.sale_line_ids.discount and line.sale_line_ids.discount or 0.0
             #cfdi_values[line.id]['discount_promotion'] = (line.sale_line_ids.discount_promotions) if line.sale_line_ids.discount_promotions else 0
             cfdi_values[line.id]['discount_promotion'] = (
                0.01) if line.sale_line_ids.is_reward_line else 0
