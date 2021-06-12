@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+
+    <record id="product_product_descuento_promocional" model="product.template">
+        <field name="name">Descuento promocional</field>
+        <field name="type">service</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="list_price">0.0</field>
+        <field name="invoice_policy">order</field>
+        <field name="company_id"></field>
+        <field name="desc_pos">True</field>
+        <field name="available_in_pos">True</field>
+    </record>
+
+</odoo>

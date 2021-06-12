@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_cupones_descuentos/static/src/js/coupon.js"></script>
+            <script type="text/javascript" src="/pos_cupones_descuentos/static/src/js/Orderline.js"></script>
+            <script type="text/javascript" src="/pos_cupones_descuentos/static/src/js/PaymentScreen.js"></script>
+            <script type="text/javascript" src="/pos_cupones_descuentos/static/src/js/ProductScreen.js"></script>
+            <script type="text/javascript" src="/pos_cupones_descuentos/static/src/js/ActivePrograms.js"></script>
+            <script type="text/javascript" src="/pos_cupones_descuentos/static/src/js/ControlButtons/PromoCodeButton.js"></script>
+            <script type="text/javascript" src="/pos_cupones_descuentos/static/src/js/ControlButtons/ResetProgramsButton.js"></script>
+            <link rel="stylesheet" href="/pos_cupones_descuentos/static/src/css/coupon.css"/>
+        </xpath>
+    </template>
+
+</odoo>
