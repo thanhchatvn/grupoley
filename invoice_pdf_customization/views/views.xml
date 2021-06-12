@@ -382,15 +382,21 @@
                                                 <span class="text-nowrap" t-field="line.price_unit"/>
                                             </td>
                                             <!-- PROMOCIONES-->
+                                            <!-- <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                                <t t-if="cfdi_values[line.id]['discount_rate']!=0" t-esc="cfdi_values[line.id]['discount_rate']" ></t>
+                                            </td>
+                                            <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                                <t t-if="cfdi_values[line.id]['discount_promotion']!=0" t-esc="cfdi_values[line.id]['discount_promotion']" ></t>
+                                            </td> -->
                                             <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                                 <t t-esc="cfdi_values" ></t>
                                             </td>
                                             <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                                <t t-if="cfdi_values[line.id]['discount_promotion']!=0" t-esc="cfdi_values[line.id]['discount_promotion']" ></t>
+                                                <t>0</t>
                                             </td>
                                             <!-- PROMOCIONES-->
 
-                                            <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                            <!-- <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                                 <t t-esc="cfdi_values[line.id]['discount_amount_price_list']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"></t>
                                             </td>
                                             <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
@@ -401,6 +407,19 @@
                                             <td class="text-right o_price_total">
                                                 <span class="text-nowrap">
                                                     <t t-esc="cfdi_values[line.id]['total_wo_discount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"></t>
+                                                </span>
+                                            </td> -->
+                                            <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                                <t>0</t>
+                                            </td>
+                                            <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                                <span class="text-nowrap">
+                                                    <t>0</t>
+                                                </span>
+                                            </td>
+                                            <td class="text-right o_price_total">
+                                                <span class="text-nowrap">
+                                                    <t>0</t>
                                                 </span>
                                             </td>
                                         </t>
