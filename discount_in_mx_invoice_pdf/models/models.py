@@ -31,5 +31,9 @@ class AccountInvoice(models.Model):
             cfdi_values[line.id]['discount_amount'] = invoice.currency_id.round(
                 cfdi_values[line.id]['total_wo_discount'] - line.price_subtotal)
             cfdi_values[line.id]['price_subtotal_unit'] = invoice.currency_id.round(cfdi_values[line.id]['total_wo_discount'] / line.quantity)
+
+            cfdi_values[line.id]['discount_rate'] = line.sale_line_ids.discount_rate and line.sale_line_ids.discount_original or  line.sale_line_ids.discount and line.sale_line_ids.discount or 0.0
+            cfdi_values[line.id]['discount_promotion'] = (0.01) if line.sale_line_ids.is_reward_line else 0
+            cfdi_values[line.id]['discount_amount_price_list'] = (line.quantity * line.price_unit) * (cfdi_values[line.id]['discount_rate']/100.0)
         return cfdi_values
 
