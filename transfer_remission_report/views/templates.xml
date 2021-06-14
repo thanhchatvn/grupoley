@@ -148,7 +148,7 @@
                                             <div>REMISIÓN(ES):</div><br/>
                                             <span>#ORDEN: <span t-field="o.sale_id"/></span>
                                         </div>-->
-                                          <div  style="border: 1px solid; display: grid; grid-gap: 5px;height: 100px; width: 100%; padding: 10px;">
+                                          <div  style="border: 1px solid; display: grid; grid-gap: 5px;height: 80px; width: 100%; padding: 10px;">
                                             <div>DÍAS DE CRÉDITO:</div>
                                             <span t-if="o.sale_id.payment_term_id">crédito <span t-field="o.sale_id.payment_term_id"/></span>
                                         </div>
