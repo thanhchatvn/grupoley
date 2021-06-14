@@ -3,7 +3,7 @@
 
     <template id="assets" inherit_id="point_of_sale.assets">
         <xpath expr="." position="inside">
-            <script type="text/javascript" src="/pos_ticket_template/static/src/js/Screens/ReceiptScreen/InheritOrderReceipt.js"></script>
+            <script type="text/javascript" src="/pos_client_ref_screen/static/src/js/models.js"></script>
         </xpath>
     </template>
 
