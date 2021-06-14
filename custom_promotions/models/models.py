@@ -323,7 +323,8 @@ class SaleOrder(models.Model):
                 'is_reward_line': True,
                 'name': "(" + program.display_name +  ") " + "Free Product" + " - " + name,
                 'product_uom': product_uom,
-                'tax_id': [(4, tax.id, False) for tax in taxes]
+                'tax_id': [(4, tax.id, False) for tax in taxes],
+                'route_id': self.partner_id.x_studio_ruta.id
             }
 
     def _custom_update_existing_reward_lines(self):
