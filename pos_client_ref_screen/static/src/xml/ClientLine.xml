@@ -2,7 +2,10 @@
 <templates id="point_of_sale.template" xml:space="preserve">
     <t t-name="ClientLine" t-inherit="point_of_sale.ClientLine" t-inherit-mode="extension" owl="1">
          <xpath expr="//tr/td[1]" position="before">
-             <td> [<t t-esc="props.partner.ref" />]</td>
+             <td>
+                 [<t t-if="props.partner.ref" t-esc="props.partner.ref" />
+                 <t t-else="" t-esc="'N/A'"/>]
+             </td>
 
          </xpath>
        <!-- <tr t-attf-class="client-line {{highlight}}" t-att-data-id="props.partner.id"
