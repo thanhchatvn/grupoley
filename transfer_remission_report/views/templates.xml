@@ -80,7 +80,7 @@
                                             <strong>REMISION <span t-field="o.name"></span></strong>
                                         </div>
                                         <div>
-                                            <strong>Fecha Remision <span t-field="o.date_done"></span></strong>
+                                            <strong>Fecha Remision <span t-field="o.date"></span></strong>
                                         </div>
                                         <div>
                                             <strong>Pedido <span t-field="o.sale_id.name" t-if="o.sale_id"></span></strong>
@@ -217,7 +217,8 @@
                                         <span t-esc="sale_line_calculated_values[line.id]['line_qty']"/>
                                     </td>
                                     <td class="text-center">
-                                        <span t-field="line.product_uom"  groups="uom.group_uom"/>
+                                        <span t-esc="line.product_id.uom_id.name" groups="uom.group_uom"/>
+                                       <!-- <span t-field="line.product_uom"  groups="uom.group_uom"/>-->
                                     </td>
                                     <td class="text-center">
                                         <span t-field="line.product_id.barcode"/>
