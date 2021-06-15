@@ -11,6 +11,6 @@
     'version': '0.1',
     'depends': ['base', 'stock', 'sale'],
     'data': [
-        'views/sale_order_line_route_column_view_form.xml',
+        # 'views/sale_order_line_route_column_view_form.xml',
     ],
 }
