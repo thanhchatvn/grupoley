@@ -6,13 +6,13 @@
         <xpath expr="//div[hasclass('paymentmethods')]" position="replace">
             <div class="paymentmethods">
                 <t t-if="env.pos.get_client().property_payment_term_id and env.pos.get_client().x_l10n_mx_edi_payment_method_id">
-                    <t t-if="env.pos.get_client().property_payment_term_id[1] == 'Contado'">
+                    <t t-if="env.pos.get_client().property_payment_term_id[1] == 'Contado' and env.pos.get_client().x_l10n_mx_edi_payment_method_id[1] != 'Transferencia electrónica de fondos'">
                         <t t-foreach="env.pos.payment_methods.filter(e => e.name == 'Efectivo')" t-as="paymentMethod" t-key="paymentMethod.id">
                             <PaymentMethodButton paymentMethod="paymentMethod" />
                         </t>
                     </t>
                     <t t-else="">
-                        <t t-if="env.pos.get_client().x_l10n_mx_edi_payment_method_id[1] == 'Transferencia electrónica de fondos'">
+                        <t t-if="env.pos.get_client().property_payment_term_id[1] == 'Contado' and env.pos.get_client().x_l10n_mx_edi_payment_method_id[1] == 'Transferencia electrónica de fondos'">
                             <t t-foreach="env.pos.payment_methods.filter(e => e.name == 'Transferencia electrónica')" t-as="paymentMethod" t-key="paymentMethod.id">
                                 <PaymentMethodButton paymentMethod="paymentMethod" />
                             </t>
